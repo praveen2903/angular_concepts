@@ -1,0 +1,277 @@
+<div class="page">
+
+  <h1>Angular Basic Concepts</h1>
+
+  <pre class="flow-box">
+Interpolation     {{ '{' }}{{ '{' }} value {{ '}' }}{{ '}' }}
+       ↓
+Property Binding  []
+       ↓
+Event Binding     ()
+       ↓
+Two-Way Binding   [()]
+       ↓
+Directives        *ngIf, *ngFor
+  </pre>
+
+  <!-- ==================================== -->
+  <!-- INTERPOLATION -->
+  <!-- ==================================== -->
+
+  <section class="card">
+
+    <h2>1. Interpolation {{ '{' }}{{ '{' }} {{ '}' }}{{ '}' }}</h2>
+
+    <p class="definition">
+      Displays TypeScript values inside HTML.
+    </p>
+
+    <h3>Example</h3>
+
+    <div class="demo-box">
+      <p>Name : {{ name }}</p>
+      <p>Age : {{ age }}</p>
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+TypeScript Variable
+        ↓
+Interpolation
+        ↓
+HTML Output
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Avoid heavy function calls inside interpolation.</li>
+      <li>❌ Cannot use loops or if statements.</li>
+      <li>✅ Use only expressions.</li>
+    </ul>
+
+  </section>
+
+  <!-- ==================================== -->
+  <!-- EVENT BINDING -->
+  <!-- ==================================== -->
+
+  <section class="card">
+
+    <h2>2. Event Binding ()</h2>
+
+    <p class="definition">
+      Listens to browser events and executes TypeScript methods.
+    </p>
+
+    <h3>Examples</h3>
+
+    <div class="demo-box">
+
+      <button
+        (click)="increment()"
+        [disabled]="count === 100"
+      >
+        Increment
+      </button>
+
+      <button
+        (click)="decrement()"
+        [disabled]="count === 0"
+      >
+        Decrement
+      </button>
+
+      <h1>{{ count }}</h1>
+
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+User Click
+     ↓
+(click)
+     ↓
+increment()
+     ↓
+count++
+     ↓
+UI Updated
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Too much logic inside templates.</li>
+      <li>❌ Multiple function calls in click handler.</li>
+      <li>✅ Keep logic in TypeScript methods.</li>
+    </ul>
+
+  </section>
+
+  <!-- ==================================== -->
+  <!-- PROPERTY BINDING -->
+  <!-- ==================================== -->
+
+  <section class="card">
+
+    <h2>3. Property Binding []</h2>
+
+    <p class="definition">
+      Updates DOM properties using component state.
+    </p>
+
+    <h3>Examples</h3>
+
+    <pre>
+[disabled]
+[src]
+[alt]
+[min]
+[max]
+[value]
+    </pre>
+
+    <div class="demo-box">
+
+      <button [disabled]="count === 100">
+        Disabled at 100
+      </button>
+
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+TypeScript
+      ↓
+Property Binding
+      ↓
+DOM Property
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ disabled="true"</li>
+      <li>✅ [disabled]="isLoading"</li>
+      <li>❌ Confusing attributes with properties.</li>
+    </ul>
+
+  </section>
+
+  <!-- ==================================== -->
+  <!-- NGIF -->
+  <!-- ==================================== -->
+
+  <section class="card">
+
+    <h2>4. Structural Directive *ngIf</h2>
+
+    <p class="definition">
+      Creates or removes elements from DOM.
+    </p>
+
+    <div class="demo-box">
+
+      <button (click)="authLog()">
+
+        {{ loggedIn ? 'Log Out' : 'Login' }}
+
+      </button>
+
+      <div *ngIf="loggedIn" class="success-box">
+        User Logged In
+      </div>
+
+      <div *ngIf="!loggedIn" class="danger-box">
+        User Logged Out
+      </div>
+
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+Condition True
+      ↓
+Create DOM
+
+Condition False
+      ↓
+Destroy DOM
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ ngIf does not hide elements.</li>
+      <li>✅ ngIf removes DOM elements.</li>
+      <li>❌ Component state may be destroyed.</li>
+    </ul>
+
+  </section>
+
+  <!-- ==================================== -->
+  <!-- NGMODEL -->
+  <!-- ==================================== -->
+
+  <section class="card">
+
+    <h2>5. Two-Way Binding [(ngModel)]</h2>
+
+    <p class="definition">
+      Synchronizes TypeScript and HTML automatically.
+    </p>
+
+    <div class="demo-box">
+
+      <input
+        type="text"
+        [(ngModel)]="name"
+        placeholder="Enter your name"
+      >
+
+      <p>
+        Typed Name : {{ name }}
+      </p>
+
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+TypeScript
+      ↓
+Input
+      ↑
+User Input
+    </pre>
+
+    <h3>Behind The Scenes</h3>
+
+    <pre>
+[value]="name"
+
++
+
+(input)="name=$event.target.value"
+
+=
+
+[(ngModel)]="name"
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Forgetting FormsModule.</li>
+      <li>❌ Mixing Template Forms and Reactive Forms.</li>
+      <li>✅ Import FormsModule in AppModule.</li>
+    </ul>
+
+  </section>
+
+</div>
