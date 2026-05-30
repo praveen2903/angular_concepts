@@ -7,9 +7,21 @@ import { CommonModule } from '@angular/common';
 import { BasicAngularConcepts } from './components/basic-angular-concepts/basic-angular-concepts';
 import { FormsModule } from '@angular/forms';
 import { StructuralDirectives } from './components/structural-directives/structural-directives';
+import { PipesRouting } from './components/pipes-routing/pipes-routing';
+import { SalaryPipe } from './pipes/salary-pipe';
+import { SearchFilterPipe } from './pipes/search-filter-pipe';
+import { HighlightSearchPipe } from './pipes/highlight-search-pipe';
 
 @NgModule({
-  declarations: [App, BasicAngularConcepts, StructuralDirectives],
+  declarations: [
+    App,
+    BasicAngularConcepts,
+    StructuralDirectives,
+    PipesRouting,
+    SalaryPipe,
+    SearchFilterPipe,
+    HighlightSearchPipe,
+  ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

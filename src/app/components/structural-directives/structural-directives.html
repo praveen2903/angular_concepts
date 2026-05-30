@@ -1,1 +1,340 @@
-<p>structural-directives works!</p>
+<div>
+<div class="page">
+
+  <h1>Angular Structural Directives</h1>
+
+  <pre class="flow-box">
+*ngIf
+    ↓
+*ngIf else
+    ↓
+*ngFor
+    ↓
+index / first / last
+    ↓
+even / odd
+    ↓
+trackBy
+    ↓
+ngSwitch
+  </pre>
+
+  <!-- ===================================================== -->
+  <!-- NGIF -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>1. *ngIf</h2>
+
+    <p class="definition">
+      Creates or removes DOM elements based on a condition.
+    </p>
+
+    <div class="demo-box">
+
+      <button (click)="toggleLogin()">
+        Toggle Login
+      </button>
+
+      <div *ngIf="loggedIn" class="success-box">
+        User Logged In
+      </div>
+
+      <div *ngIf="!loggedIn" class="danger-box">
+        User Logged Out
+      </div>
+<pre>{{ngifcode}}</pre>
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+Condition True
+      ↓
+Create DOM
+
+Condition False
+      ↓
+Destroy DOM
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ ngIf does not hide elements.</li>
+      <li>✅ It removes elements from DOM.</li>
+      <li>❌ Child component state can be destroyed.</li>
+    </ul>
+
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- NGIF ELSE -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>2. *ngIf Else</h2>
+
+    <p class="definition">
+      Shows alternate template when condition becomes false.
+    </p>
+
+    <div class="demo-box">
+
+      <button (click)="toggleCourses()">
+        Toggle Courses
+      </button>
+
+      <div *ngIf="showCourses; else noCourses">
+        <p *ngFor="let skill of skills">{{skill}}</p>
+      </div>
+
+      <ng-template #noCourses>
+        <p>No Courses Available</p>
+      </ng-template>
+    </div>
+
+    <h3>Syntax</h3>
+
+    <pre>
+        {{ngIfElseCode}}
+    </pre>
+
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- NGFOR -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>3. *ngFor</h2>
+
+    <p class="definition">
+      Repeats HTML for every item in a collection.
+    </p>
+
+    <div class="demo-box">
+
+      <ul>
+        <li *ngFor="let skill of skills">
+          {{ skill }}
+        </li>
+      </ul>
+
+    </div>
+
+    <h3>Flow</h3>
+
+    <pre>
+Array
+   ↓
+Loop
+   ↓
+DOM Creation
+   ↓
+Multiple Elements
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Large lists may re-render often.</li>
+      <li>✅ Use trackBy when possible.</li>
+    </ul>
+
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- INDEX FIRST LAST -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>4. index / first / last - gives indexing and first and last in *ngfor</h2>
+
+    <p class="definition">
+      Angular provides metadata while looping.
+    </p>
+
+    <div class="demo-box">
+
+      <div *ngFor="let skill of skills;
+          let i = index;
+          let first = first;
+          let last = last">
+        {{ i }} -
+        {{ skill }}
+        |
+        First: {{ first }}
+        |
+        Last: {{ last }}
+      </div>
+
+    </div>
+
+    <h3>Syntax</h3>
+
+    <pre>
+let i = index
+let first = first
+let last = last
+    </pre>
+<pre>{{indexCode}}</pre>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- EVEN ODD -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h3>5. even / odd  -- without use of % angular allows you to choose even and odd for alternative rows</h3>
+
+    <div class="demo-box">
+
+      <div *ngFor="
+          let skill of skills;
+          let even = even;
+          let odd = odd">
+        {{ skill }}
+        | Even : {{ even }}
+        | Odd : {{ odd }}
+      </div>
+
+    </div>
+    <pre>{{oddEvenCode}}</pre>
+
+    <h3>Real Usage</h3>
+
+    <pre>
+Alternate Row Colors
+
+Data Tables
+
+Reports
+    </pre>
+
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- TRACKBY -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+    <h2>6. trackBy -allowing key to each item coming in for loop like map key will be there right</h2>
+    <p class="definition">
+      Helps Angular identify items efficiently.
+    </p>
+
+    <div class="demo-box">
+      <div *ngFor="let user of users;
+          trackBy: trackByUserId">
+        {{ user.id }} - {{ user.name }}
+      </div>
+    </div>
+<pre>{{trackby}}</pre>
+    <h3>Flow</h3>
+
+    <pre>
+Without trackBy
+      ↓
+Destroy DOM
+      ↓
+Create Again
+
+With trackBy
+      ↓
+Reuse Existing DOM
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Missing trackBy in huge tables.</li>
+      <li>❌ Performance issues in large lists.</li>
+      <li>✅ Use unique IDs.</li>
+    </ul>
+
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- NGSWITCH -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>7. ngSwitch</h2>
+
+    <p class="definition">
+      Displays content based on matching cases.
+    </p>
+
+    <div class="demo-box">
+
+      <div [ngSwitch]="selectedRole">
+
+        <div *ngSwitchCase="'Admin'">
+          Admin Dashboard
+        </div>
+
+        <div *ngSwitchCase="'Manager'">
+          Manager Dashboard
+        </div>
+
+        <div *ngSwitchDefault>
+          User Dashboard
+        </div>
+
+      </div>
+
+    </div>
+<pre>{{ngswitchcode}}</pre>
+    <h3>Flow</h3>
+
+    <pre>
+Role
+   ↓
+Match Case
+   ↓
+Render View
+    </pre>
+
+    <h3>Common Traps</h3>
+
+    <ul>
+      <li>❌ Forgetting quotes around string values.</li>
+      <li>❌ Missing ngSwitchDefault.</li>
+    </ul>
+
+
+    <h3> table using *ngFor and style binding example</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let emp of employees;
+        let even = even;
+        let odd = odd"
+      [class.even-row]="even"
+      [class.odd-row]="odd"
+    >
+      <td>{{ emp.id }}</td>
+      <td>{{ emp.name }}</td>
+      <td>{{ emp.salary }}</td>
+    </tr>
+  </tbody>
+</table>
+<pre>{{tableCode}}</pre>
+  </section>
+
+</div>
+</div>

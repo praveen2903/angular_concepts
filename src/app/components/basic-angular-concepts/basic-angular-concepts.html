@@ -274,4 +274,108 @@ User Input
 
   </section>
 
+  <section class="card">
+
+  <h2>6. Style Binding [style]</h2>
+
+  <p class="definition">
+    Dynamically applies inline CSS styles using component data.
+  </p>
+
+  <div class="demo-box">
+
+    <button (click)="toggleTheme()">
+      Toggle Color
+    </button>
+
+    <h3
+      [style.color]="isRed ? 'red' : 'green'"
+    >
+      Angular Style Binding
+    </h3>
+
+  </div>
+
+  <h3>Flow</h3>
+
+  <pre>
+Component Variable
+        ↓
+[style.color]
+        ↓
+Inline CSS
+        ↓
+UI Updated
+  </pre>
+
+  <h3>Examples</h3>
+
+  <pre>
+[style.color]
+
+[style.background]
+
+[style.font-size.px]
+
+[style.width.px]
+
+[style.display]
+  </pre>
+
+  <h3>Common Traps</h3>
+
+  <ul>
+    <li>❌ Too many inline styles.</li>
+    <li>❌ Complex styling logic in HTML.</li>
+    <li>✅ Use class binding for large styles.</li>
+  </ul>
+
+</section>
+<pre>{{stylebindingcode}}</pre>
+
+<section class="card">
+
+  <h2>7. Class Binding [class]</h2>
+
+  <p class="definition">
+    Dynamically adds or removes CSS classes.
+  </p>
+
+  <div class="demo-box">
+
+    <button (click)="toggleLogin()">
+      Toggle Login
+    </button>
+
+    <h3
+      [class.success]="loggedIn"
+      [class.danger]="!loggedIn"
+    >
+      User Status
+    </h3>
+
+  </div>
+
+  <h3>Flow</h3>
+
+  <pre>
+Condition
+    ↓
+Class Added
+    ↓
+CSS Applied
+    ↓
+UI Updated
+  </pre>
+
+  <h3>Common Traps</h3>
+
+  <ul>
+    <li>❌ Using style binding for huge CSS.</li>
+    <li>❌ Too many inline conditions.</li>
+    <li>✅ Prefer class binding for reusable styles.</li>
+  </ul>
+
+</section>
+<pre>{{classbindingcode}}</pre>
 </div>

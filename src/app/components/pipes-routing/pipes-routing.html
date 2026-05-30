@@ -1,0 +1,367 @@
+<div class="page">
+
+  <h1>Angular Pipes & Routing</h1>
+
+  <pre class="flow-box">
+Component Data
+      ↓
+Pipes
+      ↓
+Formatted Output
+      ↓
+Routing
+      ↓
+Page Navigation
+      ↓
+Component Rendering
+  </pre>
+
+  <!-- ===================================================== -->
+  <!-- PIPES -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>1. Uppercase Pipe</h2>
+
+    <p class="definition">
+      Converts all text into uppercase.
+    </p>
+
+    <div class="demo-box">
+      {{ name | uppercase }}
+    </div>
+
+    <pre>{{ uppercaseCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>2. Lowercase Pipe</h2>
+
+    <div class="demo-box">
+      {{ name | lowercase }}
+    </div>
+
+    <pre>{{ lowercaseCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>3. TitleCase Pipe</h2>
+
+    <div class="demo-box">
+      {{ name | titlecase }}
+    </div>
+
+    <pre>{{ titlecaseCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>4. Currency Pipe</h2>
+
+    <div class="demo-box">
+      {{ salary | currency:'INR' }}
+    </div>
+
+    <pre>{{ currencyCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>5. Percent Pipe</h2>
+
+    <div class="demo-box">
+      {{ percentage | percent }}
+    </div>
+
+    <pre>{{ percentCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>6. Date Pipe</h2>
+
+    <div class="demo-box">
+      {{ today | date:'dd/MM/yyyy' }}
+    </div>
+
+    <pre>{{ dateCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>7. JSON Pipe</h2>
+
+    <div class="demo-box">
+      <pre>{{ user | json }}</pre>
+    </div>
+
+    <pre>{{ jsonCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Pipes Flow</h2>
+
+    <pre>
+Raw Data
+    ↓
+Pipe
+    ↓
+Transform Data
+    ↓
+Display To UI
+
+
+❌ Heavy calculations inside pipes
+
+❌ HTTP calls inside pipes
+
+❌ Pure:false everywhere
+
+❌ Business logic inside pipes
+
+✅ Only transform data
+
+✅ Use Async Pipe for Observables
+    </pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Pipes Interview Traps</h2>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Pure Pipe</td>
+          <td>Runs only when input changes</td>
+        </tr>
+
+        <tr>
+          <td>Impure Pipe</td>
+          <td>Runs every change detection cycle</td>
+        </tr>
+
+        <tr>
+          <td>API Calls In Pipe</td>
+          <td>Never Recommended</td>
+        </tr>
+
+        <tr>
+          <td>Async Pipe</td>
+          <td>Observable / Promise</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    <h2>Custom Pipes</h2>
+    <p>{{salary | salary}}</p>
+    <pre>{{customPipes}}</pre>
+
+    <input type="text" [(ngModel)]="searchText" placeholder="Search Employee"/>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees | searchFilter:searchText">
+      <td>{{ employee.id }}</td>
+      <td  [innerHTML]="employee.name | highlightSearch:searchText">{{ employee.name }}</td>
+      <td [innerHTML]="employee.department | highlightSearch:searchText">{{ employee.department }}</td>
+      <td>{{ employee.salary }}</td>
+    </tr>
+
+  </tbody>
+</table>
+<pre>{{searchfilterpipecode}}</pre>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- ROUTING -->
+  <!-- ===================================================== -->
+
+  <section class="card">
+
+    <h2>8. Route Configuration</h2>
+
+    <p class="definition">
+      Maps URL paths to Angular Components.
+    </p>
+
+    <pre>{{ routeConfigCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>9. routerLink</h2>
+
+    <pre>{{ routerLinkCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>10. router-outlet</h2>
+
+    <pre>{{ routerOutletCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>11. Route Parameters</h2>
+
+    <pre>{{ routeParamCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>12. Programmatic Navigation</h2>
+
+    <pre>{{ navigateCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>13. ActivatedRoute</h2>
+
+    <pre>{{ activatedRouteCode }}</pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Routing Flow</h2>
+
+    <pre>
+User Click
+      ↓
+routerLink
+      ↓
+Angular Router
+      ↓
+Route Match
+      ↓
+Load Component
+      ↓
+router-outlet
+      ↓
+Render View
+    </pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Routing Interview Traps</h2>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>routerLink vs href</td>
+          <td>routerLink avoids page refresh</td>
+        </tr>
+
+        <tr>
+          <td>router-outlet</td>
+          <td>Displays routed component</td>
+        </tr>
+
+        <tr>
+          <td>Route Params</td>
+          <td>Dynamic URL Values</td>
+        </tr>
+
+        <tr>
+          <td>Lazy Loading</td>
+          <td>Loads module when required</td>
+        </tr>
+
+        <tr>
+          <td>Guard</td>
+          <td>Protects routes</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+<pre>
+    ❌ Forgetting router-outlet
+
+❌ Using href instead of routerLink
+
+❌ Missing pathMatch:'full'
+
+❌ Wrong route order
+
+❌ Not unsubscribing route observables
+
+✅ Use lazy loading
+
+✅ Use route guards
+
+✅ Use routerLinkActive
+</pre>
+
+<pre>Users Page
+     ↓
+Click User
+     ↓
+router.navigate()
+     ↓
+URL Created
+/users/101
+     ↓
+Route Param
+:id
+     ↓
+ActivatedRoute
+     ↓
+Read Param
+     ↓
+API Call
+     ↓
+Render User Details</pre>
+
+<pre>{{routingCompleteCode}}</pre>
+  </section>
+
+</div>
