@@ -179,11 +179,10 @@ ____________________________________________________________________________
   Users
 </a>`;
 
-  routerOutletCode = `<router-outlet>
-</router-outlet>`;
+  routerOutletCode = `<router-outlet></router-outlet>`;
 
   routeParamCode = `{
-  path:'users/:id',
+  path:'users/:id', 
   component:UserDetailsComponent
 }`;
 
@@ -200,8 +199,7 @@ goUsers(){
 ){}
 
 ngOnInit(){
- const id =
- this.route.snapshot.paramMap.get('id');
+ const id = this.route.snapshot.paramMap.get('id');
 }`;
 
 customPipes =`import { Pipe, PipeTransform } from '@angular/core';
@@ -216,7 +214,11 @@ export class SalaryPipe implements PipeTransform {
     }
     return 'Low Salary';
   }
-}`
+}
+  
+____________________________________________________________
+ts: salary = 125000
+html:{{salary|salary}} //pipename also salary right`
 
 
 routingCompleteCode = `/* ============================
@@ -314,8 +316,7 @@ this.route.queryParamMap.subscribe(params => {
    ROUTE GUARD
 ============================ */
 
-export const authGuard:
-CanActivateFn = () => {
+export const authGuard: CanActivateFn = () => {
   const token = localStorage.getItem('token');
   return !!token;
 };
@@ -343,4 +344,85 @@ CanActivateFn = () => {
       )
 }
 `;
+
+guardFlowCode = `
+User Request
+      ↓
+Route Navigation
+      ↓
+Route Guard
+      ↓
+
+Token Exists ?
+   /        \\
+
+Yes         No
+ ↓           ↓
+
+Allow      Redirect
+Route      Login Page
+`;
+
+authGuardCode = `import {
+  CanActivateFn
+} from '@angular/router';
+
+export const authGuard:
+CanActivateFn = () => {
+
+  const token =
+    localStorage.getItem('token');
+
+  return !!token;
+
+};`;
+
+protectedRouteCode = `{
+  path: 'dashboard',
+  component: DashboardComponent,
+  canActivate: [authGuard]
+}`;
+
+authGuardWithRedirectCode = `--like for JWT token
+
+import {CanActivateFn, Router} from '@angular/router';
+import { inject } from '@angular/core';
+export const authGuard:
+CanActivateFn = () => {
+  const router =inject(Router);
+  const token = localStorage.getItem('token');
+  if(token){
+    return true;
+  }
+  return router.createUrlTree(['/login']);
+};`;
+
+roleGuardCode = `export const adminGuard:
+CanActivateFn = () => {
+  const role = localStorage.getItem('role');
+  return role === 'Admin';
+};`;
+
+implementGaurd = `import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent} from './dashboard/admin.component';
+import { authGuard } from './guards/auth.guard';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path:'adminPage',
+    component: AdminComponent,
+    canActivate: [authGaurd, AdminGaurd]
+  }
+];`
 }

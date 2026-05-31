@@ -1,0 +1,439 @@
+<div class="page">
+
+<h1>
+Angular Lifecycle Hooks,
+@Input & @Output
+</h1>
+
+<pre class="flow-box">
+Parent Component
+        ↓
+@Input()
+        ↓
+Child Component
+        ↓
+@Output()
+        ↓
+Parent Component
+        ↓
+Lifecycle Hooks
+        ↓
+Component Creation
+        ↓
+Component Updates
+        ↓
+Component Destroy
+</pre>
+
+<!-- INPUT -->
+
+<section class="card">
+
+<h2>1. @Input()</h2>
+
+<p class="definition">
+Receives data from Parent Component.
+</p>
+
+<pre>{{ inputFlowCode }}</pre>
+
+<h3>Input Decorator</h3>
+
+<pre>{{ inputCode }}</pre>
+
+<h3>Parent HTML</h3>
+
+<pre>{{ parentHtmlCode }}</pre>
+
+<pre>{{childtoparent}}</pre>
+<pre>{{interviewQuestions}}</pre>
+</section>
+
+<!-- OUTPUT -->
+
+<section class="card">
+
+<h2>2. @Output() - definitely require eventemitter </h2>
+<p>In parent tag of child : (eventemitteruseMethodinchild)= "receivingParentMethod($event)"</p>
+<p class="definition">
+Sends data from Child Component
+to Parent Component.
+</p>
+
+<pre>{{ outputFlowCode }}</pre>
+
+<h3>Output Decorator</h3>
+
+<pre>{{ outputCode }}</pre>
+
+<h3>Child HTML</h3>
+
+<pre>{{ childHtmlCode }}</pre>
+
+</section>
+
+<!-- PARENT -->
+
+<section class="card">
+
+<h2>3. Parent Component Logic</h2>
+
+<pre>{{ parentTsCode }}</pre>
+
+</section>
+
+<!-- FLOW -->
+
+<section class="card">
+
+<h2>4. Component Communication Flow</h2>
+
+<pre>
+Parent Component
+       ↓
+Pass Data
+       ↓
+@Input()
+       ↓
+Child Component
+       ↓
+Button Click
+       ↓
+@Output()
+       ↓
+EventEmitter
+       ↓
+Parent Component
+</pre>
+<h2>Total Industry standard Example</h2>
+<pre>
+Products Page (Parent)
+        ↓
+Pass Product Data
+        ↓
+Product Card (Child)
+        ↓
+User Clicks Add To Cart
+        ↓
+@Output Emits Event
+        ↓
+Parent Updates Cart
+        ↓
+API Call / Redux Store
+        ↓
+Cart Count Updated
+</pre>
+<pre [textContent]="parentproduct"></pre>
+<pre>
+Parent Component
+      ↓
+Products Array
+      ↓
+@Input(product)
+      ↓
+Child Product Card
+
+--------------------------------
+
+User Click
+      ↓
+Add To Cart
+      ↓
+EventEmitter
+      ↓
+@Output(cartClicked)
+      ↓
+Parent Component
+      ↓
+addToCart(product)
+      ↓
+Update Cart Count
+      ↓
+API Call
+      ↓
+Redux Store Update
+</pre>
+</section>
+
+<!-- LIFECYCLE -->
+
+<section class="card">
+
+<h2>5. Lifecycle Execution Order</h2>
+
+<pre>{{ lifecycleOrderCode }}</pre>
+
+</section>
+
+<section class="card">
+
+<h2>6. Lifecycle Hooks Example</h2>
+
+<pre>{{ lifecycleCode }}</pre>
+
+</section>
+
+<section class="card">
+
+<h2>7. ngOnChanges()</h2>
+
+<p>
+Runs whenever an @Input value changes.
+</p>
+
+<pre>{{ changeFlowCode }}</pre>
+
+</section>
+
+<section class="card">
+
+<h2>8. ngOnInit()</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Usage</th>
+<th>Example</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>API Calls</td>
+<td>HttpClient</td>
+</tr>
+
+<tr>
+<td>Load Data</td>
+<td>Users List</td>
+</tr>
+
+<tr>
+<td>Initialize Form</td>
+<td>Reactive Forms</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>9. ngAfterViewInit()</h2>
+
+<p>
+Used with ViewChild.
+</p>
+
+<pre>{{ viewChildCode }}</pre>
+
+</section>
+
+<section class="card">
+
+<h2>10. ngOnDestroy()</h2>
+
+<p>
+Cleanup subscriptions,
+timers and sockets.
+</p>
+
+<pre>{{ realWorldCode }}</pre>
+
+</section>
+
+<section class="card">
+
+<h2>Lifecycle Usage Table</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Hook</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>constructor</td>
+<td>Dependency Injection</td>
+</tr>
+
+<tr>
+<td>ngOnChanges</td>
+<td>Input Changes</td>
+</tr>
+
+<tr>
+<td>ngOnInit</td>
+<td>API Calls</td>
+</tr>
+
+<tr>
+<td>ngDoCheck</td>
+<td>Custom Change Detection</td>
+</tr>
+
+<tr>
+<td>ngAfterContentInit</td>
+<td>Projected Content Init</td>
+</tr>
+
+<tr>
+<td>ngAfterContentChecked</td>
+<td>Projected Content Check</td>
+</tr>
+
+<tr>
+<td>ngAfterViewInit</td>
+<td>ViewChild Access</td>
+</tr>
+
+<tr>
+<td>ngAfterViewChecked</td>
+<td>View Checked</td>
+</tr>
+
+<tr>
+<td>ngOnDestroy</td>
+<td>Cleanup</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>Lifecycle Interview Traps</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>First Executed?</td>
+<td>Constructor</td>
+</tr>
+
+<tr>
+<td>First Lifecycle Hook?</td>
+<td>ngOnChanges</td>
+</tr>
+
+<tr>
+<td>API Calls?</td>
+<td>ngOnInit</td>
+</tr>
+
+<tr>
+<td>ViewChild Available?</td>
+<td>ngAfterViewInit</td>
+</tr>
+
+<tr>
+<td>Cleanup Hook?</td>
+<td>ngOnDestroy</td>
+</tr>
+
+<tr>
+<td>@Input Direction?</td>
+<td>Parent → Child</td>
+</tr>
+
+<tr>
+<td>@Output Direction?</td>
+<td>Child → Parent</td>
+</tr>
+
+<tr>
+<td>Purpose Of EventEmitter?</td>
+<td>Emit Events</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>Common Mistakes</h2>
+
+<pre>
+❌ API Calls Inside Constructor
+
+❌ Heavy Logic In ngDoCheck
+
+❌ Mutating @Input Directly
+
+❌ Forgetting unsubscribe()
+
+❌ Missing EventEmitter Type
+
+❌ Accessing ViewChild In ngOnInit
+
+✅ API Calls In ngOnInit
+
+✅ Cleanup In ngOnDestroy
+
+✅ Use @Input For Data
+
+✅ Use @Output For Events
+
+✅ Use ViewChild In ngAfterViewInit
+</pre>
+
+</section>
+
+<section class="card">
+
+<h2>Real Industry Flow</h2>
+
+<pre>
+REST API
+      ↓
+Parent Component
+      ↓
+Users Data
+      ↓
+@Input()
+      ↓
+Child Component
+      ↓
+Button Click
+      ↓
+@Output()
+      ↓
+EventEmitter
+      ↓
+Parent Component
+      ↓
+API Call / Redux Update
+      ↓
+UI Refresh
+</pre>
+<pre>{{lifecyleMethods}}</pre>
+<pre [textContent]="lifecycleMethodsOutput">Output:
+
+</pre>
+</section>
+
+</div>

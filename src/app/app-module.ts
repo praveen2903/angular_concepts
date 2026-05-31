@@ -11,6 +11,7 @@ import { PipesRouting } from './components/pipes-routing/pipes-routing';
 import { SalaryPipe } from './pipes/salary-pipe';
 import { SearchFilterPipe } from './pipes/search-filter-pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search-pipe';
+import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecycle-inputoutput';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HighlightSearchPipe } from './pipes/highlight-search-pipe';
     SalaryPipe,
     SearchFilterPipe,
     HighlightSearchPipe,
+    LifecycleInputoutput,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

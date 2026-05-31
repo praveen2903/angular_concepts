@@ -360,8 +360,147 @@ Read Param
 API Call
      ↓
 Render User Details</pre>
-
+<h2>Full code of how param is appended in the route and how it is read in next page</h2>
 <pre>{{routingCompleteCode}}</pre>
   </section>
+<section class="card">
 
+  <h2>14. Route Guards</h2>
+
+  <p class="definition">
+    Route Guards protect pages and decide whether
+    a user can access a route.
+  </p>
+
+  <pre [textContent]="guardFlowCode"></pre>
+
+</section>
+<section class="card">
+
+  <h2>Guard With Login Redirect</h2>
+
+  <pre [textContent]="authGuardWithRedirectCode"></pre>
+
+</section>
+<section class="card">
+
+  <h2>Role Based Guard</h2>
+
+  <pre [textContent]="roleGuardCode"></pre>
+  <pre [textContent]="implementGaurd"></pre>
+</section>
+<section class="card">
+
+  <h2>Guard Types</h2>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Guard</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td>CanActivate</td>
+        <td>Allow Route Access</td>
+      </tr>
+
+      <tr>
+        <td>CanDeactivate</td>
+        <td>Prevent Leaving Page</td>
+      </tr>
+
+      <tr>
+        <td>CanLoad</td>
+        <td>Prevent Lazy Module Loading</td>
+      </tr>
+
+      <tr>
+        <td>CanMatch</td>
+        <td>Control Route Matching</td>
+      </tr>
+
+      <tr>
+        <td>Resolve</td>
+        <td>Load Data Before Route Opens</td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</section>
+<section class="card">
+
+  <h2>Real JWT Authentication Flow</h2>
+
+  <pre>
+Login
+   ↓
+Backend API
+   ↓
+JWT Token
+   ↓
+localStorage / Cookie
+   ↓
+Navigate Dashboard
+   ↓
+Auth Guard
+   ↓
+Check Token
+   ↓
+Allow Route
+  </pre>
+
+</section>
+
+<section class="card">
+
+  <h2>Route Guard Interview Traps</h2>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td>Does Guard Secure Backend?</td>
+        <td>No</td>
+      </tr>
+
+      <tr>
+        <td>Purpose Of Guard?</td>
+        <td>Frontend Route Protection</td>
+      </tr>
+
+      <tr>
+        <td>Can User Bypass Guard?</td>
+        <td>Yes, Backend Must Validate</td>
+      </tr>
+
+      <tr>
+        <td>Best JWT Storage?</td>
+        <td>HttpOnly Cookie</td>
+      </tr>
+
+      <tr>
+        <td>Most Used Guard?</td>
+        <td>CanActivate</td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</section>
 </div>
