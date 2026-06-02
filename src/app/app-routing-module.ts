@@ -5,6 +5,7 @@ import { BasicAngularConcepts } from './components/basic-angular-concepts/basic-
 import { StructuralDirectives } from './components/structural-directives/structural-directives';
 import { PipesRouting } from './components/pipes-routing/pipes-routing';
 import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecycle-inputoutput';
+import { ServicesTemplateref } from './components/services-templateref/services-templateref';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path:'lifecycle',
     component:LifecycleInputoutput
+  },
+  {
+    path: 'services',
+    component: ServicesTemplateref
   }
 ];
 

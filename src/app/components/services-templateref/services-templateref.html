@@ -1,0 +1,295 @@
+<div class="page">
+  <h1>Angular Services & Template Reference Variables</h1>
+  <pre class="flow-box">
+  Component
+     ↓
+  Service
+     ↓
+  Business Logic
+     ↓
+    API
+     ↓
+   Response
+     ↓
+    UI
+----------------
+Template
+     ↓
+#variable
+     ↓
+ViewChild
+     ↓
+TypeScript
+  </pre>
+
+  <!-- SERVICES -->
+
+  <section class="card">
+
+    <h2>1. Services</h2>
+
+    <p class="definition">
+      Reusable business logic shared across components.
+    </p>
+
+    <pre [textContent]="serviceFlowCode"></pre>
+
+  </section>
+
+  <section class="card">
+    <h2>2. Creating Service</h2>
+    <pre [textContent]="serviceCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>3. Using Service In Component</h2>
+
+    <pre [textContent]="serviceUsageCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>4. HTML Rendering</h2>
+
+    <pre [textContent]="serviceHtmlCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>5. Service Execution Flow</h2>
+
+    <pre [textContent]="serviceOutputCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>6. Dependency Injection (DI means declaring it in constructor) - DI of service</h2>
+
+    <pre [textContent]="dependencyInjectionCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>7. Enterprise Product Service</h2>
+
+    <pre [textContent]="enterpriseServiceCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>8. Service Interview Traps</h2>
+
+    <pre [textContent]="serviceInterviewCode"></pre>
+
+  </section>
+
+  <!-- TEMPLATE REF -->
+
+  <section class="card">
+
+    <h2>Template Reference Variable</h2>
+
+    <p class="definition">
+      References HTML elements directly inside template.
+    </p>
+
+    <pre [textContent]="templateRefCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>1. Component Method</h2>
+
+    <pre [textContent]="templateRefTsCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>2. Template Ref Flow</h2>
+
+    <pre [textContent]="templateRefFlowCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>3. ViewChild Example</h2>
+
+    <pre [textContent]="viewChildCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>4. ViewChild Flow</h2>
+
+    <pre [textContent]="viewChildFlowCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>5. Template Ref Interview Traps</h2>
+
+    <pre [textContent]="templateInterviewCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>6. Real Enterprise Usage</h2>
+
+    <pre [textContent]="realWorldCode"></pre>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Services vs Template Ref Variable</h2>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Service</th>
+          <th>Template Ref</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Purpose</td>
+          <td>Business Logic</td>
+          <td>Access HTML Element</td>
+        </tr>
+
+        <tr>
+          <td>Reusable</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+
+        <tr>
+          <td>Used In</td>
+          <td>TypeScript</td>
+          <td>Template</td>
+        </tr>
+
+        <tr>
+          <td>Dependency Injection</td>
+          <td>Yes</td>
+          <td>No</td>
+        </tr>
+
+        <tr>
+          <td>Common Example</td>
+          <td>API Calls</td>
+          <td>Input Focus</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </section>
+
+  <section class="card">
+
+    <h2>Most Asked Interview Question</h2>
+
+    <pre>
+@Component(...)
+{{constructorRef}}
+
+Question:
+Who creates UserService?
+Answer: Angular Injector
+
+--------------------------------
+Question:
+When is it injected?
+
+Answer: During Component Creation
+--------------------------------
+Question:
+Why not new UserService()?
+
+Answer: Angular loses lifecycle, singleton behavior, testing support, interceptors and DI features.
+    </pre>
+
+  </section>
+<section class="card">
+  <h2>User Management</h2>
+<input #nameRef type="text" placeholder="Enter Name"/>
+
+<hr>
+
+<button (click)="loadUsers()">GET Users</button>
+<button (click)="getSingleUser()">GET User By Id</button>
+<button (click)="searchUser()">Query Params</button>
+<button (click)="addUser()">POST User</button>
+<button (click)="updateUser()">PUT User</button>
+<button (click)="deleteUser()">DELETE User</button>
+
+<hr>
+
+<!-- Loading -->
+
+<div *ngIf="loading">
+  Loading Users...
+</div>
+
+<!-- Error -->
+
+<div *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+<!-- Table -->
+
+<table *ngIf="users.length > 0">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<!-- Empty State -->
+
+<div *ngIf="!loading && !errorMessage && users.length === 0">
+  No Users Found
+</div>
+</section>
+<section class="card">
+  <h2>Implementing service with data provided from component mainly rest or graphql operations must happen in the service</h2>
+  <pre [textContent]="userServicesDemoService"></pre>
+  <h2>Sending and retriving data from service to component as service talks to the db or other links data fetching</h2>
+  <pre [textContent]="serviceInjectionToComponent"></pre>
+  <h2> user interactions and how input tab has inputRef and helps to save data</h2>
+  <pre [textContent]="implementRefandServiceHtml"></pre>
+</section>
+
+</div>

@@ -12,6 +12,7 @@ import { SalaryPipe } from './pipes/salary-pipe';
 import { SearchFilterPipe } from './pipes/search-filter-pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search-pipe';
 import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecycle-inputoutput';
+import { ServicesTemplateref } from './components/services-templateref/services-templateref';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecyc
     SearchFilterPipe,
     HighlightSearchPipe,
     LifecycleInputoutput,
+    ServicesTemplateref,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
