@@ -1,0 +1,57 @@
+<div class="page">
+    <section class="card">
+        <table border="1">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="users.length === 0">
+      <td colspan="4">
+        No Users Found
+      </td>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td> <button (click)="viewUser(user)">View</button></td>
+    </tr>
+  </tbody>
+
+</table>
+
+<!-- MODAL -->
+
+<div class="overlay" *ngIf="openModal && selectedUser">
+  <div class="modal">
+    <h2>User Details</h2>
+    <hr>
+    <p>Id : {{ selectedUser.id }}</p>
+    <p>Name : {{ selectedUser.name }}</p>
+    <p>Username : {{ selectedUser.username }}</p>
+    <p>Email : {{ selectedUser.email }}</p>
+    <p>Phone : {{ selectedUser.phone }}</p>
+    <p>Website : {{ selectedUser.website }}</p>
+    <button (click)="closeModal()">Close</button>
+  </div>
+</div>
+    </section>
+    <section class="card">
+        <h2>Model</h2>
+        <pre [textContent]="modelDemoCode"></pre>
+        <h2>Service</h2>
+        <pre [textContent]="modalDemoService"></pre>
+        <h2>Ts code</h2>
+        <pre [textContent]="modalusageTsCode"></pre>
+        <h2>HTML code</h2>
+        <pre [textContent]="modalUsageHtmlCode"></pre>
+    </section>
+    <section>
+        <pre [textContent]="randomDefs"></pre>
+    </section>
+</div>

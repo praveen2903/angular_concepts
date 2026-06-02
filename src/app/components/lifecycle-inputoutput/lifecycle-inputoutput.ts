@@ -9,7 +9,30 @@ import { Component } from '@angular/core';
 export class LifecycleInputoutput {
 
   employeeName = 'Praveen';
+randomDefs = `
+═══════════════════════════════════════════════════════
+19. LIFECYCLE HOOKS -- too important
+═══════════════════════════════════════════════════════
 
+constructor
+     ↓
+ngOnChanges
+     ↓
+ngOnInit
+     ↓
+ngDoCheck
+     ↓
+ngAfterViewInit
+     ↓
+ngOnDestroy
+
+Used For:
+
+• API Calls
+• Input Changes
+• Cleanup
+• View Initialization
+`;
   inputCode = `import { Input } from '@angular/core';
 @Input()
 userName!: string;`;

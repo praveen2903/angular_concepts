@@ -6,6 +6,8 @@ import { StructuralDirectives } from './components/structural-directives/structu
 import { PipesRouting } from './components/pipes-routing/pipes-routing';
 import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecycle-inputoutput';
 import { ServicesTemplateref } from './components/services-templateref/services-templateref';
+import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
+import { ModelsUsage } from './components/models-usage/models-usage';
 
 const routes: Routes = [
   {
@@ -32,6 +34,14 @@ const routes: Routes = [
   {
     path: 'services',
     component: ServicesTemplateref
+  },
+  {
+    path:'forms',
+    component: ReactiveFormsValidations
+  }, 
+  {
+    path:'models',
+    component: ModelsUsage
   }
 ];
 

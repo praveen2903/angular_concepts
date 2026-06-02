@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { CommonModule } from '@angular/common';
 import { BasicAngularConcepts } from './components/basic-angular-concepts/basic-angular-concepts';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StructuralDirectives } from './components/structural-directives/structural-directives';
 import { PipesRouting } from './components/pipes-routing/pipes-routing';
 import { SalaryPipe } from './pipes/salary-pipe';
@@ -13,6 +13,8 @@ import { SearchFilterPipe } from './pipes/search-filter-pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search-pipe';
 import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecycle-inputoutput';
 import { ServicesTemplateref } from './components/services-templateref/services-templateref';
+import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
+import { ModelsUsage } from './components/models-usage/models-usage';
 
 @NgModule({
   declarations: [
@@ -25,8 +27,10 @@ import { ServicesTemplateref } from './components/services-templateref/services-
     HighlightSearchPipe,
     LifecycleInputoutput,
     ServicesTemplateref,
+    ReactiveFormsValidations,
+    ModelsUsage,
   ],
-  imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

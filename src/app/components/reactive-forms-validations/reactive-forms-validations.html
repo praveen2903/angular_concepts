@@ -1,0 +1,81 @@
+<div class="page">
+  <h1>Employee Registration Form</h1>
+<section class="card" style=" display:flex; align-items: center; justify-content: center;">
+
+<form [formGroup]="registrationForm" (ngSubmit)="submitForm()">
+<label>Full Name</label>
+
+<input type="text" formControlName="fullName"/>
+<div class="error" *ngIf="submitted && f['fullName'].errors">
+
+<span *ngIf="f['fullName'].errors?.['required']">Name Required</span>
+<span *ngIf="f['fullName'].errors?.['minlength']">Minimum 3 Characters</span>
+</div>
+
+<hr>
+
+<!-- EMAIL -->
+
+<label>Email</label>
+
+<input type="email" formControlName="email">
+
+<div class="error" *ngIf="submitted && f['email'].errors">
+<span *ngIf="f['email'].errors?.['required']">Email Required</span>
+<span *ngIf="f['email'].errors?.['email']">Invalid Email</span>
+</div>
+
+<hr>
+
+<!-- MOBILE -->
+
+<label>Mobile</label>
+<input formControlName="mobile"/>
+<div class="error" *ngIf="submitted && f['mobile'].errors">Invalid Mobile Number</div>
+<hr>
+
+<!-- AGE -->
+
+<label>Age</label>
+<input type="number" formControlName="age"/>
+<div class="error" *ngIf="submitted &&  f['age'].errors">Must Be 18+</div>
+<hr>
+
+<!-- GENDER -->
+<label>Gender</label>
+<select formControlName="gender">
+    <option value="">Select</option>
+    <option>Male</option>
+    <option>Female</option>
+</select>
+<div class="error" *ngIf="submitted && f['gender'].errors">Select Gender</div>
+<hr>
+
+<!-- PASSWORD -->
+
+<label>Password</label>
+<input type="password" formControlName="password"/>
+<div class="error" *ngIf="submitted && f['password'].errors">Minimum 8 Characters</div>
+<hr>
+
+<!-- FORM ARRAY -->
+<h3>Skills</h3>
+<div formArrayName="skills">
+    <div *ngFor="let skill of skills.controls;
+                    let i=index" style="display: flex; gap: 20px;">
+        <input [type]="'text'" [formControlName]="i"/>
+        <button type="button" (click)="removeSkill(i)">Remove </button>
+    </div>
+</div>
+<button type="button" (click)="addSkill()">Add Skill</button>
+<hr>
+<button type="submit" style="min-width: 400px; border-radius: 20px; padding: 20px; background-color: blue; color: white;">Register</button>
+</form>
+</section>
+<section class="card">
+    <h2>Initalizing the form builder and setting validations</h2>
+    <pre [textContent]="formsTsCode"></pre>
+    <h2>Now using html to store and submit the form</h2>
+    <pre [textContent]="formshtmlcode"></pre>
+</section>
+</div>
