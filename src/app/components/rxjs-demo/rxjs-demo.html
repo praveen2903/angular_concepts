@@ -1,0 +1,192 @@
+<div class="page">
+
+  <h1>Angular RxJS Demo</h1>
+
+<section class="card">
+    <pre class="flow-box">
+RxJS Operators
+      ↓
+Data Creation
+      ↓
+Data Transformation
+      ↓
+Data Filtering
+      ↓
+State Management
+      ↓
+API Calls
+      ↓
+Search Optimization
+      ↓
+Multiple Requests
+      ↓
+Memory Management
+    </pre>
+      <pre class="flow-box">
+Observable
+    ↓
+Subscribe
+    ↓
+of()
+    ↓
+from()
+    ↓
+interval()
+    ↓
+Subject
+    ↓
+BehaviorSubject
+    ↓
+map()
+    ↓
+filter()
+    ↓
+debounceTime()
+    ↓
+switchMap()
+    ↓
+takeUntil()
+________________________________________________________________
+Observable
+      ↓
+Subscribe
+      ↓
+Operators
+      ↓
+Subject
+      ↓
+BehaviorSubject
+      ↓
+API Calls
+      ↓
+UI Update
+__________________________________________________________
+User Types
+      ↓
+Subject
+      ↓
+debounceTime
+      ↓
+distinctUntilChanged
+      ↓
+switchMap
+      ↓
+HTTP Request
+      ↓
+Observable
+      ↓
+Subscribe
+      ↓
+UI Updated
+  </pre>
+
+</section>
+<h2>Observable Example</h2>
+
+<ul>
+  <li *ngFor="let item of observableData">
+    {{ item }}
+  </li>
+</ul>
+
+<hr>
+
+<h2>Subject Example</h2>
+
+<button (click)="sendSubjectValue()">
+  Send Subject Value
+</button>
+
+<p>{{ subjectData }}</p>
+
+<hr>
+
+<h2>BehaviorSubject Example</h2>
+
+<button (click)="updateBehaviorSubject()">
+  Update BehaviorSubject
+</button>
+
+<p>{{ behaviorData }}</p>
+
+<hr>
+
+<h2>Search Example</h2>
+
+<input
+  type="text"
+  [(ngModel)]="searchText"
+  placeholder="Search..."
+/>
+
+<button (click)="search()">
+  Search
+</button>
+<pre class="flow-box">
+    JavaScript                    RxJS
+
+map()               →         map()
+
+filter()            →         filter()
+
+Promise.all()       →         forkJoin()
+
+setTimeout()        →         debounceTime()
+
+async/await         →         concatMap()
+
+Promise.all()       →         mergeMap()
+
+Global Variable     →         BehaviorSubject()
+
+EventEmitter        →         Subject()
+
+Promise             →         Observable()
+
+Array               →         from()
+
+Static Data         →         of()
+</pre>
+
+
+<section class="card">
+  <h2>Data Creation Operators</h2>
+  <pre>{{ observableCode }}</pre>
+  <pre>{{ ofCode }}</pre>
+  <pre>{{ fromCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>Transformation Operators</h2>
+  <pre>{{ mapCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>Filtering Operators</h2>
+  <pre>{{ filterCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>State Management</h2>
+  <pre>{{ subjectCode }}</pre>
+  <pre>{{ behaviorCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>Search Optimization</h2>
+  <pre>{{ debounceCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>Multiple API Calls</h2>
+  <pre>{{ forkJoinCode }}</pre>
+  <pre>{{ mergeMapCode }}</pre>
+  <pre>{{ concatMapCode }}</pre>
+  <pre>{{ combineLatestCode }}</pre>
+</section>
+
+<section class="card">
+  <h2>Memory Management</h2>
+  <pre>{{ takeUntilCode }}</pre>
+</section>
+</div>

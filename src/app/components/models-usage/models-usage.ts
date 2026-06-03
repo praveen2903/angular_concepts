@@ -113,7 +113,35 @@ modalusageTsCode = `users: User[] = [];
   </tbody>
 
 </table>`
+  withoutModels = `users: any[] = [];
+  
+❌ No type safety
+❌ No IntelliSense
+❌ Typing mistakes
+❌ Hard to maintain`
 
+useOfModels = `users: User[] = [];
+Class model uses to give initial Default values and mostly used for forms & memory allocated to object & can have methods too
+export class User {
+  id: number = 0;
+  name: string = '';
+  email: string = '';
+  role: string = '';
+}
+  
+Interface model just used to define types and attached to services to capture data & No object created
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+  
+✅ Type Safety
+✅ Auto Suggestions
+✅ Cleaner Code
+✅ Reusable
+✅ Easy Refactoring`
 randomDefs= `
 
 ╔══════════════════════════════════════════════════════╗

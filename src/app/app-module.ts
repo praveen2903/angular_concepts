@@ -15,6 +15,7 @@ import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecyc
 import { ServicesTemplateref } from './components/services-templateref/services-templateref';
 import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
 import { ModelsUsage } from './components/models-usage/models-usage';
+import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ModelsUsage } from './components/models-usage/models-usage';
     ServicesTemplateref,
     ReactiveFormsValidations,
     ModelsUsage,
+    RxjsDemo,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

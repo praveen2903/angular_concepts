@@ -8,6 +8,7 @@ import { LifecycleInputoutput } from './components/lifecycle-inputoutput/lifecyc
 import { ServicesTemplateref } from './components/services-templateref/services-templateref';
 import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
 import { ModelsUsage } from './components/models-usage/models-usage';
+import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 
 const routes: Routes = [
   {
@@ -42,6 +43,9 @@ const routes: Routes = [
   {
     path:'models',
     component: ModelsUsage
+  }, {
+    path: 'rxjs',
+    component: RxjsDemo
   }
 ];
 
