@@ -16,6 +16,7 @@ import { ServicesTemplateref } from './components/services-templateref/services-
 import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
 import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
+import { AngularInterview } from './components/angular-interview/angular-interview';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
     ReactiveFormsValidations,
     ModelsUsage,
     RxjsDemo,
+    AngularInterview,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

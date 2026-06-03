@@ -1,0 +1,53 @@
+<div class="page">
+<h2> users     -> Normal Variable</h2>
+<h2>users$    -> Observable Stream need of $ sign</h2>
+  <h1>Angular Interview Master Sheet</h1>
+
+  <div class="grid">
+
+    <div
+      class="card"
+      *ngFor="let topic of angularTopics"
+    >
+      <h2>{{topic.title}}</h2>
+
+      <pre>
+{{topic.code}}
+      </pre>
+
+    </div>
+
+  </div>
+<section class="card">
+  <h2>Machine Coding Problems</h2>
+
+  <div class="grid">
+
+    <div class="machine-card">
+      <h3>Search Autocomplete</h3>
+      <pre [textContent]="searchMachineCode"></pre>
+    </div>
+
+    <div class="machine-card">
+      <h3>Employee Registration</h3>
+      <pre [textContent]="employeeFormCode"></pre>
+    </div>
+
+    <div class="machine-card">
+      <h3>Shopping Cart</h3>
+      <pre [textContent]="shoppingCartCode"></pre>
+    </div>
+
+    <div class="machine-card">
+      <h3>Infinite Scroll</h3>
+      <pre [textContent]="infiniteScrollCode"></pre>
+    </div>
+
+    <div class="machine-card">
+      <h3>JWT Authentication</h3>
+      <pre [textContent]="jwtAuthCode"></pre>
+    </div>
+
+  </div>
+</section>
+</div>

@@ -9,6 +9,7 @@ import { ServicesTemplateref } from './components/services-templateref/services-
 import { ReactiveFormsValidations } from './components/reactive-forms-validations/reactive-forms-validations';
 import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
+import { AngularInterview } from './components/angular-interview/angular-interview';
 
 const routes: Routes = [
   {
@@ -46,6 +47,9 @@ const routes: Routes = [
   }, {
     path: 'rxjs',
     component: RxjsDemo
+  }, {
+    path:'angular-interview',
+    component: AngularInterview
   }
 ];
 

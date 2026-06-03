@@ -14,6 +14,19 @@ export class StructuralDirectives {
 {{ i }} -{{ skill }} | First: {{ first }}| Last: {{ last }}
 </div>`;
 
+trackbyUsage =`State 1 (Current UI)
+══════════════════════════════════════
+User A: {id: 'u101',name: 'Alice'} //Rendered in DOM Node #1
+
+User B: {id: 'u102', name: 'Bob'}  //Rendered in DOM Node #2
+
+State 2 (Fresh API Response) -> new data
+══════════════════════════════════════
+User A: {id: 'u101',name: 'Alicia'}
+User B: {id: 'u102',name: 'Bob'}
+User C: {id: 'u103', name: 'Charlie'}
+
+When fresh data is occured don't destroy the DOM instead trackBy the id and stores the node and adds new one`
 trackby = `<div *ngFor="let user of users;
     trackBy: trackByUserId">
   {{ user.id }} - {{ user.name }}
