@@ -125,8 +125,8 @@ export class ReactiveFormsValidations implements OnInit {
 <input type="text" formControlName="fullName"/>
 <div class="error" *ngIf="submitted && f['fullName'].errors">
 
-<span *ngIf="f['fullName'].errors?.['required']">Name Required</span>
-<span *ngIf="f['fullName'].errors?.['minlength']">Minimum 3 Characters</span>
+<span *ngIf="f['fullName'].errors['required']">Name Required</span>           //validator has 2 types errors required and minlength
+<span *ngIf="f['fullName'].errors['minlength']">Minimum 3 Characters</span>
 </div>
 
 <hr>
@@ -138,8 +138,8 @@ export class ReactiveFormsValidations implements OnInit {
 <input type="email" formControlName="email">
 
 <div class="error" *ngIf="submitted && f['email'].errors">
-<span *ngIf="f['email'].errors?.['required']">Email Required</span>
-<span *ngIf="f['email'].errors?.['email']">Invalid Email</span>
+<span *ngIf="f['email'].errors['required']">Email Required</span>  //validator type here 2 types required and email so distinguish
+<span *ngIf="f['email'].errors['email']">Invalid Email</span>
 </div>
 
 <hr>
