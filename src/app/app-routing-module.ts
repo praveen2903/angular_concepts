@@ -11,6 +11,7 @@ import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { AngularInterview } from './components/angular-interview/angular-interview';
 import { ReactInterview } from './components/react-interview/react-interview';
+import { MachineCode } from './components/machine-code/machine-code';
 
 const routes: Routes = [
   {
@@ -54,6 +55,9 @@ const routes: Routes = [
   }, {
     path: 'react-interview',
     component: ReactInterview
+  }, {
+    path: 'machine-code',
+    component: MachineCode
   }
 ];
 

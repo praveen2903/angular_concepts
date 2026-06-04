@@ -18,6 +18,8 @@ import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { AngularInterview } from './components/angular-interview/angular-interview';
 import { ReactInterview } from './components/react-interview/react-interview';
+import { SearchAutocomplete } from './components/search-autocomplete/search-autocomplete';
+import { MachineCode } from './components/machine-code/machine-code';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ReactInterview } from './components/react-interview/react-interview';
     RxjsDemo,
     AngularInterview,
     ReactInterview,
+    SearchAutocomplete,
+    MachineCode,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

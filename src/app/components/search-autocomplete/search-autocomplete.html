@@ -1,0 +1,35 @@
+<div class="page">
+  <h2>Auto Complete Search</h2>
+<pre class="flow-box">
+    User Types
+        p
+        pr
+        pra
+        prav
+        ↓
+    debounceTime(500)
+        ↓
+    Only "prav"
+        ↓
+    API Call
+        ↓
+   switchMap
+        ↓
+Cancels previous requests
+        ↓
+Latest result shown
+</pre>
+<input type="text" placeholder="Search user..." #searchBox (input)="search(searchBox.value)"/>
+
+<div *ngIf="loading">
+  Loading...
+</div>
+<ul>
+  <li *ngFor="let user of users">
+    <span [innerHTML]="user.name | highlightSearch : searchBox.value">
+  </span>
+
+  </li>
+
+</ul>
+</div>
