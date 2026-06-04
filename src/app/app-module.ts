@@ -17,6 +17,7 @@ import { ReactiveFormsValidations } from './components/reactive-forms-validation
 import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { AngularInterview } from './components/angular-interview/angular-interview';
+import { ReactInterview } from './components/react-interview/react-interview';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AngularInterview } from './components/angular-interview/angular-intervi
     ModelsUsage,
     RxjsDemo,
     AngularInterview,
+    ReactInterview,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

@@ -10,6 +10,7 @@ import { ReactiveFormsValidations } from './components/reactive-forms-validation
 import { ModelsUsage } from './components/models-usage/models-usage';
 import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { AngularInterview } from './components/angular-interview/angular-interview';
+import { ReactInterview } from './components/react-interview/react-interview';
 
 const routes: Routes = [
   {
@@ -50,6 +51,9 @@ const routes: Routes = [
   }, {
     path:'angular-interview',
     component: AngularInterview
+  }, {
+    path: 'react-interview',
+    component: ReactInterview
   }
 ];
 
