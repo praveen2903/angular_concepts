@@ -3,8 +3,10 @@
 <app-search-autocomplete></app-search-autocomplete>
 <hr/>
 <h2>Click stars - style binding & *ngFor</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre> {{clickedCode}}</pre>
 <pre>{{clickedTs}}</pre>
+</div>
 <div style="display: flex; align-items: center; justify-content: center;">
     <div *ngFor="let star of stars" (click)="rateStars(star)">
         <span [style.background]="star<=clickedIndex ? 'gold' :'gray'" 
@@ -15,8 +17,10 @@
 
 <hr/>
 <h2> hover stars -- style and class binding showcase</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre>{{hoveredHtml}}</pre>
 <pre>{{hoveredCode}}</pre>
+</div>
 <div style="display:flex; align-items:center; justify-content: center;">
   <div *ngFor="let star of stars" (click)="ratingStars(star)" (mouseenter)="hoverStars(star)" (mouseleave)="hoverRating=0">
     <!-- <span class="star" [class.active]="star <= (hoverRating || rating)" [style.height.px]="100" [style.width.px]="100" [style.border-radius.%]="50" [style.display]="'flex'"></span> -->
@@ -25,8 +29,10 @@
 </div>
 <hr/>
 <h2>Decimal Stars understanding event binding</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre>{{fractionTs}}</pre>
 <pre>{{fractionCode}}</pre>
+</div>
 <div style="display: flex; align-items: center; justify-content: center;">
    <div *ngFor="let star of stars" class="circle-wrapper" (click)="selectRating($event, star)" (mouseenter)="hoverSelectRating($event, star)" (mouseleave)="hoverStarRating = 0">
   <span class="circle-base"></span>
@@ -35,4 +41,124 @@
 </div>
 <h2>HoverRating: {{hoverStarRating}}</h2>
 <h2>Rating: {{starRating}}</h2>
+
+<hr/>
+<h2>Users Searching demo</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
+  <pre>{{searchCode}}</pre>
+  <pre>{{searchTs}}</pre>
+</div>
+<input [(ngModel)]="searchText" placeholder="search ..."  />
+<ul>
+  <li *ngFor="let user of filteredUsers()">
+    {{user}}
+  </li>
+</ul>
+<hr/>
+<h2>TODO App- basic the edit will add the thing to input itself simple model</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
+<pre>{{todoBasicHtml}}</pre>
+<pre>{{todobasicCode}}</pre>
+</div>
+<div style="display: flex; gap: 20px;">
+  <input type=" 'text" [(ngModel)]="task"/>
+  <button (click)="addTask()">
+    {{editIndex !== null ? 'Update': 'Add'}}
+  </button>
+</div>
+<ul>
+  <li *ngFor="let todo of todos; let i = index">
+    {{todo}}
+    <button (click)="updateTask(i)">Edit</button>
+    <button (click)="deleteTask(i)">delete</button>
+  </li>
+</ul>
+<hr/>
+<h2>TODO Advanced-- edit multi items, key press enter add like that you could see advantage in angular</h2>
+<p>here keyup/keydown.enter manages the enter button unlike in react pass event and check e.key=="Enter"</p>
+<h3>Modal div get document: to event but not input why?</h3>
+<p>(document:keydown.escape) the document: is because the escape key happens on document not modal like in input which is dom so it can be negated.</p>
+<p>A normal div cannot recieve the keyboard events unless focused but input, textarea, select, button get global focus without document: </p>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+  <pre>{{todoHtml}}</pre>
+  <pre [textContent]="todoTs"></pre>
+</div>
+<div style="display: flex; gap: 20px;">
+  <input type="text" [(ngModel)]="taskItem" (keyup.enter)="addTodoTask()" placeholder="Enter..."/>
+  <button (click)="addTodoTask()">Add </button>
+</div>
+<ul>
+  <li *ngFor="let list of todoList; let i = index">
+    <ng-container *ngIf="updateIndex!==i; else editMode"> 
+      {{list}}
+      <button (click)="startEdit(i)">Edit</button>
+      <button (click)="deleteTodoTask(i)">Delete</button>
+    </ng-container>
+    <!-- //else must in ng-template only; else it gives error-->
+    <ng-template #editMode>
+      <div style="display: flex; gap: 20px;">  
+        <input type="text" [(ngModel)]="updatingTask" placeholder="Edit.." (keyup.enter)="saveEdit(i)"/>
+        <button (click)="saveEdit(i)">save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+<hr/>
+<h2>TODO Drag & Drop using previous ones itself</h2>
+<p>If asked to save priorities like on drag and drop new array create use put axios request to update the tasks list</p>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+  <pre>{{todoDragHtml}}</pre>
+  <pre [textContent]="todoDragTs"></pre>
+</div>
+<div style="display: flex; gap: 20px;">
+  <input type="text" [(ngModel)]="taskItem" (keyup.enter)="addTodoTask()" placeholder="Enter..."/>
+  <button (click)="addTodoTask()">Add </button>
+</div>
+<ul>
+  <li *ngFor="let list of todoList; let i = index" draggable="true" (dragstart)="onDragStart(i)" (dragover)="$event.preventDefault()" (drop)="onDrop(i)"
+  [class.dragging]="draggedIndex===i">
+    <ng-container *ngIf="updateIndex!==i; else editMode"> 
+      {{list}}
+      <button (click)="startEdit(i)">Edit</button>
+      <button (click)="deleteTodoTask(i)">Delete</button>
+    </ng-container>
+    <!-- //else must in ng-template only; else it gives error-->
+    <ng-template #editMode>
+      <div style="display: flex; gap: 20px;">  
+        <input type="text" [(ngModel)]="updatingTask" placeholder="Edit.." (keyup.enter)="saveEdit(i)"/>
+        <button (click)="saveEdit(i)">save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+
+<hr/>
+
+<h2>Grid Lights code -- class binding active->inactive (clicked active blue; else gold)</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">
+  <pre [textContent]="gridCode">  </pre>
+  <pre [textContent]="gridHtml"></pre>
+</div>
+<p>{{grid | json}}</p>
+<p>{{grids | json}}</p>
+
+<div class="grid-light">
+  <div *ngFor="let light of grids; let i = index" class="cell-light" [class.active]="lights[i]" [class.inactive]="!lights[i]" (click)="toggle(i)">
+    {{i+1}}
+  </div>
+</div>
+<hr/>
+<h2>Modal related</h2>
+<p>(document:keydown.escape) the document: is because the escape key happens on document not modal like in input which is dom so it can be negated.</p>
+<p>A normal div cannot recieve the keyboard events unless focused but input, textarea, select, button get global focus without document: </p>
+<button (click)="openModal()">Open Modal</button>
+<div class="backdrop" *ngIf="isModalOpen" (document:keydown.escape)="closeModal()" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2> Modal Title</h2>
+    <p> Modal content</p>
+    <button (click)="closeModal()">close</button>
+  </div>
+</div>
 </div>
