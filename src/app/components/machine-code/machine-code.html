@@ -153,6 +153,10 @@
 <h2>Modal related</h2>
 <p>(document:keydown.escape) the document: is because the escape key happens on document not modal like in input which is dom so it can be negated.</p>
 <p>A normal div cannot recieve the keyboard events unless focused but input, textarea, select, button get global focus without document: </p>
+<div style="display: grid;grid-template-columns: repeat(2,1fr); gap: 20px;">
+  <pre [textContent]="modalCode"></pre>
+  <pre [textContent]="modalTs"></pre>
+</div>
 <button (click)="openModal()">Open Modal</button>
 <div class="backdrop" *ngIf="isModalOpen" (document:keydown.escape)="closeModal()" (click)="closeModal()">
   <div class="modal" (click)="$event.stopPropagation()">

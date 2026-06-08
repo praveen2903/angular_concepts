@@ -458,4 +458,39 @@ openModal (){
 closeModal(){
   this.isModalOpen= false;
 }
+
+modalTs =`isModalOpen = false;
+openModal (){
+  this.isModalOpen=true;
+}
+closeModal(){
+  this.isModalOpen= false;
+}`
+
+modalCode =`.backdrop{
+  position:fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}
+.modal{
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+<button (click)="openModal()">Open Modal</button>
+<div class="backdrop" *ngIf="isModalOpen" (document:keydown.escape)="closeModal()" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h2> Modal Title</h2>
+    <p> Modal content</p>
+    <button (click)="closeModal()">close</button>
+  </div>
+</div>`
 }
