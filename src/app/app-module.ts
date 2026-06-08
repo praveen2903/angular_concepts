@@ -20,6 +20,8 @@ import { AngularInterview } from './components/angular-interview/angular-intervi
 import { ReactInterview } from './components/react-interview/react-interview';
 import { SearchAutocomplete } from './components/search-autocomplete/search-autocomplete';
 import { MachineCode } from './components/machine-code/machine-code';
+import { AsyncMachineCodes } from './components/async-machine-codes/async-machine-codes';
+import { NodeJs } from './components/node-js/node-js';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { MachineCode } from './components/machine-code/machine-code';
     ReactInterview,
     SearchAutocomplete,
     MachineCode,
+    AsyncMachineCodes,
+    NodeJs,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

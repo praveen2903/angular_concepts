@@ -12,6 +12,8 @@ import { RxjsDemo } from './components/rxjs-demo/rxjs-demo';
 import { AngularInterview } from './components/angular-interview/angular-interview';
 import { ReactInterview } from './components/react-interview/react-interview';
 import { MachineCode } from './components/machine-code/machine-code';
+import { AsyncMachineCodes } from './components/async-machine-codes/async-machine-codes';
+import { NodeJs } from './components/node-js/node-js';
 
 const routes: Routes = [
   {
@@ -58,6 +60,14 @@ const routes: Routes = [
   }, {
     path: 'machine-code',
     component: MachineCode
+  },
+  {
+    path:'async-machine-codes',
+    component: AsyncMachineCodes
+  },
+  {
+    path:'node-js',
+    component: NodeJs
   }
 ];
 
