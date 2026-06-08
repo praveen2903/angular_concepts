@@ -1,1 +1,49 @@
-<p>async-machine-codes works!</p>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px">
+        <pre [textContent]="cdrExample">
+        </pre>
+        <pre [textContent]="otherCommonUsed"></pre>
+    </div>
+<div class="page">
+<hr/>
+    <h2>Traffic lights and ChangeDetectionRef usage</h2>
+    <pre>Q. Why did detectChanges() fix the issue?
+
+A. currentIndex changed inside an async callback.
+Angular did not run change detection for that update.
+detectChanges() manually triggers a view refresh.
+
+------------------------------------------------
+Q. Can ngOnChanges() fix it?
+
+A. No. As parent component change like that it manages you can see previously. Own state then ngonchange don't work.
+ngOnChanges only runs for @Input changes from a parent component.
+It does not run when a component updates its own state.</pre>
+
+<div style="display: grid; grid-template-columns: repeat(2,1fr);">
+    <pre [textContent]="trafficLightsCode">    </pre>
+    <pre [textContent]="trafficLightsHtml"></pre>
+</div>
+    <p>{{currentIndex}}</p>
+    <p>{{isRunning}}</p>
+    <div class="traffic-light">
+        <div *ngFor="let light of lights; let i=index" class="light" [class.active]="i === currentIndex" [style.background]="light.color">
+    </div>
+    </div>
+    <button (click)="start()">start</button>
+    <button (click)="stop()"> stop</button>
+
+<hr/>
+<h2>Grid timeout movement</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+    <pre [textContent]="gridLightsCode"></pre>
+    <pre [textContent]="gridLightsHtml"></pre>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3,1fr);">
+    <div *ngFor="let grid of gridLights; let i = index" class="grid-light" [class.grid-active]="gridLights[i]" [class.grid-inactive]="!gridLights[i]">
+        {{i+1}}
+    </div>
+</div>
+<button (click)="gridStart()">Start</button>
+<button (click)="gridStop()">Stop</button>
+</div>
