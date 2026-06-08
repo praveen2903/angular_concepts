@@ -1,1 +1,38 @@
+<div class="page">
+    <hr/>
 <app-search-autocomplete></app-search-autocomplete>
+<hr/>
+<h2>Click stars - style binding & *ngFor</h2>
+<pre> {{clickedCode}}</pre>
+<pre>{{clickedTs}}</pre>
+<div style="display: flex; align-items: center; justify-content: center;">
+    <div *ngFor="let star of stars" (click)="rateStars(star)">
+        <span [style.background]="star<=clickedIndex ? 'gold' :'gray'" 
+        style="height: 50px; width: 50px; border-radius: 50%; display: flex;"></span>
+    </div>
+</div>
+<span>Rating: {{clickedIndex}}</span>
+
+<hr/>
+<h2> hover stars -- style and class binding showcase</h2>
+<pre>{{hoveredHtml}}</pre>
+<pre>{{hoveredCode}}</pre>
+<div style="display:flex; align-items:center; justify-content: center;">
+  <div *ngFor="let star of stars" (click)="ratingStars(star)" (mouseenter)="hoverStars(star)" (mouseleave)="hoverRating=0">
+    <!-- <span class="star" [class.active]="star <= (hoverRating || rating)" [style.height.px]="100" [style.width.px]="100" [style.border-radius.%]="50" [style.display]="'flex'"></span> -->
+     <span class="star" [class.active]="star <= rating" [class.hover]="star <= hoverRating"></span>
+  </div>
+</div>
+<hr/>
+<h2>Decimal Stars understanding event binding</h2>
+<pre>{{fractionTs}}</pre>
+<pre>{{fractionCode}}</pre>
+<div style="display: flex; align-items: center; justify-content: center;">
+   <div *ngFor="let star of stars" class="circle-wrapper" (click)="selectRating($event, star)" (mouseenter)="hoverSelectRating($event, star)" (mouseleave)="hoverStarRating = 0">
+  <span class="circle-base"></span>
+  <span class="circle-fill" [style.width.%]="getFill(star)" [style.background]="hoverStarRating > 0 ? 'black': 'gold'"></span>
+</div>
+</div>
+<h2>HoverRating: {{hoverStarRating}}</h2>
+<h2>Rating: {{starRating}}</h2>
+</div>

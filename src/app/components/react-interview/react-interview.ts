@@ -24,12 +24,8 @@ State Updates are Asynchronous.
 
 Example
 ------------
-const [count,setCount]
-=
-useState(0);
-
+const [count,setCount] = useState(0);
 setCount(count+1);
-
 console.log(count);
 
 Output
@@ -514,31 +510,132 @@ Real Usage
 Every React App
 `;
 
-reconciliationCode = `
-Reconciliation
-
-Purpose
+reconciliationCode = `Purpose
 ------------
-Compare old tree vs new tree based on keys if same, no new objects, else create new ones.
+React compares the old Virtual DOMwith the new Virtual DOM and updates only the changed parts in the Real DOM.
 
-Interview Trap
+Goal:
 ------------
-Keys are important.
+Minimize expensive DOM operations for better performance.
+====================================================
+FLOW
+----------------------------------------------------
+State Change
+      ↓
+Render New Virtual DOM
+      ↓
+Compare With Old Virtual DOM
+      ↓
+Find Differences
+      ↓
+Update Only Changed Nodes
+====================================================
+EXAMPLE
+----------------------------------------------------
+Before
+<ul>
+ <li>A</li>
+ <li>B</li>
+ <li>C</li>
+</ul>
 
+After
+<ul>
+ <li>A</li>
+ <li>B</li>
+ <li>D</li>
+</ul>
+
+React Detects
+A → Same
+B → Same
+C → Changed To D
+
+Only Last Node Updated.
+====================================================
+WHY IMPORTANT?
+----------------------------------------------------
+Without Reconciliation
+Change One Item
+      ↓
+Recreate Entire DOM Expensive
+
+With Reconciliation
+Change One Item
+      ↓
+Update Only Changed Node Faster
+====================================================
+KEYS IN RECONCILIATION
+----------------------------------------------------
+React Uses Keys To Identify Which Element Changed.
 Example
-------------
-users.map(user=>
- <UserCard key={user.id}/>
-)
+users.map(user => <UserCard key={user.id} /> )
+====================================================
+WITH KEYS
+----------------------------------------------------
+Before
+1 John
+2 Sai
+3 Tom
 
-Without Keys
-------------
-Bad Performance
+After
+1 John
+3 Tom
+2 Sai
 
-With Keys
-------------
-Efficient Updates`;
+React Knows
+1 → Same
+3 → Moved
+2 → Moved
+Only Reorders Elements.
+====================================================
+WITHOUT KEYS
+----------------------------------------------------
+Before
+John
+Sai
+Tom
 
+After
+Tom
+John
+Sai
+React Cannot Identify Items.
+May Recreate Multiple Nodes. More DOM Work.
+====================================================
+INTERVIEW TRAP
+----------------------------------------------------
+Wrong
+key={index}
+Correct
+key={user.id}
+Reason: Index Changes During Insert/Delete/Reorder.
+====================================================
+REAL WORLD EXAMPLE
+----------------------------------------------------
+Todo List
+Add Todo
+Delete Todo
+Reorder Todo
+React Uses Keys To Track Each Todo Efficiently.
+====================================================
+INTERVIEW QUESTION
+----------------------------------------------------
+Q: What is Reconciliation?
+Answer:
+Reconciliation is React's process of comparing the old Virtual DOM with the new Virtual DOM and updating only the changed parts of the Real DOM.
+====================================================
+INTERVIEW TRAP
+----------------------------------------------------
+Reconciliation
+-------------
+Comparison Algorithm Virtual DOM
+-------------
+In-Memory Representation
+Keys
+-------------
+Help React Identify Elements Across Renders.
+`;
 contextCode = `
 Context API
 
