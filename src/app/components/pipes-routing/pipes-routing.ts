@@ -245,60 +245,47 @@ const routes: Routes = [
   }
 ];
 
+=========================================================
+Param Navigation  - useNavigate('/users/id') or /users/id
+============================================================
+<a [routerLink]="['/users',user.id]">View User</a>  -- if param navigation in html
 
-/* ============================
-   ROUTER LINK
-============================ */
-
-<a [routerLink]="['/users',user.id]">View User</a>
-
-/* ============================
-   PROGRAMMATIC NAVIGATION
-============================ */
+          [or]
 
 import { Router } from '@angular/router';
+
 constructor(private router: Router) {}
+
 viewUser(id: number) {
-  this.router.navigate(['/users', id);
+  this.router.navigate(['/users', id);              -- if param navigation in ts
 }
 
 /* ============================
-   READ PARAM (SNAPSHOT)
+   READ PARAM  -- useParams()
 ============================ */
 
 import {ActivatedRoute} from '@angular/router';
 
 constructor(private route: ActivatedRoute) {}
 ngOnInit() {
-  const id = this.route.snapshot.paramMap.get('id');
+  const id = this.route.snapshot.paramMap.get('id');  - you could get the param form snapshot
 }
 
-/* ============================
-   READ PARAM (SUBSCRIBE)
-============================ */
 
 this.route.paramMap.subscribe(params => {
     const id =params.get('id');
   }
 );
-
-
 /* ============================
-   QUERY PARAM NAVIGATION
+   QUERY PARAM NAVIGATION  - multiparams ?---&---
 ============================ */
-
 this.router.navigate(['/users'],
   {
-    queryParams: {
-      id: 101,
-      role: 'admin'
-    }
+    queryParams: {id: 101,role: 'admin'}
   }
 );
-
-
 /* ============================
-   READ QUERY PARAMS
+   READ QUERY PARAMS -reading them useParams() in react
 ============================ */
 
 this.route.queryParamMap.subscribe(params => {
@@ -306,44 +293,31 @@ this.route.queryParamMap.subscribe(params => {
 });
 
 /* ============================
-   ROUTER OUTLET
+   ROUTER OUTLET  --base for routing
 ============================ */
-
 <router-outlet> </router-outlet>
-
-
 /* ============================
-   ROUTE GUARD
+   ROUTE GUARD  -- custom for role base authentication and authorization for page
 ============================ */
-
 export const authGuard: CanActivateFn = () => {
   const token = localStorage.getItem('token');
   return !!token;
 };
-
-
 /* ============================
    PROTECTED ROUTE
 ============================ */
-
 {
   path: 'dashboard',
   component: DashboardComponent,
-  canActivate: [authGuard]
+  canActivate: [authGuard]    -- like authgaurd allows if token generated post login there then only open page
 }
-
-
 /* ============================
    LAZY LOADING
 ============================ */
-
 {
   path: 'admin',
-  loadChildren: () => import('./admin/admin.module').then(
-        m => m.AdminModule
-      )
-}
-`;
+  loadChildren: () => import('./admin/admin.module').then( m => m.AdminModule)
+}`;
 
 guardFlowCode = `
 User Request
@@ -363,18 +337,11 @@ Allow      Redirect
 Route      Login Page
 `;
 
-authGuardCode = `import {
-  CanActivateFn
-} from '@angular/router';
+authGuardCode = `import { CanActivateFn } from '@angular/router';
 
-export const authGuard:
-CanActivateFn = () => {
-
-  const token =
-    localStorage.getItem('token');
-
+export const authGuard: CanActivateFn = () => {
+  const token = localStorage.getItem('token');
   return !!token;
-
 };`;
 
 protectedRouteCode = `{
@@ -387,8 +354,8 @@ authGuardWithRedirectCode = `--like for JWT token
 
 import {CanActivateFn, Router} from '@angular/router';
 import { inject } from '@angular/core';
-export const authGuard:
-CanActivateFn = () => {
+
+export const authGuard: CanActivateFn = () => {
   const router =inject(Router);
   const token = localStorage.getItem('token');
   if(token){
@@ -397,8 +364,7 @@ CanActivateFn = () => {
   return router.createUrlTree(['/login']);
 };`;
 
-roleGuardCode = `export const adminGuard:
-CanActivateFn = () => {
+roleGuardCode = `export const adminGuard: CanActivateFn = () => {
   const role = localStorage.getItem('role');
   return role === 'Admin';
 };`;

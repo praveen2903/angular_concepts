@@ -31,7 +31,8 @@ Component Destroy
 
 <section class="card">
 
-<h2>1. @Input()</h2>
+<h2>1. @Input() </h2>
+<span>-- Parent-> child parent directly sends to @Input the data in [childState]</span>
 
 <p class="definition">
 Receives data from Parent Component.
@@ -55,7 +56,7 @@ Receives data from Parent Component.
 
 <section class="card">
 
-<h2>2. @Output() - definitely require eventemitter </h2>
+<h2>2. @Output() - definitely require EventEmitter -- child->parent through event</h2>
 <p>In parent tag of child : (eventemitteruseMethodinchild)= "receivingParentMethod($event)"</p>
 <p class="definition">
 Sends data from Child Component

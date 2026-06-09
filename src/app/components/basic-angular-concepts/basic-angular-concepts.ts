@@ -7,14 +7,46 @@ import { Component } from '@angular/core';
   styleUrl: './basic-angular-concepts.css',
 })
 export class BasicAngularConcepts {
-
-  stylebindingcode = `<button (click)="toggleTheme()">Toggle Color</button>
+ngStyleCodes = `<div
+  [ngStyle]="{
+    color: isRed ? 'red' : 'green',
+    fontSize: '20px',
+    fontWeight: 'bold'
+  }"
+>
+  Employee
+</div>
+`
+  stylebindingcode = `<div [style.color]="isRed ? 'red':'green'" [style.font-size.px]="20" [style.font-weight]="bold">
+  ___________________________________________________________________________________
+  <button (click)="toggleTheme()">Toggle Color</button>
   <h3 [style.color]="isRed ? 'red' : 'green'"> Angular Style Binding </h3>
 _______________________________________________________________________________________________
 <div [style.background]="salary > 50000 ? 'lightgreen' : 'lightcoral'">
   Employee Salary : {{ salary }}
 </div>`
+ngClass = `<div [class.active]="active" [class.disabled]="disabled" [class.highlight]="highlight">
 
+active = true;
+disabled = false;
+highlight = true;
+
+Generates: 
+<div class="active highlight">
+_____________________________________________________________
+<span [ngClass]="{online: user.status==='ONLINE', offline: user.status==='OFFLINE', busy: user.status==='BUSY'}">
+  {{user.status}}
+</span>
+
+.online{
+  color:green;
+}
+.offline{
+  color:red;
+}
+.busy{
+  color:orange;
+}`
 classbindingcode = `<button (click)="toggleLogin()">Toggle Login</button>
 <h3 [class.success]="loggedIn" [class.danger]="!loggedIn">
   User Status
@@ -58,6 +90,40 @@ ________________________________________________________________________________
 
 .odd-row {
   background: #fee2e2;
+}
+  -------------------------------------------------------
+  <div
+  [class.high-salary]="salary > 100000"
+  [class.medium-salary]="salary >= 50000 && salary <=100000"
+  [class.low-salary]="salary < 50000"
+>
+  Salary : {{salary}}
+</div>
+.high-salary{
+  color:green;
+}
+
+.medium-salary{
+  color:orange;
+}
+
+.low-salary{
+  color:red;
+}
+------------------------------------------------------
+<tr
+  *ngFor="let emp of employees"
+  [class.selected-row]="selectedId===emp.id"
+  [class.high-earner]="emp.salary > 80000"
+  (click)="selectedId = emp.id"
+>
+  
+.selected-row{
+  border:2px solid blue;
+}
+
+.high-earner{
+  background:#dcfce7;
 }`
   name:string= 'praveen';
   age: number = 23;

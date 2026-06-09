@@ -11,33 +11,32 @@ export class LifecycleInputoutput {
   employeeName = 'Praveen';
 randomDefs = `
 ═══════════════════════════════════════════════════════
-19. LIFECYCLE HOOKS -- too important
+19. LIFECYCLE HOOKS -- too important you would see usage in machinecodes
 ═══════════════════════════════════════════════════════
-
-constructor
+constructor  -- 1st to execute
      ↓
-ngOnChanges
+ngOnChanges  
+-- works only when parent -> child/ child->parent communication if internal setTimeout, setInterval Macrotasks changes recording need the ChangeDetectionRef
      ↓
-ngOnInit
+ngOnInit  -- like useEffect with empty dependency works on page load
      ↓
 ngDoCheck
      ↓
 ngAfterViewInit
      ↓
-ngOnDestroy
+ngOnDestroy  - unmounting timeouts, intervals, removelisteners
 
 Used For:
-
 • API Calls
 • Input Changes
 • Cleanup
-• View Initialization
-`;
-  inputCode = `import { Input } from '@angular/core';
+• View Initialization`;
+
+inputCode = `import { Input } from '@angular/core';
 @Input()
 userName!: string;`;
 
-  outputCode = `import {Output,  EventEmitter} from '@angular/core';
+outputCode = `import {Output,  EventEmitter} from '@angular/core';
 @Output()
 userClicked = new EventEmitter<string>();
 
@@ -47,21 +46,21 @@ sendData(){
   );
 }`;
 
-  parentHtmlCode = `<app-child [userName]="employeeName" (userClicked)="receiveData($event)"></app-child>`;
+parentHtmlCode = `<app-child [userName]="employeeName" (userClicked)="receiveData($event)"></app-child>`;
 
-  parentTsCode = `export class ParentComponent {
+parentTsCode = `export class ParentComponent {
   employeeName = 'Praveen';
   receiveData(data:string){
     console.log(data);
-}
+  }
 }`;
 
-  childHtmlCode = `<h3>{{ userName }}</h3>
+childHtmlCode = `<h3>{{ userName }}</h3>
 <button (click)="sendData()">
  Send To Parent
 </button>`;
 
-  inputFlowCode = `
+inputFlowCode = `
 Parent Component
         ↓
       Data
@@ -71,8 +70,7 @@ Parent Component
  Child Component
 `;
 
-  outputFlowCode = `
-Child Component
+outputFlowCode = `Child Component
         ↓
  EventEmitter
         ↓
@@ -80,7 +78,7 @@ Child Component
         ↓
  Parent Component`;
 
-  lifecycleOrderCode = `
+lifecycleOrderCode = `
 Constructor
       ↓
 ngOnChanges
@@ -153,6 +151,7 @@ View Updated
 
   viewChildCode = `@ViewChild('inputRef')
 inputRef!: ElementRef;
+
 ngAfterViewInit(){
  this.inputRef.nativeElement.focus();
 }`;
@@ -164,7 +163,7 @@ ngAfterViewInit(){
   ){}
 
   ngOnInit(){
-    this.subscription = this.http.get('/api/users').subscribe();
+    this.subscription = this.http.get('/api/users').subscribe();  // or call the service which is industrial standard
   }
 
   ngOnDestroy(){
@@ -225,10 +224,11 @@ export class ChildComponent {
   @Output()
   employeeSelected = new EventEmitter<any>();
 
-  sendEmployee() {
+  sendEmployee() {                             -- sendEmployee method that using the event emitter and emit to parent
     this.employeeSelected.emit(this.employee);
   }
 }
+
 <button (click)="sendEmployee()">Send Employee</button>
 
 /* ======================================================
@@ -242,13 +242,13 @@ import { Component } from '@angular/core';
 })
 export class ParentComponent {
   selectedEmployee: any;
-  receiveEmployee(employee: any) {
+
+  receiveEmployee(employee: any) {   //employee event like selected employee
     this.selectedEmployee = employee;
   }
 }
 
-
-<app-child (employeeSelected)="receiveEmployee($event)"></app-child>
+<app-child (employeeSelected)="receiveEmployee($event)"></app-child>   //employeeselected eventemitter in child and recieveEmployee method in parent ts
 <hr>
 <h3>Employee Details</h3>
 <p>Id : {{ selectedEmployee?.id }}</p>
@@ -370,8 +370,8 @@ loadUser(user: User) {
   console.log(user);
 }`
 parentproduct = ` But child to parent event is passed 
-parent -> child : products sent [products]
-child -> parent : products added to card (cartClicked)="addToCart($event)" event binding
+parent -> child : products sent [parentRecords]
+child -> parent : products added to card (childEventEmitter)="parentMethod($event)" event binding
 
 --parent.ts
 
@@ -404,25 +404,21 @@ export class ProductsComponent {
   ];
 
   addToCart(product: any) {
-    console.log('Adding Product:',product);
-    this.cartCount++;
-
-    /*
-      Industry Example - pushing it to cart instead of increasing count
       this.cartService.add(product);
       this.store.dispatch(addToCart(product));
       this.http.post('/api/cart', product).subscribe();
-    */
   }
 }
   
 -------parent.html
 
 <h2>Cart Count : {{ cartCount }}</h2>
+
 <app-product-card *ngFor="let product of products" [product]="product" (cartClicked)="addToCart($event)"></app-product-card>
 
 
 -- child.ts
+
 import {Component,Input,Output,EventEmitter} from '@angular/core';
 
 @Component({
@@ -442,6 +438,7 @@ export class ProductCardComponent {
 }
  
 ---child html
+
 <div class="card">
   <h3>{{ product.name }}</h3>
   <p>₹{{ product.price| INR }}</p>

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Observable, of, from, interval, Subject, BehaviorSubject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap, takeUntil} from 'rxjs/operators';
+import {debounceTime, delay, distinctUntilChanged, switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs-demo',
@@ -12,14 +12,26 @@ export class RxjsDemo implements OnInit, OnDestroy {
   destroy$ = new Subject<void>();
 
   observableData: any[] = [];
-  subjectData = '';
-  behaviorData = '';
+  subjectData:any ;
+  behaviorData:any;
   searchText = '';
+  results: string[] = [];
+
+  users = [
+    'Praveen',
+    'Sai',
+    'Ravi',
+    'Kiran',
+    'Krishna',
+    'Ramesh',
+    'Vamsi',
+    'Suresh',
+    'Mahesh'
+  ];
 
   private searchSubject = new Subject<string>();
-  private subject = new Subject<string>();
-  private behaviorSubject =
-    new BehaviorSubject<string>('Initial Value');
+  private subject = new Subject<number>();
+  private behaviorSubject = new BehaviorSubject<string>('Initial Value');
 
   ngOnInit(): void {
     this.observableExample();
@@ -34,9 +46,9 @@ export class RxjsDemo implements OnInit, OnDestroy {
   // Observable
   observableExample() {
     const observable = new Observable(observer => {
-      observer.next('Angular');
-      observer.next('React');
-      observer.next('Node');
+      observer.next(50000);
+      observer.next(6000);
+      observer.next(7000);
       observer.complete();
     });
 
@@ -45,6 +57,24 @@ export class RxjsDemo implements OnInit, OnDestroy {
     });
   }
 
+  ObservableDemo = ` observableData: any[] = [];
+  observableExample() {
+    const observable = new Observable(observer => {
+      observer.next(50000);
+      observer.next(6000);
+      observer.next(7000);
+      observer.complete();
+    });
+
+    observable.subscribe(value => {
+      this.observableData.push(value);
+    });
+  }
+
+  <li *ngFor="let item of observableData">
+    {{ item }}
+  </li>
+`
   // of()
   ofExample() {
     of('Java', 'Spring', 'Angular').subscribe(value => {
@@ -61,9 +91,7 @@ export class RxjsDemo implements OnInit, OnDestroy {
 
   // interval()
   intervalExample() {
-    interval(1000)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
+    interval(1000).pipe(takeUntil(this.destroy$)).subscribe(value => {
         console.log('Interval', value);
       });
   }
@@ -76,9 +104,167 @@ export class RxjsDemo implements OnInit, OnDestroy {
   }
 
   sendSubjectValue() {
-    this.subject.next('Subject Value Sent');
+    this.subject.next(5000);
   }
 
+  subjectDemo =`subjectData:any;  //works as observable recieve data
+  private subject = new Subject<number>();   //works as observer emits data
+
+  subjectExample() {
+    this.subject.subscribe(data => {  //observable recieves data
+      this.subjectData = data;
+    });
+  }
+
+  sendSubjectValue() {
+    this.subject.next(5000);  //observer emits data
+  }
+    
+<button (click)="sendSubjectValue()">
+  Send Subject Value
+</button>
+
+<p>{{ subjectData }}</p>`;
+
+subjectvsBehavioursubject = `SUBJECT vs BEHAVIORSUBJECT
+==========================================================
+Problem with Subject
+----------------------------------------------------------
+Subject only sends data to CURRENT subscribers.
+If a value is emitted before a component subscribes, that value is lost forever.
+
+Timeline
+----------------------------------------------------------
+Subject
+next('Praveen')
+      ↓
+      LOST
+
+subscribe()
+      ↓
+Receives Nothing
+
+Example
+----------------------------------------------------------
+const userSubject = new Subject<string>();
+userSubject.next('Praveen');
+userSubject.subscribe(value => {
+  console.log(value);
+});
+
+Output
+----------------------------------------------------------
+Nothing
+
+Reason
+----------------------------------------------------------
+The subscription happened AFTER the value was emitted.
+Subject does NOT store previous values.
+
+
+Real Angular Problem
+==========================================================
+Auth Service
+
+login() {
+  authSubject.next(true);
+}
+
+Navbar Component
+
+ngOnInit() {
+  authSubject.subscribe(value => {
+    this.isLoggedIn = value;
+  });
+}
+
+Problem
+----------------------------------------------------------
+User logs in
+      ↓
+authSubject.next(true)
+      ↓
+Navbar loads later
+      ↓
+Navbar receives nothing
+
+Current login state is lost.
+
+One-Line Interview Answer
+==========================================================
+
+Subject emits values only to current subscribers.
+
+BehaviorSubject remembers the latest value and
+immediately provides it to new subscribers, making it
+ideal for state management and component communication.`
+
+behaviourSubjectDemo = `Solution: BehaviorSubject
+==========================================================
+BehaviorSubject stores the latest value.
+Every new subscriber immediately receives the most recent value.
+
+Timeline
+----------------------------------------------------------
+BehaviorSubject(false)
+
+next(true)
+      ↓
+Stored internally
+
+subscribe()
+      ↓
+Immediately gets true
+
+Example
+----------------------------------------------------------
+const userSubject = new BehaviorSubject<string>('Guest');  -- inital value
+userSubject.next('Praveen');
+userSubject.subscribe(value => {
+  console.log(value);
+});
+
+Output
+----------------------------------------------------------
+Praveen
+
+Why BehaviorSubject is Preferred
+==========================================================
+State must be remembered.
+
+Examples
+----------------------------------------------------------
+✓ Logged In User
+✓ Theme (Dark / Light)
+✓ Shopping Cart Count
+✓ Current Language
+✓ Selected Employee
+✓ Dashboard Filters
+✓ Shared Data Between Components
+✓ User Profile
+
+
+Interview Question
+==========================================================
+When should you use Subject?
+----------------------------------------------------------
+Events
+Button Clicked
+Modal Opened
+Notification Triggered
+Refresh Data Event
+Anything where old values are NOT important.
+
+
+When should you use BehaviorSubject?
+----------------------------------------------------------
+Application State
+Login State
+Theme State
+Cart State
+Current User
+
+Shared Component Data. Anything where the latest value must be remembered.`
   // BehaviorSubject
   behaviorSubjectExample() {
     this.behaviorSubject.subscribe(value => {
@@ -92,21 +278,20 @@ export class RxjsDemo implements OnInit, OnDestroy {
 
   // Search Example
   searchExample() {
-    this.searchSubject
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        switchMap(value => {
-          return of(`API Call: ${value}`);
-        })
-      )
-      .subscribe(result => {
-        console.log(result);
-      });
+    this.searchSubject.pipe( debounceTime(500), distinctUntilChanged(), switchMap(searchTerm => {
+      // console.log('API Call =>', searchTerm);
+      const filteredUsers = this.users.filter(user =>
+        user.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      return of(filteredUsers).pipe(delay(1000));
+
+    }), takeUntil(this.destroy$)).subscribe(users => {
+      this.results = users;
+    });
   }
 
   search() {
-    this.searchSubject.next(this.searchText);
+     this.searchSubject.next(this.searchText);
   }
 
   ngOnDestroy(): void {
@@ -114,6 +299,58 @@ export class RxjsDemo implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  rxjsSearchDemo=`searchText = '';
+results: string[] = [];
+
+users = [
+  'Praveen',
+  'Sai',
+  'Ravi',
+  'Kiran',
+  'Krishna',
+  'Ramesh',
+  'Vamsi',
+  'Suresh',
+  'Mahesh'
+];
+
+private searchSubject = new Subject<string>();
+ngOnInit(){
+    this.searchExample();
+}
+searchExample() {
+  this.searchSubject.pipe( debounceTime(500), distinctUntilChanged(), switchMap(searchTerm => {
+    // console.log('API Call =>', searchTerm);
+    const filteredUsers = this.users.filter(user =>
+      user.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return of(filteredUsers).pipe(delay(1000));
+
+  }), takeUntil(this.destroy$)).subscribe(users => {
+    this.results = users;
+  });
+}
+
+search() {
+  this.searchSubject.next(this.searchText);
+}
+
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
+}`
+
+rxjsSearchDemoHtml =`<div style="display: flex; gap:20px">
+  <input type="text" [(ngModel)]="searchText" placeholder="Search..."  (keyup.enter)="search()" />
+  <button (click)="search()">Search</button>
+
+  <input type="text" [(ngModel)]="searchText" (input)="search()" placeholder="search...">
+</div>
+<ul>
+  <li *ngFor="let user of results">
+    {{ user }}
+  </li>
+</ul>`;
  observableCode = `
 Observable
 
@@ -316,13 +553,11 @@ Output
 5
 `;
 
-subjectCode = `
-Subject
+subjectCode = `Subject
 
 What Is It?
 ------------
 Event broadcaster.
-
 Purpose
 ------------
 Send data to multiple listeners.
@@ -335,8 +570,7 @@ Used In
 
 Example
 ------------
-const subject =
- new Subject<string>();
+const subject = new Subject<string>();
 
 subject.subscribe(
  data => console.log(data)
@@ -347,6 +581,7 @@ subject.next('Hello');
 Output
 ------------
 Hello
+if other event subscribed this hello is lost
 `;
 
 behaviorCode = `
@@ -369,16 +604,11 @@ Used In
 
 Why Industry Loves It?
 ------------
-New subscriber immediately gets
-latest value.
+New subscriber immediately gets latest value.
 
 Example
 ------------
-const user$ =
- new BehaviorSubject(
-   'Guest'
- );
-
+const user$ = new BehaviorSubject('Guest');
 user$.next('Praveen');
 
 Output

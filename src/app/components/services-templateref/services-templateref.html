@@ -89,13 +89,72 @@ TypeScript
     <pre [textContent]="serviceInterviewCode"></pre>
 
   </section>
+  <section class="card">
+  <h2>User Management</h2>
+<input #nameRef type="text" placeholder="Enter Name"/>
 
+<hr>
+
+<button (click)="loadUsers()">GET Users</button>
+<button (click)="getSingleUser()">GET User By Id</button>
+<button (click)="searchUser()">Query Params</button>
+<button (click)="addUser()">POST User</button>
+<button (click)="updateUser()">PUT User</button>
+<button (click)="deleteUser()">DELETE User</button>
+
+<hr>
+
+<!-- Loading -->
+
+<div *ngIf="loading">
+  Loading Users...
+</div>
+
+<!-- Error -->
+
+<div *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+<!-- Table -->
+
+<table *ngIf="users.length > 0">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+<!-- Empty State -->
+
+<div *ngIf="!loading && !errorMessage && users.length === 0">
+  No Users Found
+</div>
+</section>
+<h3>Implementing service with data provided from component mainly CRUD operations must happen in the service</h3>
+  <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px">
+    <pre [textContent]="userServicesDemoService"></pre>
+  <pre [textContent]="serviceInjectionToComponent"></pre>
+  </div>
   <!-- TEMPLATE REF -->
 
   <section class="card">
-
     <h2>Template Reference Variable</h2>
+<span>they give you a direct handle to DOM elements, component instances, or directives right inside the template or the TypeScript code.</span>
 
+<pre [textContent]="templateRefUse"></pre>
     <p class="definition">
       References HTML elements directly inside template.
     </p>
@@ -230,64 +289,6 @@ Answer: Angular loses lifecycle, singleton behavior, testing support, intercepto
 
   </section>
 <section class="card">
-  <h2>User Management</h2>
-<input #nameRef type="text" placeholder="Enter Name"/>
-
-<hr>
-
-<button (click)="loadUsers()">GET Users</button>
-<button (click)="getSingleUser()">GET User By Id</button>
-<button (click)="searchUser()">Query Params</button>
-<button (click)="addUser()">POST User</button>
-<button (click)="updateUser()">PUT User</button>
-<button (click)="deleteUser()">DELETE User</button>
-
-<hr>
-
-<!-- Loading -->
-
-<div *ngIf="loading">
-  Loading Users...
-</div>
-
-<!-- Error -->
-
-<div *ngIf="errorMessage">
-  {{ errorMessage }}
-</div>
-
-<!-- Table -->
-
-<table *ngIf="users.length > 0">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    <tr *ngFor="let user of users">
-      <td>{{ user.id }}</td>
-      <td>{{ user.name }}</td>
-    </tr>
-
-  </tbody>
-
-</table>
-
-<!-- Empty State -->
-
-<div *ngIf="!loading && !errorMessage && users.length === 0">
-  No Users Found
-</div>
-</section>
-<section class="card">
-  <h2>Implementing service with data provided from component mainly rest or graphql operations must happen in the service</h2>
-  <pre [textContent]="userServicesDemoService"></pre>
-  <h2>Sending and retriving data from service to component as service talks to the db or other links data fetching</h2>
-  <pre [textContent]="serviceInjectionToComponent"></pre>
   <h2> user interactions and how input tab has inputRef and helps to save data</h2>
   <pre [textContent]="implementRefandServiceHtml"></pre>
 </section>

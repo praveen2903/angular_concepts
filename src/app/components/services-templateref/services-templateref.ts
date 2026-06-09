@@ -49,7 +49,7 @@ export class UsersComponent {
  users:string[] = [];
  constructor(private userService: UserService) {}
 
- ngOnInit() {
+ ngOnInit() {   -- like when pageloads only the service called
    this.users = this.userService.getUsers();
  }
 }`;
@@ -105,13 +105,12 @@ TypeScript
 
 viewChildCode = `import {Component,ViewChild,ElementRef, AfterViewInit} from '@angular/core';
 
-export class UsersComponent implements AfterViewInit {
-
+export class UsersComponent implements AfterViewInit {  - post page render like must when @ViewChild as focus mustn't be before
  @ViewChild('userInput') -- @viewChildRef
  input!: ElementRef;
 
  ngAfterViewInit() {
-   this.input.nativeElement.focus();
+   this.input.nativeElement.focus();  --nativeElement is a property of ElementRef that provides direct access to the underlying DOM node
  }
 }`;
 
@@ -153,7 +152,9 @@ export class ProductsComponent {
  products:any[] = [];
  constructor(private productService: ProductService){}
  ngOnInit(){
-   this.productService.getProducts().subscribe(data => {
+   this.productService.getProducts().subscribe(data => {  
+
+   -- subscribe since api calling gives the stream data to handle we use rxjs
       this.products =data;
    });
  }
@@ -487,5 +488,77 @@ serviceInjectionToComponent=`users: any[] = [];
   No Users Found
 </div>
 </section>`;
+
+templateRefUse = `what's use since [(ngModel)] provide two-way binding right?
+
+
+----interdom communication 
+<input #userInput type="text">
+<p>Hello, {{ userInput.value }}</p> 
+
+
+-- invoke DOM directly 
+<video #moviePlayer src="promo.mp4"></video>
+
+<!-- Binds directly to the HTMLVideoElement play() method -->
+<button (click)="moviePlayer.play()">Play Video</button>
+<button (click)="moviePlayer.pause()">Pause Video</button>
+
+
+--can access the child methods 
+-- parent like click on the opensetting also open modal---
+ <!-- 1. We instantiate the child and tag it with #modalWindow -->
+  <app-custom-modal #modalWindow></app-custom-modal>
+
+  <!-- 2. We use the tag directly to execute the child's public open() method -->
+  <button class="btn-primary" (click)="modalWindow.open()">
+    Open Settings
+  </button>
+
+  //child
+<div *ngIf="isOpen" class="modal-backdrop">
+  <div class="modal-box">
+    <h3>Settings Modal</h3>
+    <p>This is your custom modal content.</p>
+    <button (click)="close()">Close</button>
+  </div>
+</div>
+export class CustomModalComponent {
+  // 1. This state is hidden inside the child
+  isOpen = false;
+
+  // 2. This public method can be triggered by anyone who has a reference to this component
+  public open() {
+    this.isOpen = true;
+    console.log('Modal opened from the outside world!');
+  }
+
+  public close() {
+    this.isOpen = false;
+  }
+}
+
+
+
+-- query elements in typescript
+// Component Template binding ref variable to html 
+<div #chartContainer></div>
+
+// Component TypeScript Logic
+@ViewChild('chartContainer') 
+chart!: ElementRef<HTMLDivElement>;
+
+ngAfterViewInit() {
+  // Direct, safe programmatic access to the underlying DOM element
+  const width = this.chart.nativeElement.getBoundingClientRect().width;
+}
+
+
+--Access deriatives
+<form #myForm="ngForm" (ngSubmit)="submit(myForm.value)">
+  <input name="email" required ngModel>
+  <!-- Disables button by accessing the directive's "valid" state property  directly by ref -->
+  <button [disabled]="!myForm.valid">Submit</button>
+</form>`
 }
 

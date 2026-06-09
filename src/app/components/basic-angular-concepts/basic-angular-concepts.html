@@ -278,6 +278,10 @@ User Input
 
   <h2>6. Style Binding [style]</h2>
 
+  <span>[class.xxx] and [style.xxx] are preferred when binding a single class/style.
+
+[ngClass] and [ngStyle] are preferred when multiple dynamic classes/styles.
+need to be applied together.</span>
   <p class="definition">
     Dynamically applies inline CSS styles using component data.
   </p>
@@ -331,12 +335,18 @@ UI Updated
   </ul>
 
 </section>
-<pre>{{stylebindingcode}}</pre>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+  <pre>{{stylebindingcode}}</pre>
+  <pre>{{ngStyleCodes}}</pre>
+</div>
+
 
 <section class="card">
 
   <h2>7. Class Binding [class]</h2>
+<span>[class.xxx] and [style.xxx] are preferred when binding a single class/style.
 
+[ngClass] and [ngStyle] are preferred when multiple dynamic classes/styles need to be applied together.</span>
   <p class="definition">
     Dynamically adds or removes CSS classes.
   </p>
@@ -377,5 +387,8 @@ UI Updated
   </ul>
 
 </section>
-<pre>{{classbindingcode}}</pre>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+  <pre>{{classbindingcode}}</pre>
+  <pre>{{ngClass}}</pre>
+</div>
 </div>

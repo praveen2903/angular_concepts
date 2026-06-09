@@ -1,6 +1,6 @@
 <div class="page">
 
-  <h1>Angular RxJS Demo</h1>
+  <h2>Angular RxJS Demo (Reactive Extension for JavaScript)</h2>
 
 <section class="card">
     <pre class="flow-box">
@@ -82,7 +82,8 @@ UI Updated
 
 </section>
 <h2>Observable Example</h2>
-
+<p>an Observable acts as a data producer that emits streams of values over time, while an Observer acts as the data consumer that listens to and processes those emitted values</p>
+<pre [textContent]="ObservableDemo"></pre>
 <ul>
   <li *ngFor="let item of observableData">
     {{ item }}
@@ -92,12 +93,24 @@ UI Updated
 <hr>
 
 <h2>Subject Example</h2>
-
+<p>a special type of Observable that acts as both an Observer (can push data) and an Observable (can be subscribed to)</p>
+<pre [textContent]="subjectDemo"></pre>
 <button (click)="sendSubjectValue()">
   Send Subject Value
 </button>
 
 <p>{{ subjectData }}</p>
+
+<pre>
+      subject DrawBack
+next(50000)
+      ↓
+      (lost)
+
+subscribe()
+
+No value received
+</pre>
 
 <hr>
 
@@ -108,20 +121,32 @@ UI Updated
 </button>
 
 <p>{{ behaviorData }}</p>
-
+<div style="display: grid; grid-template-columns: repeat(2,1fr);gap:20px">
+      <pre [textContent]="subjectvsBehavioursubject"></pre>
+      <pre [textContent]="behaviourSubjectDemo"></pre>
+</div>
 <hr>
 
-<h2>Search Example</h2>
+<h2>Search Example - debounce example</h2>
 
-<input
-  type="text"
-  [(ngModel)]="searchText"
-  placeholder="Search..."
-/>
+<p>1st search handles on click enter/ button, 2nd one handles while search input itself it takes value like onChange.</p>
+<div style="display: flex; gap:20px">
+      <input type="text" [(ngModel)]="searchText" placeholder="Search..."  (keyup.enter)="search()" />
+      <button (click)="search()">Search</button>
 
-<button (click)="search()">
-  Search
-</button>
+      <input type="text" [(ngModel)]="searchText" (input)="search()" placeholder="search...">
+</div>
+<ul>
+  <li *ngFor="let user of results">
+    {{ user }}
+  </li>
+</ul>
+
+<div style="display: grid; grid-template-columns: 3fr 2fr; gap: 20px;">
+      <pre [textContent]="rxjsSearchDemo"></pre>
+      <pre [textContent]="rxjsSearchDemoHtml"></pre>
+</div>
+<hr/>
 <pre class="flow-box">
     JavaScript                    RxJS
 

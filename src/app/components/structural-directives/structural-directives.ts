@@ -49,7 +49,9 @@ oddEvenCode = `<div *ngFor="
   User Logged Out
 </div>`
 
-ngswitchcode =`<div [ngSwitch]="selectedRole">
+ngswitchcode =`TS: selectedRole='Admin'
+
+<div [ngSwitch]="selectedRole">
   <div *ngSwitchCase="'Admin'">
     Admin Dashboard
   </div>
