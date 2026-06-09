@@ -46,4 +46,67 @@ It does not run when a component updates its own state.</pre>
 </div>
 <button (click)="gridStart()">Start</button>
 <button (click)="gridStop()">Stop</button>
+
+<hr/>
+
+<h3>Stop Watch</h3>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+    <pre [textContent]="stopWatchCode"></pre>
+    <pre [textContent]="stopWatchHtml"></pre>
+</div>
+<div>{{currentTime}}</div>
+<button (click)="timeStart()">Start</button>
+<button (click)="timeStop()">Stop</button>
+
+<hr/>
+
+<h2>Clock for time with pipes for formats</h2>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
+    <pre [textContent]="changeDateCode"></pre>
+    <pre [textContent]="changeDateHtml"></pre>
+</div>
+<div>{{currentDate}}</div>
+<div>{{ currentDate | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+<div>{{ currentDate | date:'dd/MM/yyyy' }}</div>
+<div>{{ currentDate | date:'HH:mm:ss' }}</div>
+<div>{{ currentDate | date:'hh:mm:ss a' }}</div>
+<div>
+  GMT : {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'UTC' }}
+</div>
+<div>
+  PST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'America/Los_Angeles' }}
+</div>
+<div>
+  EST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'America/New_York' }}
+</div>
+<div>
+  IST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'Asia/Kolkata' }}
+</div>
+
+<span>interview formats</span>
+<div>
+<!-- 09 Jun 2026 -->
+{{ currentDate | date:'dd MMM yyyy' }}
+</div>
+<div>
+    <!-- Tuesday, June 09, 2026 -->
+{{ currentDate | date:'EEEE, MMMM dd, yyyy' }}
+</div>
+
+<div>
+<!-- 18:45 -->
+{{ currentDate | date:'HH:mm' }}
+</div>
+<div>
+    <!-- 06:45 PM -->
+{{ currentDate | date:'hh:mm a' }}
+</div>
+
+<div>
+    <!-- Jun 09, 2026 06:45 PM -->
+{{ currentDate | date:'MMM dd, yyyy hh:mm:ss a' }}
+</div>
 </div>

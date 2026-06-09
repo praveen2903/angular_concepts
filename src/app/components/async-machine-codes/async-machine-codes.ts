@@ -10,7 +10,7 @@ export class AsyncMachineCodes {
 
   constructor(private cdr: ChangeDetectorRef ){}
   lights = [
-  { color: 'red', duration: 20000 },
+  { color: 'red', duraeion: 20000 },
   { color: 'green', duration: 15000 },
   { color: 'yellow', duration: 10000 }
 ];
@@ -22,6 +22,7 @@ ngOnInit() {
   console.log('init')
   this.start();
   this.gridStart();
+  this.changeDate()
 }
 
 start() {
@@ -317,7 +318,10 @@ gridStop(){
   clearTimeout(this.gridtimeoutId);
 }
 
-gridLightsCode = `gridLights = Array(9).fill(false);
+gridLightsCode = `
+constructor(private cdr: changeDetectionRef) {}
+
+gridLights = Array(9).fill(false);
 gridIndex = 0;
 gridtimeoutId: any;
 gridStarted = false;
@@ -378,4 +382,137 @@ gridLightsHtml = `.cell-light{
 </div>
 <button (click)="gridStart()">Start</button>
 <button (click)="gridStop()">Stop</button>`
+
+currentTime =0;
+timeIntervalId:any;
+timeStarted = false;
+timeInterval =1000;
+
+timeStart(){
+  if(this.timeStarted) return;
+
+  this.timeStarted= true;
+  this.timeChange();
+}
+timeChange(){
+  if(!this.timeStarted) return;
+
+  this.timeIntervalId= setInterval(()=>{
+    this.currentTime++;
+    this.cdr.detectChanges();   
+
+//Note:-the timeout needs to call method since it destroy previous timeout and create new everytime but interval keeps on running so new intervals cause disturbance
+  }, this.timeInterval)
+}
+timeStop(){
+  this.timeStarted= false;
+  clearInterval(this.timeIntervalId);
+}
+
+stopWatchCode = `
+constructor(private cdr: changeDetectionRef) {}
+currentTime =0;
+timeIntervalId:any;
+timeStarted = false;
+timeInterval =1000;
+ngOnInit(){
+   this.timeStart(); //like useEffect with empty dependency when page loads initial call happens
+}
+timeStart(){
+  if(this.timeStarted) return;
+
+  this.timeStarted= true;
+  this.timeChange();
+}
+timeChange(){
+  if(!this.timeStarted) return;
+
+  this.timeIntervalId= setInterval(()=>{
+    this.currentTime++;
+    this.cdr.detectChanges();   
+
+//Note:-the timeout needs to call method since it destroy previous timeout and create new everytime but interval keeps on running so new intervals cause disturbance
+  }, this.timeInterval)
+}
+timeStop(){
+  this.timeStarted= false;
+  clearInterval(this.timeIntervalId);
+}
+  
+ngOnDestroy(){
+  clearInterval(this.timeIntervalId);
+}`;
+stopWatchHtml = `<h3>Stop Watch</h3>
+<div>{{currentTime}}</div>
+<button (click)="timeStart()">Start</button>
+<button (click)="timeStop()">Stop</button>`;
+
+currentDate: Date = new Date();
+dateIntervalId:any;
+changeDate(){
+  this.dateIntervalId = setInterval(()=>{
+    this.currentDate = new Date();
+    this.cdr.detectChanges();
+  }, 1000)
+}
+changeDateHtml = `<div>{{currentDate}}</div>
+<div>{{ currentDate | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+<div>{{ currentDate | date:'dd/MM/yyyy' }}</div>
+<div>{{ currentDate | date:'HH:mm:ss' }}</div>
+<div>{{ currentDate | date:'hh:mm:ss a' }}</div>
+<div>
+  GMT : {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'UTC' }}
+</div>
+<div>
+  PST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'America/Los_Angeles' }}
+</div>
+<div>
+  EST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'America/New_York' }}
+</div>
+<div>
+  IST :
+  {{ currentDate | date:'dd/MM/yyyy HH:mm:ss':'Asia/Kolkata' }}
+</div>
+
+<span>interview formats</span>
+<div>
+<!-- 09 Jun 2026 -->
+{{ currentDate | date:'dd MMM yyyy' }}
+</div>
+<div>
+    <!-- Tuesday, June 09, 2026 -->
+{{ currentDate | date:'EEEE, MMMM dd, yyyy' }}
+</div>
+
+<div>
+<!-- 18:45 -->
+{{ currentDate | date:'HH:mm' }}
+</div>
+<div>
+    <!-- 06:45 PM -->
+{{ currentDate | date:'hh:mm a' }}
+</div>
+
+<div>
+    <!-- Jun 09, 2026 06:45 PM -->
+{{ currentDate | date:'MMM dd, yyyy hh:mm:ss a' }}
+</div>`;
+changeDateCode = `ngOnInit(){
+  this.changeDate();
+}
+
+currentDate: Date = new Date();
+dateIntervalId:any;
+
+changeDate(){
+  this.dateIntervalId = setInterval(()=>{
+    this.currentDate = new Date();
+    this.cdr.detectChanges();   //set interval so need to call function to create new intervals it is for timeouts
+  }, 1000)
+}
+ngOnDestroy(){
+  clearInterval(this.dateIntervalId)
+}`
 }

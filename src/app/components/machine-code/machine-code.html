@@ -165,4 +165,52 @@
     <button (click)="closeModal()">close</button>
   </div>
 </div>
+
+<hr/>
+
+<h2>Pagination & filtering</h2>
+
+<div style="display: grid; grid-template-columns: repeat(2,1fr);gap: 20px;">
+  <pre [textContent]="paginationTs"></pre>
+  <pre [textContent]="paginationHtml"></pre>
+</div>
+<div class="controls">
+  <input type="text" [(ngModel)]="searchTableText" placeholder="Search Name..." (input)="applyFilters()" />
+  <input type="number" [(ngModel)]="minAge" placeholder="Min Age..." (input)="applyFilters()"/>
+
+  <button class="sort-btn" (click)="changeSort('asc')"> ASC</button>
+  <button class="sort-btn" (click)="changeSort('desc')">DSC </button>
+  <span>OR</span>
+  <button class="sort-btn" (click)="toggleSort()"> Age {{ sortOrder === 'asc' ? '↑' : '↓' }}</button>
+</div>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of paginatedUsers">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.age}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <button (click)="previousPage()">Prev</button>
+  <button *ngFor="let page of pages" (click)="goToPage(page)">{{page}}  </button>
+  <button (click)="nextPage()">Next</button>
+  <div class="page-size">
+    <select [(ngModel)]="pageSize" (change)="changePageSize()">
+      <option *ngFor="let size of pageSizeArray" [value]="size">
+        {{size}}
+      </option>
+
+    </select>
+  </div>
+</div>
 </div>

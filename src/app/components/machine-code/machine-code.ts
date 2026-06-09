@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+import { TableUserData } from '../../models/TableUserModel';
 
 @Component({
   selector: 'app-machine-code',
@@ -493,4 +494,192 @@ modalCode =`.backdrop{
     <button (click)="closeModal()">close</button>
   </div>
 </div>`
+
+tableUsers: TableUserData[] = [];
+filteredTableUsers: TableUserData[] = [];
+paginatedUsers: TableUserData[] = [];
+searchTableText= '';
+minAge =0;
+sortOrder: 'asc'|'desc' = 'asc';
+currentPage =1;
+pageSize =5;
+totalPages =0;
+pageSizeArray = [5,10, 15,20];
+
+ngOnInit(){
+  this.tableUsers = Array.from({length:30}, (_,index)=>({
+    id:index,
+    name: `User ${index}`,
+    age: Math.floor(Math.random()*11)+20
+  }))
+  this.applyFilters();
+}
+applyFilters(){
+  this.filteredTableUsers = this.tableUsers.filter(user=>user.name.toLowerCase().includes(this.searchTableText.toLowerCase())).filter(user=> user.age >= this.minAge);
+  this.sortUsers();
+  this.currentPage=1;
+  this.updatePagination();
+}
+sortUsers(){
+  this.filteredTableUsers.sort((a,b)=>{
+    if(this.sortOrder=='asc') return a.age- b.age;
+    return b.age-a.age;
+  })
+}
+updatePagination(){
+  this.totalPages = Math.ceil(this.filteredTableUsers.length/ this.pageSize);
+  const startIndex = (this.currentPage-1)*this.pageSize;
+  const endIndex = startIndex+ this.pageSize;
+  this.paginatedUsers = this.filteredTableUsers.slice(startIndex, endIndex);
+}
+
+goToPage(number:number){
+  this.currentPage= number;
+  this.updatePagination();
+}
+previousPage(){
+  if(this.currentPage>1){
+    this.currentPage--;
+    this.updatePagination();
+  }
+}
+nextPage(){
+  if(this.currentPage < this.totalPages){
+    this.currentPage++;
+    this.updatePagination();
+  }
+}
+changePageSize(){
+  this.currentPage=1;
+  this.updatePagination();
+}
+changeSort(order: 'asc'| 'desc'){
+  this.sortOrder= order;
+  this.applyFilters();
+}
+toggleSort() {
+  this.sortOrder = this.sortOrder === 'asc'? 'desc' : 'asc';
+ this.applyFilters();
+}
+get pages(){
+  return Array.from({length: this.totalPages}, (_,i)=>i+1)  //[1...] start from 1
+  // return Array(this.totalPages).keys(); for the iterating pages to display provide it. give 0 index too not valid
+}
+
+paginationHtml = `<div class="controls">
+  <input type="text" [(ngModel)]="searchTableText" placeholder="Search Name..." (input)="applyFilters()" />
+  <input type="number" [(ngModel)]="minAge" placeholder="Min Age..." (input)="applyFilters()"/>
+
+  <button class="sort-btn" (click)="changeSort('asc')"> ASC</button>
+  <button class="sort-btn" (click)="changeSort('desc')">DSC </button>
+  <span>OR</span>
+  <button class="sort-btn" (click)="toggleSort()"> Age {{ sortOrder === 'asc' ? '↑' : '↓' }}</button>
+</div>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of paginatedUsers">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.age}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <button (click)="previousPage()">Prev</button>
+  <button *ngFor="let page of pages" (click)="goToPage(page)">{{page}}  </button>
+  <button (click)="nextPage()">Next</button>
+  <div class="page-size">
+    <select [(ngModel)]="pageSize" (change)="changePageSize()">
+      <option *ngFor="let size of pageSizeArray" [value]="size">
+        {{size}}
+      </option>
+
+    </select>
+  </div>
+</div>`;
+paginationTs= `Model Usage for the grouping Ts interface
+export interface TableUserData {
+    id: number;
+    name: string;
+    age: number;
+}
+
+tableUsers: TableUserData[] = [];
+filteredTableUsers: TableUserData[] = [];
+paginatedUsers: TableUserData[] = [];
+searchTableText= '';
+minAge =0;
+sortOrder: 'asc'|'desc' = 'asc';
+currentPage =1;
+pageSize =5;
+totalPages =0;
+pageSizeArray = [5,10, 15,20];
+
+ngOnInit(){
+  this.tableUsers = Array.from({length:30}, (_,index)=>({
+    id:index,
+    name: \`User \${index}\`,
+    age: Math.floor(Math.random()*11)+20
+  }))
+  this.applyFilters();
+}
+applyFilters(){
+  this.filteredTableUsers = this.tableUsers.filter(user=>user.name.toLowerCase().includes(this.searchTableText.toLowerCase())).filter(user=> user.age >= this.minAge);
+  this.sortUsers();
+  this.currentPage=1;
+  this.updatePagination();
+}
+sortUsers(){
+  this.filteredTableUsers.sort((a,b)=>{
+    if(this.sortOrder=='asc') return a.age- b.age;
+    return b.age-a.age;
+  })
+}
+updatePagination(){
+  this.totalPages = Math.ceil(this.filteredTableUsers.length/ this.pageSize);
+  const startIndex = (this.currentPage-1)*this.pageSize;
+  const endIndex = startIndex+ this.pageSize;
+  this.paginatedUsers = this.filteredTableUsers.slice(startIndex, endIndex);
+}
+
+goToPage(number:number){
+  this.currentPage= number;
+  this.updatePagination();
+}
+previousPage(){
+  if(this.currentPage>1){
+    this.currentPage--;
+    this.updatePagination();
+  }
+}
+nextPage(){
+  if(this.currentPage < this.totalPages){
+    this.currentPage++;
+    this.updatePagination();
+  }
+}
+changePageSize(){
+  this.currentPage=1;
+  this.updatePagination();
+}
+changeSort(order: 'asc'| 'desc'){
+  this.sortOrder= order;
+  this.applyFilters();
+}
+toggleSort() {
+  this.sortOrder = this.sortOrder === 'asc'? 'desc' : 'asc';
+ this.applyFilters();
+}
+get pages(){
+  return Array.from({length: this.totalPages}, (_,i)=>i+1)  //[1...] start from 1
+  // return Array(this.totalPages).keys(); for the iterating pages to display provide it. give 0 index too not valid
+}`;
 }
