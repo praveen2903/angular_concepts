@@ -155,13 +155,13 @@ Example
 ------------
 const subject = new Subject<string>();
 subject.next('Angular');
-subject.subscribe(data=>{
- console.log(data);
-});
+subject.subscribe(data=>{console.log(data);});
+subject.subscribe(data=>{console.log(data)})
 
 Output
 ------------
-Nothing Printed
+Angular  -->1st event
+Nothing Printed-> 2nd event
 `;
 
 behaviorSubjectCode = `
@@ -183,12 +183,12 @@ Example
 ------------
 const behavior = new BehaviorSubject('Initial');
 behavior.next('Angular');
-behavior.subscribe(data=>{
- console.log(data);
-});
+behavior.subscribe(data=>{console.log(data);});
+behavior.subscribe(data=>{console.log(data)})
 
-Output
+Output -- 2 events
 ------------
+Angular
 Angular
 
 Difference
@@ -204,8 +204,7 @@ switchMap
 
 Purpose
 ------------
-Cancels previous request.
-Most Asked RxJS Operator.
+Cancels previous request. Most Asked RxJS Operator.
 
 Used In
 ------------
@@ -217,8 +216,7 @@ Previous API call gets cancelled automatically.
 
 Example
 ------------
-search$.pipe( 
- debounceTime(500), switchMap(text =>
+search$.pipe(debounceTime(500), switchMap(text =>
   this.http.get('/search?q='+text)
  )
 ).subscribe();
@@ -285,7 +283,6 @@ addSkill(){
 `;
 
 changeDetectionCode = `Change Detection
-
 Purpose
 ------------
 Updates UI when data changes.
@@ -298,7 +295,6 @@ OnPush
 Interview Trap
 ------------
 Default Checks entire tree.
-
 OnPush
 
 Checks only when:
@@ -311,7 +307,10 @@ Example
 @Component({
  changeDetection: ChangeDetectionStrategy.OnPush
 })
-`;
+
+
+But ChangeDetectionRef -- used for setTimeouts, intervals to detect changes manually most used method detectChanges().
+as this auto changeDetectionStrategy don't work for macrotask/callback queues so need ref to inject to constructor and use.`;
 
 trackByCode = `trackBy
 
@@ -475,6 +474,18 @@ ngAfterViewInit(){
 
 angularTopics = [
   {
+    title:'Interplation',
+    code: this.dataBindingCode
+  },
+    {
+    title:'lifecycle',
+    code: this.lifecycleCode
+  },
+    {
+    title:'Data Injection',
+    code: this.diCode
+  },
+  {
     title: 'Observable',
     code: this.observableCode
   },
@@ -528,30 +539,18 @@ Core Snippet
 ------------
 search$ = new Subject<string>();
 
-search$
-.pipe(
- debounceTime(500),
- distinctUntilChanged(),
- switchMap(text =>
-   this.http.get(
-    '/users?q='+text
-   )
+search$.pipe(debounceTime(500), distinctUntilChanged(), switchMap(text =>
+   this.http.get('/users?q='+text)
  )
-)
-.subscribe();
+).subscribe();
 
 Implementation
 ------------
-<input
- (input)="search$.next(
-  $any($event.target).value
- )">
+<input (input)="search$.next($any($event.target).value)">
 
 Interview Trap
 ------------
-switchMap
-
-Cancels previous API call.
+switchMap: Cancels previous API call.
 
 Real Usage
 ------------
@@ -559,47 +558,31 @@ Amazon Search
 Google Search
 LinkedIn Search
 `;
-employeeFormCode = `
-Employee Registration
-
+employeeFormCode = `Employee Registration
 Problem
 ------------
 Add unlimited skills.
 
 Core Snippet
 ------------
-skills =
-this.fb.array([]);
+skills = this.fb.array([]);
 
 addSkill(){
-
- this.skills.push(
-  this.fb.control('')
- );
-
+ this.skills.push(this.fb.control(''));
 }
 
 Implementation
 ------------
 <div formArrayName="skills">
-
- <input
-  *ngFor="
-   let skill of skills.controls;
-   let i=index
-  "
-  [formControlName]="i">
-
+ <input *ngFor="let skill of skills.controls; let i=index" [formControlName]="i">
 </div>
 
 Interview Trap
 ------------
 Dynamic Fields
-
 => FormArray
 
 Fixed Fields
-
 => FormGroup
 
 Real Usage
@@ -609,48 +592,32 @@ Resume Builders
 Profile Pages
 `;
 
-shoppingCartCode = `
-Shopping Cart
-
+shoppingCartCode = `Shopping Cart
 Problem
 ------------
-Global cart state.
+Global cart state. Store stage so use the BehaviourSubject.
 
 Core Snippet
 ------------
-cart$ =
-new BehaviorSubject<any[]>(
- []
-);
+cart$ = new BehaviorSubject<any[]>([]);
 
 add(product:any){
-
- this.cart$.next([
-  ...this.cart$.value,
-  product
- ]);
-
+ this.cart$.next([...this.cart$.value, product]);
 }
 
 Implementation
 ------------
-this.cartService
-.cart$
-.subscribe(items=>{
-
+this.cartService.cart$.subscribe(items=>{
  this.items = items;
-
 });
 
 Interview Trap
 ------------
 BehaviorSubject
-
-Stores latest state.
+Stores latest state.Across the events.
 
 Subject
-
-Loses previous state.
+Loses previous state. On next event.
 
 Real Usage
 ------------
@@ -659,9 +626,7 @@ Flipkart
 Myntra
 `;
 
-infiniteScrollCode = `
-Infinite Scroll
-
+infiniteScrollCode = `Infinite Scroll
 Problem
 ------------
 Load more data while scrolling.
@@ -671,16 +636,8 @@ Core Snippet
 page = 1;
 
 loadMore(){
-
- this.api
- .getUsers(this.page++)
- .subscribe(data=>{
-
-  this.users = [
-   ...this.users,
-   ...data
-  ];
-
+ this.api.getUsers(this.page++).subscribe(data=>{
+    this.users = [...this.users,...data];
  });
 
 }
@@ -694,11 +651,9 @@ detects bottom element.
 Interview Trap
 ------------
 Append data
-
 ✔ Correct
 
 Replace data
-
 ❌ Wrong
 
 Real Usage
@@ -708,8 +663,7 @@ Facebook
 Twitter
 `;
 
-jwtAuthCode = `
-JWT Authentication
+jwtAuthCode = `JWT Authentication
 
 Problem
 ------------
@@ -718,33 +672,20 @@ Attach token automatically.
 Core Snippet
 ------------
 intercept(req,next){
-
- const authReq =
- req.clone({
-
+ const authReq = req.clone({
   setHeaders:{
-   Authorization:
-   'Bearer ' + token
+   Authorization: 'Bearer ' + token
   }
-
  });
-
- return next.handle(
-  authReq
- );
-
+ return next.handle(authReq);
 }
 
 Implementation
 ------------
 providers:[
  {
-  provide:
-  HTTP_INTERCEPTORS,
-
-  useClass:
-  AuthInterceptor,
-
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
   multi:true
  }
 ]
@@ -752,9 +693,7 @@ providers:[
 Interview Trap
 ------------
 Token Logic
-
 belongs in Interceptor
-
 NOT every component
 
 Real Usage
@@ -767,70 +706,99 @@ Route Guard
 
 Problem
 ------------
-Protect routes.
+Protect routes from
+unauthorized users.
 
 Core Snippet
 ------------
-canActivate(){
-
- return !!localStorage
- .getItem('token');
-
+@Injectable({
+ providedIn:'root'
+})
+export class AuthGuard implements CanActivate{
+ canActivate(){
+  return !!localStorage.getItem('token');
+ }
 }
 
 Implementation
 ------------
-{
- path:'dashboard',
- canActivate:[
-  AuthGuard
- ]
-}
+const routes: Routes = [
+ {
+  path:'dashboard',
+  component:DashboardComponent,
+  canActivate:[AuthGuard]
+ }
+];
+
+Flow
+------------
+User Navigates
+      ↓
+AuthGuard Runs
+      ↓
+Token Exists?
+
+Yes → Allow Route
+No  → Redirect Login
 
 Interview Trap
 ------------
 Authentication
+------------
+Who are you?
+Example: Valid JWT Token
 
-≠ Authorization
+Authorization
+------------
+What can you access?
+
+Example:
+Admin Page
+Manager Page
+User Page
+
+Advanced Example
+------------
+canActivate(){
+ const token =localStorage.getItem('token');
+
+ if(token){
+    return true;
+ }
+
+ this.router.navigate(['/login']);
+
+ return false;
+}
 
 Real Usage
 ------------
 Admin Panels
 Employee Portals
+Banking Apps
+E-Commerce Dashboards
 `;
 
-fileUploadCode = `
-File Upload
-
+fileUploadCode = `File Upload
 Problem
 ------------
 Upload images/documents.
 
 Core Snippet
 ------------
-const formData =
-new FormData();
+const formData = new FormData();
 
-formData.append(
- 'file',
- file
-);
+formData.append('file',file);
 
-this.http.post(
- '/upload',
- formData
-);
+this.http.post('/upload', formData);
 
 Implementation
 ------------
-<input
- type="file"
- (change)="upload($event)">
+<input type="file" (change)="upload($event)">
 
 Interview Trap
 ------------
 Use FormData
-
 NOT JSON
 
 Real Usage
@@ -840,8 +808,7 @@ Profile Images
 Documents
 `;
 
-chatCode = `
-Real Time Chat
+chatCode = `Real Time Chat
 
 Problem
 ------------
@@ -849,25 +816,17 @@ Instant messaging.
 
 Core Snippet
 ------------
-socket.on(
- 'message',
- data => {
-
-  this.messages.push(
-   data
-  );
-
+socket.on('message', data => {
+  this.messages.push(data);
  });
 
 Implementation
 ------------
-WebSocket
-Socket.IO
+WebSocket, Socket.IO
 
 Interview Trap
 ------------
-Always unsubscribe
-on destroy.
+Always unsubscribe on destroy.
 
 Real Usage
 ------------
@@ -876,8 +835,7 @@ Slack
 Teams
 `;
 
-kanbanCode = `
-Kanban Board
+kanbanCode = `Kanban Board
 
 Problem
 ------------
@@ -886,24 +844,16 @@ Move cards between columns.
 Core Snippet
 ------------
 onDrop(event){
-
- moveItemInArray(
-  this.tasks,
-  event.previousIndex,
-  event.currentIndex
- );
-
+ moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
 }
 
 Implementation
 ------------
-Angular CDK
-DragDropModule
+Angular CDK DragDropModule
 
 Interview Trap
 ------------
-Most companies expect
-Angular CDK solution.
+Most companies expect Angular CDK solution.
 
 Real Usage
 ------------
@@ -913,8 +863,7 @@ Azure Boards
 `;
 
 
-typeaheadCacheCode = `
-Typeahead Cache
+typeaheadCacheCode = `Typeahead Cache
 
 Problem
 ------------
@@ -922,32 +871,18 @@ Avoid duplicate API calls.
 
 Core Snippet
 ------------
-cache =
-new Map();
-
-if(
- cache.has(search)
-){
-
- return of(
-  cache.get(search)
- );
-
+cache = new Map();
+if(cache.has(search)){
+ return of(cache.get(search));
 }
 
 Implementation
 ------------
-Store response
-inside cache map.
+Store response inside cache map.
 
 Interview Trap
 ------------
-Most candidates build
-search only.
-
-Senior candidates
-
-add caching.
+Most candidates build search only. add caching.
 
 Real Usage
 ------------
@@ -956,4 +891,46 @@ Amazon
 Netflix
 `;
 
+angularMachineCodingTopics = [
+  {
+    title: 'Search Autocomplete',
+    code: this.searchMachineCode
+  },
+  {
+    title: 'Employee Registration Form',
+    code: this.employeeFormCode
+  },
+  {
+    title: 'Shopping Cart State Management',
+    code: this.shoppingCartCode
+  },
+  {
+    title: 'Infinite Scroll',
+    code: this.infiniteScrollCode
+  },
+  {
+    title: 'JWT Authentication',
+    code: this.jwtAuthCode
+  },
+  {
+    title: 'Route Guard',
+    code: this.routeGuardCodeImplement
+  },
+  {
+    title: 'File Upload',
+    code: this.fileUploadCode
+  },
+  {
+    title: 'Real Time Chat',
+    code: this.chatCode
+  },
+  {
+    title: 'Kanban Board',
+    code: this.kanbanCode
+  },
+  {
+    title: 'Typeahead Cache',
+    code: this.typeaheadCacheCode
+  }
+];
 }

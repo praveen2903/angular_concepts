@@ -1,7 +1,8 @@
 <div class="page">
 
   <h2>Angular RxJS Demo (Reactive Extension for JavaScript)</h2>
-
+<h4>users -> Normal Variable</h4>
+<h4>users$ -> Observable Stream need of $ sign means data coming from the http consumed by subscribe</h4>
 <section class="card">
     <pre class="flow-box">
 RxJS Operators
@@ -115,7 +116,7 @@ No value received
 <hr>
 
 <h2>BehaviorSubject Example</h2>
-
+<pre [textContent]="behaviorSubjectExample"></pre>
 <button (click)="updateBehaviorSubject()">
   Update BehaviorSubject
 </button>
@@ -213,5 +214,16 @@ Static Data         →         of()
 <section class="card">
   <h2>Memory Management</h2>
   <pre>{{ takeUntilCode }}</pre>
+</section>
+<section class="card">
+      <h2>Tap Demo usage</h2>
+      <pre [textContent]="tapDemo"></pre>
+</section>
+
+<h2>RXJS usage industry example</h2>
+<section class="card">
+      <pre [textContent]="searchComponentService"></pre>
+      <pre [textContent]="searchComponentTs"></pre>
+      <pre [textContent]="searchComponentHtml"></pre>
 </section>
 </div>
