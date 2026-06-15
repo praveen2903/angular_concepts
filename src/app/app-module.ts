@@ -22,6 +22,7 @@ import { SearchAutocomplete } from './components/search-autocomplete/search-auto
 import { MachineCode } from './components/machine-code/machine-code';
 import { AsyncMachineCodes } from './components/async-machine-codes/async-machine-codes';
 import { NodeJs } from './components/node-js/node-js';
+import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { NodeJs } from './components/node-js/node-js';
     MachineCode,
     AsyncMachineCodes,
     NodeJs,
+    PgsqlDemo,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

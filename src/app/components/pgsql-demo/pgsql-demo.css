@@ -1,0 +1,310 @@
+/* ============================================
+   STICKY NAVIGATION BAR
+   ============================================ */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(90deg, #0d1117 0%, #161b22 100%);
+  border-bottom: 1px solid #30363d;
+  padding: 10px 24px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.nav-brand {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #58a6ff;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav-links a {
+  color: #8b949e;
+  text-decoration: none;
+  font-size: 0.78rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #30363d;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: #f0f6fc;
+  background: #21262d;
+  border-color: #58a6ff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
+}
+
+/* ============================================
+   SCROLL TO TOP BUTTON
+   ============================================ */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #238636, #2ea043);
+  color: #fff;
+  border: 2px solid #3fb950;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(46, 160, 67, 0.45);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-top-btn:hover {
+  background: linear-gradient(135deg, #2ea043, #3fb950);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 24px rgba(63, 185, 80, 0.6);
+}
+
+.scroll-top-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ============================================
+   LAYOUT & PAGE
+   ============================================ */
+.page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  scroll-margin-top: 60px;
+}
+
+.section {
+  padding: 30px;
+  scroll-margin-top: 60px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.card {
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  scroll-margin-top: 70px;
+}
+
+.definition {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.demo-box {
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+/* ============================================
+   SQL CODE / PRE
+   ============================================ */
+.sql-container {
+  padding: 20px;
+}
+
+.sql-container h2 {
+  margin-bottom: 16px;
+}
+
+.sql-code {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 700px;
+}
+
+pre {
+  background: #0d1117;
+  color: #7ee787;
+  padding: 15px;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.sql {
+  color: #58a6ff;
+}
+
+.flow-box {
+  background: #111;
+  color: #00ff90;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th {
+  background: #222;
+  color: white;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: #f7f7f7;
+}
+
+tbody tr:hover {
+  background: #ececec;
+}
+
+/* ============================================
+   ALTER COMMANDS
+   ============================================ */
+.alter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 24px;
+}
+
+.alter-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+}
+
+.alter-card h2 {
+  margin-bottom: 10px;
+}
+
+.box {
+  margin-top: 15px;
+}
+
+.note {
+  margin-top: 15px;
+  padding: 12px;
+  background: #21262d;
+  border-left: 4px solid orange;
+}
+
+/* ============================================
+   UPDATE QUERIES
+   ============================================ */
+.summary-box {
+  margin-bottom: 24px;
+}
+
+.update-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+.update-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+}
+
+.info-box {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #21262d;
+  border-left: 4px solid #58a6ff;
+  color: #8b949e;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   SQL CONCEPTS & JOINS
+   ============================================ */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+.concept-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+}
+
+.section-box {
+  margin-top: 14px;
+  background: #0d1117;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #21262d;
+}
+
+.section-box h4 {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8b949e;
+}
+
+/* ============================================
+   JOINS IMAGE
+   ============================================ */
+.join-image {
+  width: 90%;
+  max-width: 1400px;
+  height: auto;
+  display: block;
+  margin: 30px auto;
+  object-fit: contain;
+}

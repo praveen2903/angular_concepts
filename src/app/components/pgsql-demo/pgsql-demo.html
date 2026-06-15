@@ -1,0 +1,215 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🐘 PostgreSQL Guide</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-setup')">📜 Setup</a>
+    <a (click)="scrollToSection('section-constraints')">🔒 Constraints</a>
+    <a (click)="scrollToSection('section-indexes')">📑 Indexes</a>
+    <a (click)="scrollToSection('section-btree')">🌳 B+ Tree</a>
+    <a (click)="scrollToSection('section-er')">🔗 ER Diagram</a>
+    <a (click)="scrollToSection('section-alter')">🛠️ ALTER</a>
+    <a (click)="scrollToSection('section-update')">✏️ UPDATE</a>
+    <a (click)="scrollToSection('section-queries')">🔍 Queries</a>
+    <a (click)="scrollToSection('section-joins')">🤝 Joins</a>
+  </div>
+</nav>
+
+<!-- Page 1 -->
+<div class="page" id="section-setup">
+  <h1>PostgreSQL Database Concepts</h1>
+
+  <!-- SQL Script Section -->
+  <div class="card">
+    <h2>📜 Complete PostgreSQL Setup Script</h2>
+    <div class="sql-container">
+      <pre class="sql-code">{{ sqlScript }}</pre>
+    </div>
+  </div>
+
+  <!-- Constraints Section -->
+  <div class="card" id="section-constraints">
+    <h2>🔒 Database Constraints</h2>
+    <p class="definition">
+      Constraints enforce rules on data in tables to ensure accuracy and reliability.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Constraint</th>
+          <th>Purpose</th>
+          <th>SQL Example</th>
+          <th>Valid Data</th>
+          <th>Invalid Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let constraint of constraints">
+          <td>{{ constraint.title }}</td>
+          <td>{{ constraint.definition }}</td>
+          <td><pre>{{ constraint.sql }}</pre></td>
+          <td><pre>{{ constraint.valid }}</pre></td>
+          <td><pre>{{ constraint.invalid }}</pre></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Indexes Section -->
+  <div class="card" id="section-indexes">
+    <h2>📑 Indexes</h2>
+    <p class="definition">
+      Indexes speed up data retrieval (SELECT queries) but can slow down data insertion/update.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Visual Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let index of indexes">
+          <td><strong>{{ index.title }}</strong></td>
+          <td>{{ index.description }}</td>
+          <td><pre>{{ index.example }}</pre></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- B+ Tree Visualization -->
+  <div class="card" id="section-btree">
+    <h2>🌳 B+ Tree Structure</h2>
+    <p class="definition">
+      B+ Tree is a self-balancing tree data structure that keeps data sorted and allows fast search, insert, and delete operations.
+    </p>
+    <div class="demo-box">
+      <pre>{{ bPlusTree }}</pre>
+    </div>
+  </div>
+
+  <!-- ER Diagram -->
+  <div class="card" id="section-er">
+    <h2>🔗 Entity-Relationship Diagram</h2>
+    <p class="definition">
+      Shows relationships between tables in the database schema.
+    </p>
+    <div class="demo-box">
+      <pre>{{ relationshipDiagram }}</pre>
+    </div>
+  </div>
+
+  <!-- ALTER TABLE -->
+  <section class="section" id="section-alter">
+    <h1>🛠️ ALTER TABLE Commands</h1>
+    <div class="alter-grid">
+      <div class="alter-card" *ngFor="let item of alterCommands">
+        <h2>{{ item.icon }} {{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+        <div class="box">
+          <h4>Before</h4>
+          <pre>{{ item.before }}</pre>
+        </div>
+        <div class="box">
+          <h4>SQL Command</h4>
+          <pre class="sql">{{ item.sql }}</pre>
+        </div>
+        <div class="box">
+          <h4>After</h4>
+          <pre>{{ item.after }}</pre>
+        </div>
+        <div class="note">💡 {{ item.note }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPDATE Queries -->
+  <section class="section" id="section-update">
+    <h1>✏️ UPDATE Queries in SQL</h1>
+    <div class="summary-box">
+      <table>
+        <tr><th>Category</th><th>Purpose</th></tr>
+        <tr><td>Basic Update</td><td>Modify existing values</td></tr>
+        <tr><td>Conditional Update</td><td>Use WHERE clause</td></tr>
+        <tr><td>Subquery Update</td><td>Use results from another query</td></tr>
+        <tr><td>CASE Update</td><td>Multiple conditions</td></tr>
+        <tr><td>Aggregate Update</td><td>Use MAX, SUM, AVG etc.</td></tr>
+      </table>
+    </div>
+
+    <div class="update-grid">
+      <div class="update-card" *ngFor="let item of updateExamples">
+        <h2>{{ item.icon }} {{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+        <pre class="sql">{{ item.sql }}</pre>
+        <div class="info-box">{{ item.explanation }}</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Page 2: SQL Queries -->
+<div class="page" id="section-queries">
+  <h1>🔍 SQL Query Showcase</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of sqlConcepts">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p>{{ item.purpose }}</p>
+
+      <div class="section-box">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.demo">
+        <h4>Input Data</h4>
+        <pre>{{ item.demo }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Output</h4>
+        <pre>{{ item.result }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page 3: Joins -->
+<div class="page" id="section-joins">
+  <h1>🤝 SQL Joins Showcase</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of joinConcepts">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p>{{ item.purpose }}</p>
+
+      <pre>{{ item.explanation }}</pre>
+
+      <div class="section-box">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.demo">
+        <h4>Input Data</h4>
+        <pre>{{ item.demo }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Output</h4>
+        <pre>{{ item.result }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <img [src]="'joins.png'" alt="SQL Joins" class="join-image" />
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

@@ -14,6 +14,7 @@ import { ReactInterview } from './components/react-interview/react-interview';
 import { MachineCode } from './components/machine-code/machine-code';
 import { AsyncMachineCodes } from './components/async-machine-codes/async-machine-codes';
 import { NodeJs } from './components/node-js/node-js';
+import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
   {
     path:'node-js',
     component: NodeJs
+  }, 
+  {
+    path:'pgsql',
+    component:PgsqlDemo
   }
 ];
 
