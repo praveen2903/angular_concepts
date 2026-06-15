@@ -64,10 +64,11 @@ export class ReactiveFormsValidations implements OnInit {
     alert('Form Submitted');
   }
 
-  formsTsCode = `  registrationForm!: FormGroup;
-
+  formsTsCode = `
+  registrationForm!: FormGroup;
   submitted = false;
   constructor(private fb: FormBuilder) {}  //dependency injection 
+  
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       fullName: ['', [ Validators.required, Validators.minLength(3)]],
@@ -118,75 +119,72 @@ export class ReactiveFormsValidations implements OnInit {
   }`
 
   formshtmlcode = `<section class="card">
-
 <form [formGroup]="registrationForm" (ngSubmit)="submitForm()">
-<label>Full Name</label>
-
-<input type="text" formControlName="fullName"/>
-<div class="error" *ngIf="submitted && f['fullName'].errors">
-
-<span *ngIf="f['fullName'].errors['required']">Name Required</span>           //validator has 2 types errors required and minlength
-<span *ngIf="f['fullName'].errors['minlength']">Minimum 3 Characters</span>
-</div>
+  <label>Full Name</label>
+  <input type="text" formControlName="fullName"/>
+  <div class="error" *ngIf="submitted && f['fullName'].errors">
+    <span *ngIf="f['fullName'].errors['required']">Name Required</span>           //validator has 2 types errors required and minlength
+    <span *ngIf="f['fullName'].errors['minlength']">Minimum 3 Characters</span>
+  </div>
 
 <hr>
 
 <!-- EMAIL -->
 
-<label>Email</label>
+    <label>Email</label>
 
-<input type="email" formControlName="email">
+    <input type="email" formControlName="email">
 
-<div class="error" *ngIf="submitted && f['email'].errors">
-<span *ngIf="f['email'].errors['required']">Email Required</span>  //validator type here 2 types required and email so distinguish
-<span *ngIf="f['email'].errors['email']">Invalid Email</span>
-</div>
+    <div class="error" *ngIf="submitted && f['email'].errors">
+      //validator type here 2 types required and email so distinguish
+      <span *ngIf="f['email'].errors['required']">Email Required</span>
+      <span *ngIf="f['email'].errors['email']">Invalid Email</span>
+    </div>
 
-<hr>
+    <hr>
 
-<!-- MOBILE -->
+  <!-- MOBILE -->
 
-<label>Mobile</label>
-<input formControlName="mobile"/>
-<div class="error" *ngIf="submitted && f['mobile'].errors">Invalid Mobile Number</div>
-<hr>
+    <label>Mobile</label>
+    <input formControlName="mobile"/>
+    <div class="error" *ngIf="submitted && f['mobile'].errors">Invalid Mobile Number</div>
+    <hr>
 
-<!-- AGE -->
+  <!-- AGE -->
 
-<label>Age</label>
-<input type="number" formControlName="age"/>
-<div class="error" *ngIf="submitted &&  f['age'].errors">Must Be 18+</div>
-<hr>
+    <label>Age</label>
+    <input type="number" formControlName="age"/>
+    <div class="error" *ngIf="submitted &&  f['age'].errors">Must Be 18+</div>
+    <hr>
 
-<!-- GENDER -->
-<label>Gender</label>
-<select formControlName="gender">
-    <option value="">Select</option>
-    <option>Male</option>
-    <option>Female</option>
-</select>
-<div class="error" *ngIf="submitted && f['gender'].errors">Select Gender</div>
-<hr>
+ <!-- GENDER -->
+    <label>Gender</label>
+    <select formControlName="gender">
+        <option name ='gender' value="">Select</option>
+        <option name='gender' value='male'>Male</option>
+        <option name='gender' value='female'>Female</option>
+    </select>
+    <div class="error" *ngIf="submitted && f['gender'].errors">Select Gender</div>
+    <hr>
 
 <!-- PASSWORD -->
 
-<label>Password</label>
-<input type="password" formControlName="password"/>
-<div class="error" *ngIf="submitted && f['password'].errors">Minimum 8 Characters</div>
-<hr>
+    <label>Password</label>
+    <input type="password" formControlName="password"/>
+    <div class="error" *ngIf="submitted && f['password'].errors">Minimum 8 Characters</div>
+    <hr>
 
 <!-- FORM ARRAY -->
-<h3>Skills</h3>
-<div formArrayName="skills">
-    <div *ngFor="let skill of skills.controls;
-                    let i=index" style="display: flex; gap: 20px;">
-        <input [type]="'text'" [formControlName]="i"/>
-        <button type="button" (click)="removeSkill(i)">Remove </button>
+    <h3>Skills</h3>
+    <div formArrayName="skills">
+        <div *ngFor="let skill of skills.controls; let i=index" style="display: flex; gap: 20px;">
+            <input [type]="'text'" [formControlName]="i"/>
+            <button type="button" (click)="removeSkill(i)">Remove </button>
+        </div>
     </div>
-</div>
-<button type="button" (click)="addSkill()">Add Skill</button>
-<hr>
-<button type="submit">Register</button>
-</form>
+    <button type="button" (click)="addSkill()">Add Skill</button>
+    <hr>
+    <button type="submit">Register</button>
+  </form>
 </section>`
 }

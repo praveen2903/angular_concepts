@@ -14,6 +14,14 @@ export class StructuralDirectives {
 {{ i }} -{{ skill }} | First: {{ first }}| Last: {{ last }}
 </div>`;
 
+ngifelseTemplate = `<div *ngIf="showCourses; else noCourses">
+  <p *ngFor="let skill of skills">{{skill}}</p>
+</div>
+
+<ng-template #noCourses>
+  <p>No Courses Available</p>
+</ng-template>`
+
 trackbyUsage =`State 1 (Current UI)
 ══════════════════════════════════════
 User A: {id: 'u101',name: 'Alice'} //Rendered in DOM Node #1
@@ -31,19 +39,21 @@ trackby = `<div *ngFor="let user of users;
     trackBy: trackByUserId">
   {{ user.id }} - {{ user.name }}
 </div>`
+
 oddEvenCode = `<div *ngFor="
     let skill of skills;
     let even = even;
     let odd = odd">
   {{ skill }}| Even : {{ even }}| Odd : {{ odd }}
 </div>`
-  ngIfElseCode = `<div *ngIf="condition; else block">
-  ----------True condition code -----------------
-  </div>
 
-  <ng-template #block>
+  ngIfElseCode = `
+<div *ngIf="condition; else block">
+  ----------True condition code -----------------
+</div>
+<ng-template #block>
   ----else condition code ------------------
-  </ng-template>`
+</ng-template>`
 
   ngifcode = `<div *ngIf="!loggedIn" class="danger-box">
   User Logged Out
@@ -71,13 +81,12 @@ ngswitchcode =`TS: selectedRole='Admin'
     </tr>
   </thead>
   <tbody>
-    <tr
-      *ngFor="let emp of employees;
+    <tr *ngFor="let emp of employees;
         let even = even;
         let odd = odd"
       [class.even-row]="even"
-      [class.odd-row]="odd"
-    >
+      [class.odd-row]="odd">
+    
       <td>{{ emp.id }}</td>
       <td>{{ emp.name }}</td>
       <td>{{ emp.salary }}</td>

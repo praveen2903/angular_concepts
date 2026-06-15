@@ -194,9 +194,7 @@ JWT Token
 Store Token
        ↓
 Navigate Dashboard
-
 --------------------------------
-
 Products Component
        ↓
 ProductService
@@ -206,9 +204,7 @@ REST API
 Products Data
        ↓
 Render UI
-
 --------------------------------
-
 Cart Component
        ↓
 CartService
@@ -217,8 +213,7 @@ Add Item
        ↓
 Update Count
        ↓
-Navbar Updated
-`;
+Navbar Updated`;
 
 
 serviceInterviewCode = `Q. Why Services?
@@ -351,9 +346,9 @@ export class ServicesDemo {
     return this.http.get(\`\${this.api}/\${id}\`);
   }
 
-  /* ====================================
+  /* =========================================================
       QUERY PARAMS   http://localhost:5200?name=..&page = ...
-  ==================================== */
+  ==================================== ==========================*/
 
   searchUsers(name: string, role: string) {
     const params = new HttpParams().set('name', name).set('role', role);
@@ -380,8 +375,7 @@ serviceInjectionToComponent=`users: any[] = [];
   constructor(private servicesDemo: ServicesDemo) {}
 
   loadUsers() {
-    this.servicesDemo.getUsers().subscribe({
-        next: (response:any) => {
+    this.servicesDemo.getUsers().subscribe({next: (response:any) => {   //observable stream
           console.log('GET SUCCESS',response);
           this.users = response;
         },
@@ -428,7 +422,7 @@ serviceInjectionToComponent=`users: any[] = [];
   }
 
   deleteUser() {
-    this.servicesDemo.deleteUser(101).subscribe(response => {
+    this.servicesDemo.deleteUser(101).subscribe(response =>{
         console.log('DELETE SUCCESS',response);
 
       });
@@ -491,11 +485,13 @@ serviceInjectionToComponent=`users: any[] = [];
 
 templateRefUse = `what's use since [(ngModel)] provide two-way binding right?
 
-
 ----interdom communication 
+TS:
+userInput
+
+HTML:
 <input #userInput type="text">
 <p>Hello, {{ userInput.value }}</p> 
-
 
 -- invoke DOM directly 
 <video #moviePlayer src="promo.mp4"></video>
@@ -541,10 +537,11 @@ export class CustomModalComponent {
 
 
 -- query elements in typescript
-// Component Template binding ref variable to html 
+HTML:- template ref variable to html 
 <div #chartContainer></div>
 
-// Component TypeScript Logic
+TS: viewchild need dom element ref
+
 @ViewChild('chartContainer') 
 chart!: ElementRef<HTMLDivElement>;
 

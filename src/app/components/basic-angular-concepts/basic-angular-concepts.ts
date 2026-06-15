@@ -16,7 +16,13 @@ ngStyleCodes = `<div
 >
   Employee
 </div>
-`
+`;
+
+ngModelDemo =`<input type="text" [(ngModel)]="searchText" placeholder="Search..."  (keyup.enter)="search()" />
+  <button (click)="search()">Search</button>
+--------------------------------------------------- or call method on entering input like (input) --eventbinding
+  <input type="text" [(ngModel)]="searchText" (input)="search()" placeholder="search...">`
+
   stylebindingcode = `<div [style.color]="isRed ? 'red':'green'" [style.font-size.px]="20" [style.font-weight]="bold">
   ___________________________________________________________________________________
   <button (click)="toggleTheme()">Toggle Color</button>
@@ -25,8 +31,8 @@ ________________________________________________________________________________
 <div [style.background]="salary > 50000 ? 'lightgreen' : 'lightcoral'">
   Employee Salary : {{ salary }}
 </div>`
-ngClass = `<div [class.active]="active" [class.disabled]="disabled" [class.highlight]="highlight">
 
+ngClass = `<div [class.active]="active" [class.disabled]="disabled" [class.highlight]="highlight">
 active = true;
 disabled = false;
 highlight = true;
@@ -47,7 +53,9 @@ _____________________________________________________________
 .busy{
   color:orange;
 }`
-classbindingcode = `<button (click)="toggleLogin()">Toggle Login</button>
+classbindingcode = `[class.className] -- the .className will be written in the css file
+
+<button (click)="toggleLogin()">Toggle Login</button>
 <h3 [class.success]="loggedIn" [class.danger]="!loggedIn">
   User Status
 </h3>
@@ -66,21 +74,16 @@ classbindingcode = `<button (click)="toggleLogin()">Toggle Login</button>
 _____________________________________________________________________________________
 <table>
   <tr
-    *ngFor="
-      let emp of employees;
+    *ngFor="let emp of employees;
       let isEven = even;
-      let isOdd = odd
-    "
-    [class.even-row]="isEven"
-    [class.odd-row]="isOdd"
-  >
+      let isOdd = odd"
 
+    [class.even-row]="isEven"
+    [class.odd-row]="isOdd">    
     <td>{{ emp.id }}</td>
     <td>{{ emp.name }}</td>
     <td>{{ emp.salary }}</td>
-
   </tr>
-
 </table>
 
 

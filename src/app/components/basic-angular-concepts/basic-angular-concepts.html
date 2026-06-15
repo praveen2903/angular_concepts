@@ -252,18 +252,8 @@ User Input
 
     <h3>Behind The Scenes</h3>
 
-    <pre>
-[value]="name"
-
-+
-
-(input)="name=$event.target.value"
-
-=
-
-[(ngModel)]="name"
-    </pre>
-
+    <pre>[value]="name" + (input)="name=$event.target.value" = [(ngModel)]="name"</pre>
+    <pre>{{ngModelDemo}}</pre>
     <h3>Common Traps</h3>
 
     <ul>
@@ -316,13 +306,9 @@ UI Updated
 
   <pre>
 [style.color]
-
 [style.background]
-
 [style.font-size.px]
-
 [style.width.px]
-
 [style.display]
   </pre>
 

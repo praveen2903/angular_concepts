@@ -39,7 +39,11 @@ export class ModelsUsage implements OnInit {
     this.openModal = false;
   }
 
-  modelDemoCode = `export interface User {
+  modelDemoCode = `Acts same like type & interface to the angular services.
+Mostly used in services & forms
+Used to define structure of data that will be sent to backend & received from backend
+
+  export interface User {
   id: number;
   name: string;
   username: string;
@@ -143,11 +147,9 @@ export interface User {
 ✅ Reusable
 ✅ Easy Refactoring`
 randomDefs= `
-
 ╔══════════════════════════════════════════════════════╗
 ║             ANGULAR COMPLETE ARCHITECTURE           ║
 ╚══════════════════════════════════════════════════════╝
-
 Browser
    ↓
 main.ts
@@ -170,26 +172,21 @@ Observable
    ↓
 UI Update
 
-
 ═══════════════════════════════════════════════════════
 1. COMPONENT
 ═══════════════════════════════════════════════════════
-
 Purpose: UI Building Block
-
 Contains:
 • HTML
 • CSS
 • TypeScript
 
 Example:
-
 @Component({
- selector:'app-user',
- templateUrl:'./user.html',
- styleUrl:'./user.css'
+ selector:'app-user',  -- name of the component when we use it in other components
+ templateUrl:'./user.html', -- path to the html file
+ styleUrl:'./user.css'  -- path to the css file
 })
-
 export class UserComponent {}
 
 Used For:
@@ -198,14 +195,10 @@ Used For:
 • Product Card
 • Navbar
 • Sidebar
-
-
 ═══════════════════════════════════════════════════════
 2. TEMPLATE
 ═══════════════════════════════════════════════════════
-
 Purpose: HTML View Of Component
-
 Features:
 • Interpolation
 • Property Binding
@@ -218,16 +211,16 @@ Example:
 [disabled]="isLoading"
 [(ngModel)]="name"
 
-
 ═══════════════════════════════════════════════════════
 3. MODULE
 ═══════════════════════════════════════════════════════
-
 Purpose: Groups Angular Features
 Example:
 @NgModule({
- declarations:[...],
- imports:[...]
+ declarations:[...], -- components,directive,pipe which are used in this module
+ imports:[...],      -- modules which are imported from other modules
+ providers:[...],    -- services which are used in this module
+ bootstrap:[]        -- components which are used in this module
 })
 
 Types:
