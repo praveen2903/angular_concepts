@@ -1,0 +1,105 @@
+<div class="container mt-4">
+
+  <h1 class="text-center mb-5">
+    <span class="me-2">🗄️</span>
+    PostgreSQL Queries
+    <span class="ms-2">🗄️</span>
+  </h1>
+
+  <!-- SQL Features -->
+  <div class="card mb-5">
+    <div class="card-header bg-primary text-white">
+      <h3>Database Features</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let feature of sqlImportantQueries; let i=index;">
+          <div class="feature-box">
+            <h4>{{ feature.icon }} {{ i+1 }}. {{ feature.title }}</h4>
+            <p>{{ feature.purpose }}</p>
+            <div class="row" *ngFor="let query of feature.methods">
+              <h5>{{query.name}}</h5>
+              <pre>{{query.query}}</pre>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr;; gap: 30px;">
+            <pre>{{feature.input}}</pre>
+            <pre>{{feature.output}}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SQL Scripts -->
+  <div class="card mb-5">
+    <div class="card-header bg-success text-white">
+      <h3>SQL Scripts</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6" *ngFor="let script of stringAndJoins; let i=index;">
+          <div class="feature-box">
+            <h4>{{ script.icon }} {{ i+1 }}. {{ script.title }}</h4>
+            <!-- <div *ngFor="let item of script.concepts">
+              <h5>{{item.name}}</h5>
+              <pre>{{item.purpose}}</pre>
+              <div *ngFor = "let query of item.methods">
+                <h5>{{query.name}}</h5>
+                <pre>{{query.query}}</pre>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr;; gap: 30px;">
+                <pre>{{item.input}}</pre>
+                <pre>{{item.output}}</pre>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<pre>{{joinsUsage}}</pre>
+  <!-- Common SQL Problems -->
+  <div class="card mb-5">
+    <div class="card-header bg-warning text-dark">
+      <h3>Common SQL Problems</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6" *ngFor="let query of windowFunctionsSample; let i=index;">
+          <div class="feature-box">
+            <h4>{{ query.icon }} {{ i+1 }}. {{ query.title }}</h4>
+            <p>{{ query.purpose }}</p>
+            <pre>{{ query.query }}</pre>
+            <pre>{{ query. whyNeeded}}</pre>
+            <div style="display: grid; grid-template-columns: 1fr 1fr;; gap:30px;">
+              <pre>{{query.input}}</pre>
+              <pre>{{query.output}}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SQL Interview Questions -->
+  <div class="card mb-5">
+    <div class="card-header bg-info text-dark">
+      <h3>Window Functions</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6" *ngFor="let question of windowFunctionQueries; let i=index;">
+          <div class="feature-box">
+            <h4>{{ question.icon }} {{ i+1 }}. {{ question.title }}</h4>
+            <p>{{ question.purpose }}</p>
+            <pre>{{ question.query }}</pre>
+            <div style="display: grid; grid-template-columns: repeat(2,1fr);">
+                <pre>{{question.input}}</pre>
+                <pre>{{question.output}}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

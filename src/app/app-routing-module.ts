@@ -15,6 +15,7 @@ import { MachineCode } from './components/machine-code/machine-code';
 import { AsyncMachineCodes } from './components/async-machine-codes/async-machine-codes';
 import { NodeJs } from './components/node-js/node-js';
 import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
+import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
 
 const routes: Routes = [
   {
@@ -73,6 +74,10 @@ const routes: Routes = [
   {
     path:'pgsql',
     component:PgsqlDemo
+  },
+  {
+    path:'queries',
+    component: PgsqlQueries
   }
 ];
 
