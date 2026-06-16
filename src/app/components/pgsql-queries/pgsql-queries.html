@@ -53,18 +53,153 @@
         <div class="col-md-6" *ngFor="let script of stringAndJoins; let i=index;">
           <div class="feature-box">
             <h4>{{ script.icon }} {{ i+1 }}. {{ script.title }}</h4>
-            <!-- <div *ngFor="let item of script.concepts">
-              <h5>{{item.name}}</h5>
-              <pre>{{item.purpose}}</pre>
-              <div *ngFor = "let query of item.methods">
-                <h5>{{query.name}}</h5>
-                <pre>{{query.query}}</pre>
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr;; gap: 30px;">
-                <pre>{{item.input}}</pre>
-                <pre>{{item.output}}</pre>
-              </div>
-            </div> -->
+<div *ngFor="let section of stringAndJoins">
+
+  <!-- Section Header -->
+  <div style="margin:30px 0;">
+    <h2>
+      {{section.icon}} {{section.title}}
+    </h2>
+  </div>
+
+  <!-- STRING FUNCTIONS / LIKE -->
+  <div *ngIf="section.concepts">
+
+    <div
+      *ngFor="let item of section.concepts"
+      style="
+        border:1px solid #ddd;
+        padding:20px;
+        margin-bottom:25px;
+        border-radius:8px;
+      "
+    >
+
+      <h4>{{item.name}}</h4>
+
+      <p *ngIf="item.purpose">
+        <b>Purpose:</b> {{item.purpose}}
+      </p>
+
+      <div *ngIf="item.methods">
+        <div *ngFor="let method of item.methods">
+          <h5>{{method.name}}</h5>
+
+          <pre>{{method.query}}</pre>
+
+        </div>
+
+      </div>
+
+      <div *ngIf="item.query">
+        <h5>Query</h5>
+        <pre>{{item.query}}</pre>
+      </div>
+
+      <div
+        style="
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:20px;
+          margin-top:15px;
+        "
+      >
+
+        <div>
+          <h5>Input</h5>
+          <pre>{{item.input}}</pre>
+        </div>
+
+        <div>
+          <h5>Output</h5>
+          <pre>{{item.output}}</pre>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- JOINS / ADVANCED EXAMPLES -->
+  <div *ngIf="!section.concepts">
+
+    <div
+      style="
+        border:1px solid #ddd;
+        padding:20px;
+        margin-bottom:25px;
+        border-radius:8px;
+      "
+    >
+
+      <p *ngIf="section.purpose">
+        <b>Purpose:</b>
+      </p>
+      <pre *ngIf="section.purpose">{{section.purpose}}</pre>
+
+      <p *ngIf="section.whenToUse">
+        <b>When To Use:</b>
+      </p>
+      <pre *ngIf="section.whenToUse">{{section.whenToUse}}</pre>
+
+      <!-- Methods -->
+      <div *ngIf="section.methods">
+
+        <div *ngFor="let method of section.methods">
+
+          <h5>{{method.name}}</h5>
+
+          <pre>{{method.query}}</pre>
+
+        </div>
+
+      </div>
+
+      <!-- Direct Query -->
+      <div *ngIf="section.query">
+
+        <h5>Query</h5>
+
+        <pre>{{section.query}}</pre>
+
+      </div>
+
+      <!-- Input Output -->
+      <div
+        style="
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:20px;
+          margin-top:15px;
+        "
+      >
+
+        <div>
+          <h5>Input</h5>
+          <pre>{{section.input}}</pre>
+        </div>
+
+        <div>
+          <h5>Output</h5>
+          <pre>{{section.output}}</pre>
+        </div>
+
+      </div>
+
+      <div *ngIf="section.note">
+
+        <h5>Note</h5>
+
+        <pre>{{section.note}}</pre>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
           </div>
         </div>
       </div>
@@ -118,3 +253,6 @@
 </div>
 
 </div>
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

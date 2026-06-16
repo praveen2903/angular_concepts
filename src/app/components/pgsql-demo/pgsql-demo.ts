@@ -7,6 +7,359 @@ import { Component } from '@angular/core';
   styleUrl: './pgsql-demo.css',
 })
 export class PgsqlDemo {
+
+  pgsqlSections = [
+
+{
+  title: 'DDL (Data Definition Language)',
+  icon: '🏗️',
+
+  purpose: `
+Used to define and modify database structures.
+
+DDL changes metadata/schema objects.
+  `,
+
+  commands: `
+CREATE
+ALTER
+DROP
+TRUNCATE
+RENAME
+  `,
+
+  query: `
+-- Create Table
+
+CREATE TABLE employees(
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    salary NUMERIC
+);
+
+-- Add Column
+
+ALTER TABLE employees
+ADD COLUMN email VARCHAR(100);
+
+-- Rename Column
+
+ALTER TABLE employees
+RENAME COLUMN first_name TO employee_name;
+
+-- Remove Table
+
+DROP TABLE employees;
+  `,
+
+  output: `
+
+Structure Created
+
+Table Modified
+
+Table Deleted
+
+  `,
+
+  interview: `
+DDL changes database structure.
+
+Mostly auto-committed.
+  `
+},
+
+{
+  title: 'DML (Data Manipulation Language)',
+  icon: '✍️',
+
+  purpose: `
+Used to insert, update and delete data.
+
+Works on table records.
+  `,
+
+  commands: `
+INSERT
+UPDATE
+DELETE
+  `,
+
+  query: `
+-- Insert
+
+INSERT INTO employees
+VALUES(
+    101,
+    'John',
+    50000
+);
+
+-- Update
+
+UPDATE employees
+SET salary = 60000
+WHERE employee_id = 101;
+
+-- Delete
+
+DELETE FROM employees
+WHERE employee_id = 101;
+  `,
+
+  output: `
+
+Record Inserted
+
+Record Updated
+
+Record Deleted
+
+  `,
+
+  interview: `
+DML changes data,
+not table structure.
+  `
+},
+
+{
+  title: 'DQL (Data Query Language)',
+  icon: '🔍',
+
+  purpose: `
+Used to retrieve data from database.
+  `,
+
+  commands: `
+SELECT
+  `,
+
+  query: `
+SELECT
+    employee_id,
+    first_name,
+    salary
+FROM employees
+WHERE salary > 50000
+ORDER BY salary DESC;
+  `,
+
+  output: `
+
+102 Emma 70000
+
+103 Mike 90000
+
+  `,
+
+  interview: `
+DQL only reads data.
+
+No modifications.
+  `
+},
+
+{
+  title: 'TCL (Transaction Control Language)',
+  icon: '💳',
+
+  purpose: `
+Manage transactions.
+
+Control when changes become permanent.
+  `,
+
+  commands: `
+COMMIT
+ROLLBACK
+SAVEPOINT
+  `,
+
+  query: `
+BEGIN;
+
+UPDATE accounts
+SET balance = balance - 500
+WHERE account_id = 101;
+
+UPDATE accounts
+SET balance = balance + 500
+WHERE account_id = 102;
+
+COMMIT;
+  `,
+
+  output: `
+
+Transaction Successful
+
+Changes Saved Permanently
+
+  `,
+
+  interview: `
+COMMIT
+
+Makes Changes Permanent
+
+
+ROLLBACK
+
+Undo Changes
+
+
+SAVEPOINT
+
+Partial Rollback Point
+  `
+},
+
+{
+  title: 'ROLLBACK Example',
+  icon: '↩️',
+
+  purpose: `Undo transaction changes.`,
+
+  input: `Balance = 10000  `,
+
+  query: `BEGIN;
+UPDATE accounts SET balance = 5000 WHERE account_id = 101;
+ROLLBACK;
+  `,
+
+  output: `
+Before
+10000
+↓
+After Rollback
+10000`
+},
+
+{
+  title: 'SAVEPOINT Example',
+  icon: '📍',
+
+  purpose: `
+Rollback to a specific point.
+  `,
+
+  query: `BEGIN;
+INSERT INTO employees VALUES(101,'John',50000);
+
+SAVEPOINT employee_save;
+INSERT INTO employees VALUES(102,'Emma',70000);
+
+ROLLBACK TO employee_save;
+COMMIT;
+  `,
+
+  output: `101 John 50000
+Emma Record Removed`
+},
+
+{
+  title: 'DCL (Data Control Language)',
+  icon: '🔐',
+
+  purpose: `Manage permissions and security.`,
+
+  commands: `GRANT
+REVOKE`,
+
+  query: `-- Give Access
+GRANT SELECT ON employees TO analyst_user;
+
+-- Remove Access
+REVOKE SELECT ON employees FROM analyst_user;
+  `,
+
+  output: `Permission Granted
+
+Permission Removed`,
+
+  interview: `
+Controls user privileges.
+  `
+},
+
+{
+  title: 'CREATE vs INSERT',
+  icon: '⚖️',
+
+  purpose: `
+Common Interview Question.
+  `,
+
+  query: `
+CREATE TABLE employees(
+    employee_id INT,
+    first_name TEXT
+);
+
+INSERT INTO employees
+VALUES(
+    101,
+    'John'
+);
+  `,
+
+  output: `CREATE
+Creates Structure
+
+INSERT
+Adds Data  `
+},
+
+{
+  title: 'DROP vs TRUNCATE vs DELETE',
+  icon: '🗑️',
+
+  purpose: `
+Frequently Asked Interview Topic.
+  `,
+
+  query: `
+DELETE FROM employees;
+
+TRUNCATE TABLE employees;
+
+DROP TABLE employees;
+  `,
+
+  output: `DELETE
+------
+Removes Rows Can Use WHERE
+
+TRUNCATE
+--------
+Removes All Rows No WHERE Used
+
+DROP
+----
+Removes Entire Table`
+},
+
+{
+  title: 'COMMIT vs ROLLBACK',
+  icon: '⚖️',
+
+  purpose: `Transaction Interview Question.`,
+
+  query: `BEGIN;
+UPDATE employees SET salary = 90000;
+COMMIT;
+
+BEGIN;
+UPDATE employees SET salary = 1000;
+ROLLBACK;`,
+  output: `COMMIT
+Changes Saved
+
+ROLLBACK
+Changes Undone`
+}
+];
   sqlScript = `
 -- =========================================================
 -- DEPARTMENTS TABLE

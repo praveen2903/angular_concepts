@@ -24,6 +24,7 @@ import { AsyncMachineCodes } from './components/async-machine-codes/async-machin
 import { NodeJs } from './components/node-js/node-js';
 import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
+import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
     NodeJs,
     PgsqlDemo,
     PgsqlQueries,
+    ProceduresDemo,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

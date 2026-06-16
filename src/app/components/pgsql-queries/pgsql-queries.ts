@@ -48,6 +48,9 @@ export class PgsqlQueries implements OnInit, OnDestroy {
     }
   }
 
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   sqlImportantQueries = [
    {
@@ -945,7 +948,7 @@ Select Only Shared Salaries:
 +----+------+--------+ `
 }
   ]
-  stringAndJoins = [
+  stringAndJoins: any[] = [
     {
   title: 'String Functions',
   icon: '🔤',

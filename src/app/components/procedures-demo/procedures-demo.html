@@ -1,0 +1,228 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">⚙️ PL/pgSQL Guide</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-basics')">⚖️ Basics</a>
+    <a (click)="scrollToSection('section-exceptions')">🚨 Exceptions</a>
+    <a (click)="scrollToSection('section-memory')">🧠 Memory Tricks</a>
+    <a (click)="scrollToSection('section-advanced')">🔬 Advanced</a>
+    <a (click)="scrollToSection('section-triggers')">🔄 Triggers &amp; Views</a>
+  </div>
+</nav>
+
+<!-- Section 1: Procedural SQL Basics -->
+<div class="page" id="section-basics">
+  <h1>⚙️ Procedures &amp; Functions</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of proceduralSql">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.whyNeeded">
+        <h4>Why Needed</h4>
+        <pre>{{ item.whyNeeded }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.functionExample">
+        <h4>Function Example</h4>
+        <pre class="sql">{{ item.functionExample }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.procedureExample">
+        <h4>Procedure Example</h4>
+        <pre class="sql-green">{{ item.procedureExample }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.query">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box output-box" *ngIf="item.output">
+        <h4>Output</h4>
+        <pre class="output">{{ item.output }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Exception Handling -->
+<div class="page" id="section-exceptions">
+  <h1>🚨 Exception Handling</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of proceduralExceptionSql">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.query">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box output-box" *ngIf="item.output">
+        <h4>Output</h4>
+        <pre class="output">{{ item.output }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: Memory Tricks -->
+<div class="page" id="section-memory">
+  <h1>🧠 Memory Tricks</h1>
+  <div class="memory-card">
+    <pre>{{ procedureMemoryTricks }}</pre>
+  </div>
+</div>
+
+<!-- Section 4: Advanced Procedure Examples -->
+<div class="page" id="section-advanced">
+  <h1>🔬 Advanced Procedure Examples</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of proceduresExamples">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.whyNeeded">
+        <h4>Why Needed</h4>
+        <pre>{{ item.whyNeeded }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.useCases">
+        <h4>Use Cases</h4>
+        <pre>{{ item.useCases }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.query">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box output-box" *ngIf="item.output">
+        <h4>Output</h4>
+        <pre class="output">{{ item.output }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.performanceTips">
+        <h4>Performance Tips</h4>
+        <pre>{{ item.performanceTips }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.comparison">
+        <h4>Comparison</h4>
+        <pre>{{ item.comparison }}</pre>
+      </div>
+
+      <div class="dual-box" *ngIf="item.whenToUseForLoop">
+        <div class="section-box">
+          <h4>FOR Loop — When To Use</h4>
+          <pre>{{ item.whenToUseForLoop }}</pre>
+        </div>
+        <div class="section-box">
+          <h4>REFCURSOR — When To Use</h4>
+          <pre>{{ item.whenToUseRefCursor }}</pre>
+        </div>
+      </div>
+
+      <div class="section-box" *ngIf="item.example">
+        <h4>Example</h4>
+        <pre class="sql">{{ item.example }}</pre>
+      </div>
+
+      <div class="section-box note-box" *ngIf="item.note">
+        <h4>Note</h4>
+        <pre class="note-text">{{ item.note }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: Triggers & Views -->
+<div class="page" id="section-triggers">
+  <h1>🔄 Triggers, Views &amp; Schema</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of triggerSql">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.tableQuery">
+        <h4>Table Query</h4>
+        <pre class="sql">{{ item.tableQuery }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.viewQuery">
+        <h4>View Query</h4>
+        <pre class="sql">{{ item.viewQuery }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.query">
+        <h4>Query</h4>
+        <pre class="sql">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box output-box" *ngIf="item.output">
+        <h4>Output</h4>
+        <pre class="output">{{ item.output }}</pre>
+      </div>
+
+      <div class="section-box output-box" *ngIf="item.output1">
+        <h4>✅ Valid Output</h4>
+        <pre class="output">{{ item.output1 }}</pre>
+      </div>
+
+      <div class="section-box error-box" *ngIf="item.output2">
+        <h4>❌ Error Output</h4>
+        <pre class="error-text">{{ item.output2 }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.differences">
+        <h4>Differences</h4>
+        <pre>{{ item.differences }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.diagram">
+        <h4>Diagram</h4>
+        <pre>{{ item.diagram }}</pre>
+      </div>
+
+      <div class="section-box" *ngIf="item.interview">
+        <h4>Interview Notes</h4>
+        <pre>{{ item.interview }}</pre>
+      </div>
+
+      <div class="section-box note-box" *ngIf="item.note">
+        <h4>Note</h4>
+        <pre class="note-text">{{ item.note }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>
