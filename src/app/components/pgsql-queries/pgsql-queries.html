@@ -1,4 +1,17 @@
-<div class="container mt-4">
+<div class="page">
+
+  <!-- Sticky Navigation -->
+  <nav class="sticky-nav">
+    <span class="nav-brand">🗄️ PostgreSQL</span>
+    <div class="nav-links">
+      <a (click)="scrollTo('db-features')" [class.active]="activeSection === 'db-features'">🗃️ DB Features</a>
+      <a (click)="scrollTo('sql-scripts')" [class.active]="activeSection === 'sql-scripts'">📜 SQL Scripts</a>
+      <a (click)="scrollTo('common-problems')" [class.active]="activeSection === 'common-problems'">⚠️ Common Problems</a>
+      <a (click)="scrollTo('window-functions')" [class.active]="activeSection === 'window-functions'">🪟 Window Functions</a>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
 
   <h1 class="text-center mb-5">
     <span class="me-2">🗄️</span>
@@ -7,7 +20,7 @@
   </h1>
 
   <!-- SQL Features -->
-  <div class="card mb-5">
+  <div id="db-features" class="card mb-5 section">
     <div class="card-header bg-primary text-white">
       <h3>Database Features</h3>
     </div>
@@ -31,7 +44,7 @@
   </div>
 
   <!-- SQL Scripts -->
-  <div class="card mb-5">
+  <div id="sql-scripts" class="card mb-5 section">
     <div class="card-header bg-success text-white">
       <h3>SQL Scripts</h3>
     </div>
@@ -59,7 +72,7 @@
   </div>
 <pre>{{joinsUsage}}</pre>
   <!-- Common SQL Problems -->
-  <div class="card mb-5">
+  <div id="common-problems" class="card mb-5 section">
     <div class="card-header bg-warning text-dark">
       <h3>Common SQL Problems</h3>
     </div>
@@ -82,7 +95,7 @@
   </div>
 
   <!-- SQL Interview Questions -->
-  <div class="card mb-5">
+  <div id="window-functions" class="card mb-5 section">
     <div class="card-header bg-info text-dark">
       <h3>Window Functions</h3>
     </div>
@@ -102,4 +115,6 @@
       </div>
     </div>
   </div>
+</div>
+
 </div>

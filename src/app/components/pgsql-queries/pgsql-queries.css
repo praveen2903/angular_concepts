@@ -36,9 +36,10 @@
   padding: 5px 10px;
   border-radius: 20px;
   border: 1px solid #30363d;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
   white-space: nowrap;
   cursor: pointer;
+  user-select: none;
 }
 
 .nav-links a:hover {
@@ -47,6 +48,18 @@
   border-color: #58a6ff;
   transform: translateY(-1px);
   box-shadow: 0 0 8px rgba(88, 166, 255, 0.3);
+}
+
+.nav-links a:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: none;
+}
+
+.nav-links a.active {
+  color: #fff;
+  background: linear-gradient(90deg, #1f6feb, #388bfd);
+  border-color: #58a6ff;
+  box-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
 }
 
 /* ============================================

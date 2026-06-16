@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-pgsql-queries',
@@ -6,7 +6,48 @@ import { Component } from '@angular/core';
   templateUrl: './pgsql-queries.html',
   styleUrl: './pgsql-queries.css',
 })
-export class PgsqlQueries {
+export class PgsqlQueries implements OnInit, OnDestroy {
+
+  activeSection = 'db-features';
+  private observer!: IntersectionObserver;
+
+  private readonly sections = [
+    'db-features',
+    'sql-scripts',
+    'common-problems',
+    'window-functions'
+  ];
+
+  ngOnInit(): void {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            this.activeSection = entry.target.id;
+            break;
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    this.sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) this.observer.observe(el);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+  }
+
+  scrollTo(sectionId: string): void {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
 
   sqlImportantQueries = [
    {
@@ -916,18 +957,13 @@ Select Only Shared Salaries:
 
       purpose: 'Convert text to uppercase.',
 
-      input: `
-John
+      input: `John
 Emma
-Mike
-      `,
+Mike`,
 
       methods: [{
         name: 'UPPER',
-        query: `
-SELECT UPPER(name)
-FROM employees;
-        `
+        query: `SELECT UPPER(name) FROM employees;`
       }],
 
       output: `
@@ -937,7 +973,7 @@ MIKE
       `
     },
 
-    {
+    { 
       name: 'LOWER()',
 
       purpose: 'Convert text to lowercase.',
@@ -950,10 +986,7 @@ MIKE
 
       methods: [{
         name: 'LOWER',
-        query: `
-SELECT LOWER(name)
-FROM employees;
-        `
+        query: `SELECT LOWER(name) FROM employees;`
       }],
 
       output: `
@@ -977,14 +1010,7 @@ Emma       | Watson
 
       methods: [{
         name: 'CONCAT',
-        query: `
-SELECT CONCAT(
- first_name,
- ' ',
- last_name
-)
-FROM employees;
-        `
+        query: `SELECT CONCAT( first_name,' ',last_name) FROM employees;`
       }],
 
       output: `
@@ -1004,13 +1030,7 @@ John Smith
 
       methods: [{
         name: 'SUBSTRING',
-        query: `
-SELECT SUBSTRING(
- 'John Smith',
- 1,
- 4
-);
-        `
+        query: `SELECT SUBSTRING('John Smith', 1, 4);  ---- john (like no 0 index)`
       }],
 
       output: `
@@ -1029,11 +1049,7 @@ John Smith
 
       methods: [{
         name: 'LENGTH',
-        query: `
-SELECT LENGTH(
- 'John Smith'
-);
-        `
+        query: `SELECT LENGTH('John Smith');`
       }],
 
       output: `
@@ -1052,13 +1068,7 @@ John Smith
 
       methods: [{
         name: 'REPLACE',
-        query: `
-SELECT REPLACE(
- 'John Smith',
- 'Smith',
- 'Doe'
-);
-        `
+        query: `SELECT REPLACE('John Smith','Smith','Doe');`
       }],
 
       output: `
@@ -1077,11 +1087,7 @@ John Doe
 
       methods: [{
         name: 'TRIM',
-        query: `
-SELECT TRIM(
- '   John   '
-);
-        `
+        query: `SELECT TRIM('   John   ');`
       }],
 
       output: `
@@ -1099,11 +1105,7 @@ John
     {
       name: 'Starts With A',
 
-      query: `
-SELECT *
-FROM employees
-WHERE name LIKE 'A%';
-      `,
+      query: `SELECT * FROM employees WHERE name LIKE 'A%';`,
 
       input: `
 Alex
@@ -1121,11 +1123,7 @@ Andrew
     {
       name: 'Ends With n',
 
-      query: `
-SELECT *
-FROM employees
-WHERE name LIKE '%n';
-      `,
+      query: `SELECT * FROM employees WHERE name LIKE '%n';`,
 
       input: `
 John
@@ -1143,11 +1141,7 @@ Martin
     {
       name: 'Contains son',
 
-      query: `
-SELECT *
-FROM employees
-WHERE name LIKE '%son%';
-      `,
+      query: `SELECT * FROM employees WHERE name LIKE '%son%';`,
 
       input: `
 Johnson
@@ -1164,11 +1158,7 @@ Jason
     {
       name: 'Exactly 5 Characters',
 
-      query: `
-SELECT *
-FROM employees
-WHERE name LIKE '_____';
-      `,
+      query: `SELECT * FROM employees WHERE name LIKE '_____';`,
 
       input: `
 David
@@ -1208,14 +1198,7 @@ Orders
     {
       name: 'LEFT JOIN',
 
-      query: `
-SELECT c.*
-FROM customers c
-LEFT JOIN orders o
-ON c.customer_id =
-o.customer_id
-WHERE o.order_id IS NULL;
-      `
+      query: `SELECT c.* FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id WHERE o.order_id IS NULL;`
     }
 
   ],
@@ -1245,16 +1228,7 @@ Tom   IT
     {
       name: 'JOIN + GROUP BY',
 
-      query: `
-SELECT
- department_name,
- COUNT(*)
-FROM employees e
-JOIN departments d
-ON e.department_id =
-d.department_id
-GROUP BY department_name;
-      `
+      query: `SELECT department_name, COUNT(*) FROM employees e JOIN departments d ON e.department_id = d.department_id GROUP BY department_name;`
     }
 
   ],
@@ -1290,14 +1264,7 @@ Order Items
     {
       name: 'LEFT JOIN',
 
-      query: `
-SELECT p.*
-FROM products p
-LEFT JOIN order_items oi
-ON p.product_id =
-oi.product_id
-WHERE oi.product_id
-IS NULL;
+      query: `SELECT p.* FROM products p LEFT JOIN order_items oi ON p.product_id = oi.product_id WHERE oi.product_id IS NULL;
       `
     }
 
@@ -1346,14 +1313,7 @@ Orders
 
   `,
 
-  query: `
-SELECT
-c.name,
-o.order_id
-FROM customers c
-INNER JOIN orders o
-ON c.id = o.customer_id;
-  `,
+  query: `SELECT c.name, o.order_id FROM customers c INNER JOIN orders o ON c.id = o.customer_id;`,
 
   output: `
 
@@ -1397,14 +1357,7 @@ Orders
 
   `,
 
-  query: `
-SELECT
-c.name,
-o.order_id
-FROM customers c
-LEFT JOIN orders o
-ON c.id = o.customer_id;
-  `,
+  query: `SELECT c.name, o.order_id FROM customers c LEFT JOIN orders o ON c.id = o.customer_id;`,
 
   output: `
 
@@ -1448,15 +1401,7 @@ Departments
 
   `,
 
-  query: `
-SELECT
-e.name,
-d.department_name
-FROM employees e
-RIGHT JOIN departments d
-ON e.department_id =
-d.department_id;
-  `,
+  query: `SELECT e.name, d.department_name FROM employees e RIGHT JOIN departments d ON e.department_id = d.department_id;`,
 
   output: `
 
@@ -1503,23 +1448,13 @@ Departments
 
   `,
 
-  query: `
-SELECT
-e.name,
-d.department_name
-FROM employees e
-FULL OUTER JOIN departments d
-ON e.department_id =
-d.department_id;
-  `,
+  query: `SELECT e.name,d.department_name FROM employees e FULL OUTER JOIN departments d ON e.department_id = d.department_id;`,
 
   output: `
-
 John  HR
 Emma  IT
 Mike  NULL
 NULL  Finance
-
   `,
 
   note: `
@@ -1557,14 +1492,7 @@ Employees
 
   `,
 
-  query: `
-SELECT
- e1.name AS employee,
- e2.name AS manager
-FROM employees e1
-JOIN employees e2
-ON e1.manager_id = e2.id;
-  `,
+  query: `SELECT e1.name AS employee, e2.name AS manager FROM employees e1 JOIN employees e2 ON e1.manager_id = e2.id;`,
 
   output: `
 
@@ -1610,13 +1538,7 @@ Table B
 
   `,
 
-  query: `
-SELECT
- a.col AS table_a,
- b.col AS table_b
-FROM table_a a
-CROSS JOIN table_b b;
-  `,
+  query: `SELECT a.col AS table_a, b.col AS table_b FROM table_a b CROSS JOIN table_b b;`,
 
   output: `
 
@@ -1638,31 +1560,28 @@ Be careful - can produce huge result sets!
 -----------
 Need only matching data
 
-Example:
-Customers who ordered
+Example: Customers who ordered
 
 
 LEFT JOIN
 ----------
 Need all left table records
 
-Example:
-All customers and their orders
+Example: All customers and their orders
 
 
 RIGHT JOIN
 -----------
 Need all right table records
 
-Example:
-All departments even without employees
+Example: All departments even without employees
 
 
 FULL OUTER JOIN
 ----------------
 Need everything from both tables
-Example:
-Data comparison / reconciliation`;
+
+Example:Data comparison / reconciliation`;
 
 
 windowFunctionsSample = [
@@ -1688,13 +1607,7 @@ Mike   80000
 David  60000
   `,
 
-  query: `
-SELECT
- first_name,
- salary,
- AVG(salary) OVER()
-FROM employees;
-  `,
+  query: `SELECT first_name, salary, AVG(salary) OVER() FROM employees;`,
 
   output: `
 John   70000   75000
@@ -1725,17 +1638,7 @@ Mike   IT     90000
 Sara   IT    110000
   `,
 
-  query: `
-SELECT
- name,
- department,
- salary,
- AVG(salary)
- OVER(
-   PARTITION BY department
- )
-FROM employees;
-  `,
+  query: `SELECT name, department, salary, AVG(salary) OVER(PARTITION BY department) FROM employees;`,
 
   output: `
 John   HR   50000    60000
@@ -1766,16 +1669,7 @@ Id   Salary
 4    4000
   `,
 
-  query: `
-SELECT
- employee_id,
- salary,
- SUM(salary)
- OVER(
-   ORDER BY employee_id
- )
-FROM employees;
-  `,
+  query: `SELECT employee_id, salary, SUM(salary) OVER(ORDER BY employee_id) FROM employees;`,
 
   output: `
 1   1000   1000
@@ -1797,16 +1691,7 @@ FROM employees;
 4   4000
   `,
 
-  query: `
-SELECT
- employee_id,
- salary,
- AVG(salary)
- OVER(
-   ORDER BY employee_id
- )
-FROM employees;
-  `,
+  query: `SELECT employee_id, salary, AVG(salary) OVER(ORDER BY employee_id) FROM employees;`,
 
   output: `
 1   1000   1000
@@ -1836,16 +1721,7 @@ Emma   90000
 Mike   80000
   `,
 
-  query: `
-SELECT
- name,
- salary,
- ROW_NUMBER()
- OVER(
-   ORDER BY salary DESC
- )
-FROM employees;
-  `,
+  query: `SELECT name, salary, ROW_NUMBER() OVER(ORDER BY salary DESC) FROM employees;`,
 
   output: `
 Emma   90000   1
@@ -1866,16 +1742,7 @@ C  80
 D  70
   `,
 
-  query: `
-SELECT
- name,
- marks,
- RANK()
- OVER(
-   ORDER BY marks DESC
- )
-FROM scores;
-  `,
+  query: `SELECT name, marks, RANK() OVER(ORDER BY marks DESC) FROM scores;`,
 
   output: `
 A   90   1
@@ -1897,16 +1764,7 @@ C  80
 D  70
   `,
 
-  query: `
-SELECT
- name,
- marks,
- DENSE_RANK()
- OVER(
-   ORDER BY marks DESC
- )
-FROM scores;
-  `,
+  query: `SELECT name, marks, DENSE_RANK() OVER(ORDER BY marks DESC) FROM scores;`,
 
   output: `
 A   90   1
@@ -1936,16 +1794,7 @@ Emma   60000
 Mike   70000
   `,
 
-  query: `
-SELECT
- name,
- salary,
- LAG(salary)
- OVER(
-   ORDER BY salary
- )
-FROM employees;
-  `,
+  query: `SELECT name, salary, LAG(salary) OVER(ORDER BY salary) FROM employees;`,
 
   output: `
 John   50000   NULL
@@ -1965,16 +1814,7 @@ Emma   60000
 Mike   70000
   `,
 
-  query: `
-SELECT
- name,
- salary,
- LEAD(salary)
- OVER(
-   ORDER BY salary
- )
-FROM employees;
-  `,
+  query: `SELECT name, salary, LEAD(salary) OVER(ORDER BY salary) FROM employees;`,
 
   output: `
 John   50000   60000
@@ -1996,16 +1836,7 @@ Mike    90000
 John    70000
   `,
 
-  query: `
-SELECT
- name,
- salary,
- FIRST_VALUE(salary)
- OVER(
-   ORDER BY salary DESC
- )
-FROM employees;
-  `,
+  query: `SELECT name, salary, FIRST_VALUE(salary) OVER(ORDER BY salary DESC) FROM employees;`,
 
   output: `
 Sara   110000   110000
@@ -2031,19 +1862,7 @@ otherwise current row becomes last row.
 110000
   `,
 
-  query: `
-SELECT
- salary,
- LAST_VALUE(salary)
- OVER(
-   ORDER BY salary
-   ROWS BETWEEN
-   UNBOUNDED PRECEDING
-   AND
-   UNBOUNDED FOLLOWING
- )
-FROM employees;
-  `,
+  query: `SELECT salary, LAST_VALUE(salary) OVER(ORDER BY salary ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) FROM employees;`,
 
   output: `
 70000   110000
@@ -2073,18 +1892,7 @@ Day4 400
 Day5 500
   `,
 
-  query: `
-SELECT
- sales,
- AVG(sales)
- OVER(
-   ORDER BY day_id
-   ROWS BETWEEN
-   2 PRECEDING
-   AND CURRENT ROW
- )
-FROM sales;
-  `,
+  query: `SELECT sales, AVG(sales) OVER(ORDER BY day_id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) FROM sales;`,
 
   output: `
 100   100
@@ -2114,26 +1922,11 @@ Employee_Id  First_Name
 
   `,
 
-  query: `
-SELECT *
-FROM (
-  SELECT *,
-         ROW_NUMBER() OVER(
-           PARTITION BY first_name
-           ORDER BY employee_id
-         ) AS row_num
-  FROM employees
-) t
-WHERE row_num > 1;
-  `,
+  query: `SELECT * FROM (SELECT *, ROW_NUMBER() OVER(PARTITION BY first_name ORDER BY employee_id) AS row_num FROM employees) t WHERE row_num > 1;`,
 
   output: `
-
 Employee_Id  First_Name  Row_Num
-
-3            John        2
-
-  `
+3            John        2`
 },
 {
   title: 'Delete Duplicates',
@@ -2151,24 +1944,12 @@ Employee_Id  First_Name  Row_Num
   `,
 
   query: `
-DELETE FROM employees
-WHERE employee_id IN
-(
- SELECT employee_id
- FROM (
-   SELECT employee_id,
-          ROW_NUMBER() OVER(
-             PARTITION BY first_name
-             ORDER BY employee_id
-          ) rn
-   FROM employees
- ) x
- WHERE rn > 1
-);
-  `,
+DELETE FROM employees WHERE employee_id IN (
+ SELECT employee_id FROM (
+  SELECT employee_id, ROW_NUMBER() OVER(PARTITION BY first_name ORDER BY employee_id) rn FROM employees) x WHERE rn > 1
+);`,
 
   output: `
-
 1 John
 2 Emma
 4 Mike
@@ -2182,35 +1963,18 @@ WHERE employee_id IN
   purpose: 'Select only unique first_names.',
 
   input: `
-
 1 John
 2 Emma
 3 John
 4 Mike
-
   `,
 
-  query: `
-SELECT DISTINCT
-  first_name
-FROM (
-  SELECT *, 
-         ROW_NUMBER() OVER(
-           PARTITION BY first_name
-           ORDER BY employee_id
-         ) rn
-  FROM employees
-) t
-WHERE rn = 1;
-  `,
+  query: `SELECT DISTINCT first_name FROM (SELECT *, ROW_NUMBER() OVER(PARTITION BY first_name ORDER BY employee_id) rn FROM employees) t WHERE rn = 1;`,
 
   output: `
-
 John
 Emma
-Mike
-
-  `
+Mike`
 },
 {
   title: 'Top N Per Group',
@@ -2229,18 +1993,7 @@ IT     Sara   60000
 
   `,
 
-  query: `
-SELECT *
-FROM (
-  SELECT *, 
-         RANK() OVER(
-           PARTITION BY department
-           ORDER BY salary DESC
-         ) rnk
-  FROM employees
-) t
-WHERE rnk <= 2;
-  `,
+  query: `SELECT * FROM (SELECT *, RANK() OVER(PARTITION BY department ORDER BY salary DESC) rnk FROM employees) t WHERE rnk <= 2;`,
 
   output: `
 
@@ -2275,22 +2028,8 @@ Tom   85000
 
   `,
 
-  query: `
-SELECT *
-FROM (
- SELECT
-   first_name,
-   department_name,
-   salary,
-   ROW_NUMBER()
-   OVER(
-     PARTITION BY department_name
-     ORDER BY salary DESC
-   ) row_top
- FROM employees
-) t
-WHERE row_top <= 2;
-  `,
+  query: `SELECT * FROM (SELECT first_name, department_name, salary, ROW_NUMBER() OVER(PARTITION BY department_name ORDER BY salary DESC) row_top FROM employees) t
+WHERE row_top <= 2;`,
 
   output: `
 
@@ -2322,17 +2061,7 @@ Total = 6000
 
   `,
 
-  query: `
-SELECT
- first_name,
- salary,
- ROUND(
-   salary * 100
-   / SUM(salary) OVER(),
-   2
- ) percentage
-FROM employees;
-  `,
+  query: `SELECT first_name, salary, ROUND(salary * 100 / SUM(salary) OVER(), 2) percentage FROM employees;`,
 
   output: `
 
@@ -2362,22 +2091,7 @@ Sara 110000
 
   `,
 
-  query: `
-SELECT *
-FROM (
- SELECT
-   first_name,
-   department_name,
-   salary,
-   DENSE_RANK()
-   OVER(
-     PARTITION BY department_name
-     ORDER BY salary DESC
-   ) rank_salary
- FROM employees
-) t
-WHERE rank_salary = 1;
-  `,
+  query: `SELECT * FROM (SELECT first_name, department_name, salary, DENSE_RANK() OVER(PARTITION BY department_name ORDER BY salary DESC) rank_salary FROM employees) t WHERE rank_salary = 1;`,
 
   output: `
 
@@ -2406,21 +2120,7 @@ Sara 110000
 
   `,
 
-  query: `
-SELECT *
-FROM (
- SELECT
-   first_name,
-   department_name,
-   salary,
-   AVG(salary)
-   OVER(
-      PARTITION BY department_name
-   ) dept_avg
- FROM employees
-) t
-WHERE salary > dept_avg;
-  `,
+  query: `SELECT * FROM (SELECT first_name, department_name, salary, AVG(salary) OVER(PARTITION BY department_name) dept_avg FROM employees) t WHERE salary > dept_avg;`,
 
   output: `
 
@@ -2450,18 +2150,7 @@ Account 101
 
   `,
 
-  query: `
-SELECT
- account_id,
- txn_date,
- amount,
- SUM(amount)
- OVER(
-   PARTITION BY account_id
-   ORDER BY txn_date
- )
-FROM transactions;
-  `,
+  query: `SELECT account_id, txn_date, amount, SUM(amount) OVER(PARTITION BY account_id ORDER BY txn_date) FROM transactions;`,
 
   output: `
 
@@ -2487,16 +2176,7 @@ Day3 900
 
   `,
 
-  query: `
-SELECT
- sale_date,
- total_sales,
- LAG(total_sales)
- OVER(
-   ORDER BY sale_date
- ) previous_day_sales
-FROM daily_sales;
-  `,
+  query: `SELECT sale_date, total_sales, LAG(total_sales) OVER(ORDER BY sale_date) previous_day_sales FROM daily_sales;`,
 
   output: `
 
@@ -2524,21 +2204,9 @@ Day5 500
 
   `,
 
-  query: `
-SELECT
- sales,
- AVG(sales)
- OVER(
-   ORDER BY day_id
-   ROWS BETWEEN
-   2 PRECEDING
-   AND CURRENT ROW
- ) moving_avg_3_days
-FROM daily_sales;
-  `,
+  query: `SELECT sales,AVG(sales) OVER(ORDER BY day_id ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) moving_avg_3_days FROM daily_sales;`,
 
   output: `
-
 100 100
 
 200 150 ((100+200)/2)
@@ -2548,7 +2216,6 @@ FROM daily_sales;
 400 300 ((200+300+400)/3)
 
 500 400 ((300+400+500)/3)
-
   `
 },
 {
@@ -2565,17 +2232,7 @@ Emma  70000
 
   `,
 
-  query: `
-SELECT
- first_name,
- salary,
- salary -
- LAG(salary)
- OVER(
-   ORDER BY salary DESC
- ) difference
-FROM employees;
-  `,
+  query: `SELECT first_name, salary, salary - LAG(salary) OVER(ORDER BY salary DESC) difference FROM employees;`,
 
   output: `
 
@@ -2598,18 +2255,7 @@ Emma  70000 -20000
 2022-01-03  150
 2022-01-04  250
   `,
-  query: `
-SELECT
- sale_date,
- sales,
- LAG(sales) OVER (
-   ORDER BY sale_date
- ) prev_day,
- LEAD(sales) OVER (
-   ORDER BY sale_date
- ) next_day
-FROM daily_sales;
-  `,
+  query: `SELECT sale_date, sales, LAG(sales) OVER (ORDER BY sale_date) prev_day, LEAD(sales) OVER (ORDER BY sale_date) next_day FROM daily_sales;`,
   output: `
 2022-01-01  100  NULL          200
 2022-01-02  200  100           150
@@ -2632,15 +2278,7 @@ Order_ID  Amount
 3         50
 4         150
   `,
-  query: `
-SELECT
- order_id,
- amount,
- SUM(amount) OVER (
-   ORDER BY order_id
- ) running_total
-FROM orders;
-  `,
+  query: `SELECT order_id,amount, SUM(amount) OVER (ORDER BY order_id) running_total FROM orders;`,
   output: `
 Order_ID  Amount  Running_Total
 1         100     100
@@ -2664,21 +2302,8 @@ Emma   HR          60000
 Mike   IT          70000
 Sara   IT          80000
   `,
-  query: `
-SELECT *
-FROM (
-  SELECT
-    name,
-    department,
-    salary,
-    RANK() OVER (
-      PARTITION BY department
-      ORDER BY salary DESC
-    ) dept_rank
-  FROM employees
-) t
-WHERE dept_rank <= 2;
-  `,
+  query: `SELECT * FROM (SELECT name, department, salary, RANK() OVER (PARTITION BY department ORDER BY salary DESC) dept_rank FROM employees) t WHERE dept_rank <= 2;`,
+
   output: `
 Name   Department  Salary  Dept_Rank
 Emma   HR          60000   1
@@ -2702,18 +2327,7 @@ Feb     200
 Mar     150
 Apr     250
   `,
-  query: `
-SELECT
- month,
- sales,
- AVG(sales) OVER (
-   ORDER BY month
-   ROWS BETWEEN
-   3 PRECEDING
-   AND CURRENT ROW
- ) rolling_avg_4_months
-FROM monthly_sales;
-  `,
+  query: `SELECT month,sales, AVG(sales) OVER (ORDER BY month ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) rolling_avg_4_months FROM monthly_sales;`,
   output: `
 Jan     100       100.00
 Feb     200       150.00  -- (100+200)/2
@@ -2736,21 +2350,8 @@ HR          Emma   2021-06-15
 IT          Mike   2019-03-10
 IT          Sara   2022-01-01
   `,
-  query: `
-SELECT *
-FROM (
-  SELECT
-    name,
-    department,
-    joining_date,
-    FIRST_VALUE(name) OVER (
-      PARTITION BY department
-      ORDER BY joining_date ASC
-    ) first_employee_in_dept
-  FROM employees
-) t
-WHERE joining_date = '2022-01-01'; -- Filter just to show Sara's row
-  `,
+  query: `SELECT * FROM (SELECT name,department,joining_date,FIRST_VALUE(name) OVER (PARTITION BY department ORDER BY joining_date ASC) first_employee_in_dept FROM employees) t
+WHERE joining_date = '2022-01-01'; -- Filter just to show Sara's row`,
   output: `
 Name   Department  Joining_Date  First_Employee_In_Dept
 Sara   IT          2022-01-01    Mike
@@ -2771,15 +2372,7 @@ Day3    150
 Day4    140
 Day5    180
   `,
-  query: `
-SELECT
- sale_date,
- sales,
- LAG(sales, 2) OVER (
-   ORDER BY sale_date
- ) sales_2_days_ago
-FROM daily_sales;
-  `,
+  query: `SELECT sale_date, sales, LAG(sales, 2) OVER (ORDER BY sale_date) sales_2_days_ago FROM daily_sales;`,
   output: `
 Day1    100         NULL
 Day2    120         NULL
@@ -2802,18 +2395,10 @@ A        100
 B        300
 C        600
   `,
-  query: `
-SELECT
- product,
- sales,
- SUM(sales) OVER (
-   ORDER BY sales DESC
- ) cumulative_sales,
- SUM(sales) OVER (
-   ORDER BY sales DESC
- ) * 100.0 / SUM(sales) OVER() AS cumulative_percentage
-FROM products;
-  `,
+  query: `SELECT product, sales, SUM(sales) OVER (ORDER BY sales DESC) cumulative_sales,
+ SUM(sales) OVER (ORDER BY sales DESC) * 100.0 / SUM(sales) OVER() AS cumulative_percentage
+FROM products;`,
+
   output: `
 Product  Sales  Cumulative_Sales  Cumulative_Percentage
 C        600    600               60.0%
@@ -2830,9 +2415,7 @@ Helps identify the top products that contribute most to the total sales.
 
   purpose: 'Calculate account balance after every transaction.',
 
-  input: `
-
-Account 101
+  input: `Account 101
 
 +------+--------+
 | Date | Amount |
@@ -2840,22 +2423,9 @@ Account 101
 | Day1 | 1000   |
 | Day2 | -200   |
 | Day3 | 500    |
-+------+--------+
++------+--------+`,
 
-  `,
-
-  query: `
-SELECT
- account_id,
- txn_date,
- amount,
- SUM(amount)
- OVER(
-   PARTITION BY account_id
-   ORDER BY txn_date
- )
-FROM transactions;
-  `,
+  query: `SELECT account_id, txn_date, amount, SUM(amount) OVER(PARTITION BY account_id ORDER BY txn_date) FROM transactions;`,
 
   output: `
 
@@ -2883,16 +2453,7 @@ Apr     15000
 
   `,
 
-  query: `
-SELECT
- month,
- sales,
- LAG(sales) OVER (
-   ORDER BY month
- ) previous_month_sales,
- (sales - LAG(sales) OVER (ORDER BY month)) AS growth
-FROM monthly_sales;
-  `,
+  query: `SELECT month, sales, LAG(sales) OVER (ORDER BY month) previous_month_sales, (sales - LAG(sales) OVER (ORDER BY month)) AS growth FROM monthly_sales; `,
 
   output: `
 
@@ -2917,16 +2478,7 @@ Day3 900
 
   `,
 
-  query: `
-SELECT
- sale_date,
- total_sales,
- LAG(total_sales)
- OVER(
-   ORDER BY sale_date
- ) previous_day_sales
-FROM daily_sales;
-  `,
+  query: `SELECT sale_date, total_sales, LAG(total_sales) OVER(ORDER BY sale_date) previous_day_sales FROM daily_sales;`,
 
   output: `
 
@@ -2952,17 +2504,7 @@ Emma  70000
 
   `,
 
-  query: `
-SELECT
- first_name,
- salary,
- salary -
- LAG(salary)
- OVER(
-   ORDER BY salary DESC
- ) difference
-FROM employees;
-  `,
+  query: `SELECT first_name, salary, salary - LAG(salary) OVER(ORDER BY salary DESC) difference FROM employees;`,
 
   output: `
 
@@ -2975,7 +2517,7 @@ Emma  70000 -20000
   `
 },
 {
-  title: 'Pagination Using ROW_NUMBER',
+  title: 'Pagination Using ROW_NUMBER with CTE function',
   icon: '📄',
 
   purpose: 'Fetch records page by page.',
@@ -2986,22 +2528,9 @@ Emma  70000 -20000
 
   `,
 
-  query: `
-WITH numbered AS
-(
- SELECT *,
- ROW_NUMBER()
- OVER(
-   ORDER BY price DESC
- ) row_num
- FROM products
-)
+  query: `WITH numbered AS (SELECT *, ROW_NUMBER() OVER(ORDER BY price DESC) row_num FROM products)
 
-SELECT *
-FROM numbered
-WHERE row_num
-BETWEEN 3 AND 6;
-  `,
+SELECT * FROM numbered WHERE row_num BETWEEN 3 AND 6;`,
 
   output: `
 
@@ -3032,21 +2561,8 @@ Qty 3
 
   `,
 
-  query: `
-SELECT *
-FROM (
- SELECT
-   product_id,
-   quantity,
-   ROW_NUMBER()
-   OVER(
-      PARTITION BY product_id
-      ORDER BY quantity DESC
-   ) row_num
- FROM order_items
-) t
-WHERE row_num = 1;
-  `,
+  query: `SELECT * FROM (SELECT product_id,quantity,ROW_NUMBER() OVER(PARTITION BY product_id ORDER BY quantity DESC) row_num FROM order_items) t
+WHERE row_num = 1;`,
 
   output: `
 
@@ -3072,10 +2588,7 @@ D      70
 
   `,
 
-  query: `
-RANK()
-DENSE_RANK()
-  `,
+  query: `RANK() VS DENSE_RANK() `,
 
   output: `
 
@@ -3090,7 +2603,6 @@ Gap Exists
 Missing Rank = 2
 
 
-
 DENSE_RANK()
 
 A 90  1
@@ -3098,9 +2610,7 @@ B 90  1
 C 80  2
 D 70  3
 
-No Gaps
-
-  `,
+No Gaps  `,
 
   interviewTip: `
 
@@ -3130,7 +2640,6 @@ finding:
 3rd Highest Salary
 
 because ranks remain continuous.
-
   `
 }
 ]
