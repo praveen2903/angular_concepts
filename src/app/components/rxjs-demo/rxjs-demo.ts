@@ -1128,4 +1128,31 @@ searchComponentHtml =`<h2>User Search</h2>
     {{ user.name }} - {{ user.email }}
   </li>
 </ul>`
+
+  navTopics = [
+    { title: 'Observable', id: 'observable' },
+    { title: 'Subject', id: 'subject' },
+    { title: 'BehaviorSubject', id: 'behavior-subject' },
+    { title: 'Search Example', id: 'search-example' },
+    { title: 'Data Creation Operators', id: 'data-creation' },
+    { title: 'Transformation Operators', id: 'transformation' },
+    { title: 'Filtering Operators', id: 'filtering' },
+    { title: 'State Management', id: 'state-management' },
+    { title: 'Search Optimization', id: 'search-optimization' },
+    { title: 'Multiple API Calls', id: 'multiple-api-calls' },
+    { title: 'Memory Management', id: 'memory-management' },
+    { title: 'Tap Demo', id: 'tap-demo' },
+    { title: 'Industry Example', id: 'industry-example' }
+  ];
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

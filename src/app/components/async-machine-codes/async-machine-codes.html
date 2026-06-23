@@ -1,3 +1,14 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">⏱️ Async Machine Codes</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-traffic')">🚦 Traffic Lights</a>
+    <a (click)="scrollToSection('section-grid')">🔲 Grid Movement</a>
+    <a (click)="scrollToSection('section-stopwatch')">⏱️ Stop Watch</a>
+    <a (click)="scrollToSection('section-clock')">⏰ Clock & Pipes</a>
+  </div>
+</nav>
+
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px">
         <pre [textContent]="cdrExample">
         </pre>
@@ -5,7 +16,7 @@
     </div>
 <div class="page">
 <hr/>
-    <h2>Traffic lights and ChangeDetectionRef usage</h2>
+    <h2 id="section-traffic">Traffic lights and ChangeDetectionRef usage</h2>
     <pre>Q. Why did detectChanges() fix the issue?
 
 A. currentIndex changed inside an async callback.
@@ -33,7 +44,7 @@ It does not run when a component updates its own state.</pre>
     <button (click)="stop()"> stop</button>
 
 <hr/>
-<h2>Grid timeout movement</h2>
+<h2 id="section-grid">Grid timeout movement</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
     <pre [textContent]="gridLightsCode"></pre>
     <pre [textContent]="gridLightsHtml"></pre>
@@ -49,7 +60,7 @@ It does not run when a component updates its own state.</pre>
 
 <hr/>
 
-<h3>Stop Watch</h3>
+<h3 id="section-stopwatch">Stop Watch</h3>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
     <pre [textContent]="stopWatchCode"></pre>
     <pre [textContent]="stopWatchHtml"></pre>
@@ -60,7 +71,7 @@ It does not run when a component updates its own state.</pre>
 
 <hr/>
 
-<h2>Clock for time with pipes for formats</h2>
+<h2 id="section-clock">Clock for time with pipes for formats</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
     <pre [textContent]="changeDateCode"></pre>
     <pre [textContent]="changeDateHtml"></pre>
@@ -110,3 +121,8 @@ It does not run when a component updates its own state.</pre>
 {{ currentDate | date:'MMM dd, yyyy hh:mm:ss a' }}
 </div>
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

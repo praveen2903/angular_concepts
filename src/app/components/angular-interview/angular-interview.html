@@ -1,9 +1,18 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🅰️ Angular Interview</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-topics')">📚 Angular Topics</a>
+    <a (click)="scrollToSection('section-machine')">💻 Machine Coding</a>
+  </div>
+</nav>
+
 <div class="page">
 <h2> users     -> Normal Variable</h2>
 <h2>users$    -> Observable Stream need of $ sign</h2>
   <h1>Angular Interview Master Sheet</h1>
 
-  <div class="grid">
+  <div class="grid" id="section-topics">
 
     <div
       class="card"
@@ -18,7 +27,7 @@
     </div>
 
   </div>
-<section class="card">
+<section class="card" id="section-machine">
   <h2>Machine Coding Problems</h2>
 
   <div class="grid">
@@ -51,3 +60,8 @@
   </div>
 </section>
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

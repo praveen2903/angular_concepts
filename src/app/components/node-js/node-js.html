@@ -1,3 +1,16 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🟢 NodeJS & Express</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('nodejs-introduction')">🟢 NodeJS Intro</a>
+    <a (click)="scrollToSection('expressjs-introduction')">🚂 ExpressJS Intro</a>
+    <a (click)="scrollToSection('event-loop')">🔄 Event Loop</a>
+    <a (click)="scrollToSection('middleware')">⚙️ Middleware</a>
+    <a (click)="scrollToSection('jwt-authentication')">🔑 JWT Auth</a>
+    <a (click)="scrollToSection('http-status-categories')">📊 HTTP Statuses</a>
+  </div>
+</nav>
+
 <div class="page">
 
   <h1>NodeJS & ExpressJS Master Sheet</h1>
@@ -9,6 +22,7 @@
       *ngFor="
         let topic of nodeExpressInterview
       "
+      [id]="$any(topic).id"
     >
 
       <h2>
@@ -24,3 +38,8 @@
   </div>
 
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

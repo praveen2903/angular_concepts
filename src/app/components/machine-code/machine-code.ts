@@ -682,4 +682,15 @@ get pages(){
   return Array.from({length: this.totalPages}, (_,i)=>i+1)  //[1...] start from 1
   // return Array(this.totalPages).keys(); for the iterating pages to display provide it. give 0 index too not valid
 }`;
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

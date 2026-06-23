@@ -1,0 +1,367 @@
+/* ============================================
+   STICKY NAVIGATION BAR
+   ============================================ */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(90deg, #0b1d0f 0%, #132a17 50%, #0d1f11 100%);
+  border-bottom: 1px solid #2d5a35;
+  padding: 10px 24px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+
+.nav-brand {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #4db33d;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav-links a {
+  color: #8b9e8e;
+  text-decoration: none;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #2d5a35;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: #f0f6f0;
+  background: #1a3d20;
+  border-color: #4db33d;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(77, 179, 61, 0.35);
+}
+
+/* ============================================
+   SCROLL TO TOP BUTTON
+   ============================================ */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3a8132, #4db33d);
+  color: #fff;
+  border: 2px solid #5ec54e;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(77, 179, 61, 0.45);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-top-btn:hover {
+  background: linear-gradient(135deg, #4db33d, #5ec54e);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 24px rgba(94, 197, 78, 0.6);
+}
+
+.scroll-top-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ============================================
+   LAYOUT & PAGE
+   ============================================ */
+.page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 20px;
+  scroll-margin-top: 60px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 8px;
+  /* color: #e6f4e6; */
+  font-size: 1.8rem;
+  letter-spacing: 0.02em;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #6b8a6e;
+  font-size: 0.92rem;
+  margin-bottom: 28px;
+}
+
+.purpose {
+  color: #9cb89f;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   CONCEPT GRID & CARDS
+   ============================================ */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+.concept-card {
+  background: linear-gradient(145deg, #111d13 0%, #0d160f 100%);
+  border: 1px solid #2d5a35;
+  border-radius: 14px;
+  padding: 22px;
+  color: #d4e8d6;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.concept-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(77, 179, 61, 0.15);
+  border-color: #4db33d;
+}
+
+.concept-card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  color: #8fd68f;
+}
+
+/* ============================================
+   SECTION BOX (inside cards)
+   ============================================ */
+.section-box {
+  margin-top: 14px;
+  background: #0a120b;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #1e3a22;
+}
+
+.section-box h4 {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6b8a6e;
+}
+
+.interview-box {
+  border-left: 3px solid #f0ad4e;
+  background: #12190e;
+}
+
+.interview-box h4 {
+  color: #f0ad4e;
+}
+
+/* ============================================
+   PRE / CODE BLOCKS
+   ============================================ */
+pre {
+  background: #0a120b;
+  color: #7ee787;
+  padding: 14px;
+  border-radius: 8px;
+  overflow: auto;
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.mongo-code {
+  color: #4db33d;
+}
+
+.interview-pre {
+  color: #f0ad4e;
+  background: transparent;
+  padding: 0;
+}
+
+/* ============================================
+   FULL-STACK QUERY CARDS
+   ============================================ */
+.query-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.query-card {
+  background: linear-gradient(145deg, #111d13 0%, #0d160f 100%);
+  border: 1px solid #2d5a35;
+  border-radius: 14px;
+  padding: 24px;
+  color: #d4e8d6;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.query-card:hover {
+  box-shadow: 0 6px 24px rgba(77, 179, 61, 0.12);
+  border-color: #3a8132;
+}
+
+.query-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #1e3a22;
+}
+
+.query-icon {
+  font-size: 1.6rem;
+}
+
+.query-card-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #8fd68f;
+}
+
+.query-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.query-block {
+  background: #0a120b;
+  border: 1px solid #1e3a22;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.query-block h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6b8a6e;
+  margin: 0 0 10px;
+}
+
+.query-block pre {
+  background: transparent;
+  padding: 0;
+}
+
+.route-pre {
+  color: #79c0ff !important;
+}
+
+.backend-pre {
+  color: #ffa657 !important;
+}
+
+.sql-pre {
+  color: #58a6ff !important;
+}
+
+.angular-pre {
+  color: #ff7b72 !important;
+}
+
+.react-pre {
+  color: #79c0ff !important;
+}
+
+.query-output {
+  background: #0f1e11;
+  border: 1px dashed #2d5a35;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 4px;
+}
+
+.query-output h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4db33d;
+  margin: 0 0 10px;
+}
+
+.query-output pre {
+  background: transparent;
+  padding: 0;
+  color: #7ee787;
+}
+
+/* ============================================
+   INTERVIEW CONTAINER (large text blocks)
+   ============================================ */
+.interview-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.interview-block {
+  background: linear-gradient(145deg, #111d13 0%, #0d160f 100%);
+  border: 1px solid #2d5a35;
+  border-radius: 14px;
+  padding: 28px;
+  color: #b8d8ba;
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .concept-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .query-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-nav {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .nav-brand {
+    font-size: 0.9rem;
+  }
+
+  .nav-links a {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .page {
+    padding: 16px 10px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+}

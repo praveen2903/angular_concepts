@@ -1,5 +1,15 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">📊 Models Usage</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-table')">👥 Users Table</a>
+    <a (click)="scrollToSection('section-code')">💻 Code Demo</a>
+    <a (click)="scrollToSection('section-defs')">📚 Definitions</a>
+  </div>
+</nav>
+
 <div class="page">
-    <section class="card">
+    <section class="card" id="section-table">
       <pre [textContent]="withoutModels"></pre>
       <pre [textContent]="useOfModels"></pre>
         <table border="1">
@@ -43,7 +53,7 @@
   </div>
 </div>
     </section>
-    <section class="card">
+    <section class="card" id="section-code">
         <h2>Model</h2>
         <pre [textContent]="modelDemoCode"></pre>
         <h2>Service</h2>
@@ -53,7 +63,12 @@
         <h2>HTML code</h2>
         <pre [textContent]="modalUsageHtmlCode"></pre>
     </section>
-    <section>
+    <section id="section-defs">
         <pre [textContent]="randomDefs"></pre>
     </section>
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

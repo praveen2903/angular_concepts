@@ -1,4 +1,12 @@
 <div class="page">
+  <nav class="sticky-nav">
+    <ul>
+      <li *ngFor="let topic of navTopics" (click)="scrollToSection(topic.id)">
+        {{ topic.title }}
+      </li>
+    </ul>
+  </nav>
+
 
   <h2>Angular RxJS Demo (Reactive Extension for JavaScript)</h2>
 <h4>users -> Normal Variable</h4>
@@ -82,7 +90,7 @@ UI Updated
   </pre>
 
 </section>
-<h2>Observable Example</h2>
+<h2 id="observable">Observable Example</h2>
 <p>an Observable acts as a data producer that emits streams of values over time, while an Observer acts as the data consumer that listens to and processes those emitted values</p>
 <pre [textContent]="ObservableDemo"></pre>
 <ul>
@@ -93,7 +101,7 @@ UI Updated
 
 <hr>
 
-<h2>Subject Example</h2>
+<h2 id="subject">Subject Example</h2>
 <p>a special type of Observable that acts as both an Observer (can push data) and an Observable (can be subscribed to)</p>
 <pre [textContent]="subjectDemo"></pre>
 <button (click)="sendSubjectValue()">
@@ -115,7 +123,7 @@ No value received
 
 <hr>
 
-<h2>BehaviorSubject Example</h2>
+<h2 id="behavior-subject">BehaviorSubject Example</h2>
 <pre [textContent]="behaviorSubjectExample"></pre>
 <button (click)="updateBehaviorSubject()">
   Update BehaviorSubject
@@ -128,7 +136,7 @@ No value received
 </div>
 <hr>
 
-<h2>Search Example - debounce example</h2>
+<h2 id="search-example">Search Example - debounce example</h2>
 
 <p>1st search handles on click enter/ button, 2nd one handles while search input itself it takes value like onChange.</p>
 <div style="display: flex; gap:20px">
@@ -175,35 +183,35 @@ Static Data         →         of()
 </pre>
 
 
-<section class="card">
+<section class="card" id="data-creation">
   <h2>Data Creation Operators</h2>
   <pre>{{ observableCode }}</pre>
   <pre>{{ ofCode }}</pre>
   <pre>{{ fromCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="transformation">
   <h2>Transformation Operators</h2>
   <pre>{{ mapCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="filtering">
   <h2>Filtering Operators</h2>
   <pre>{{ filterCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="state-management">
   <h2>State Management</h2>
   <pre>{{ subjectCode }}</pre>
   <pre>{{ behaviorCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="search-optimization">
   <h2>Search Optimization</h2>
   <pre>{{ debounceCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="multiple-api-calls">
   <h2>Multiple API Calls</h2>
   <pre>{{ forkJoinCode }}</pre>
   <pre>{{ mergeMapCode }}</pre>
@@ -211,19 +219,22 @@ Static Data         →         of()
   <pre>{{ combineLatestCode }}</pre>
 </section>
 
-<section class="card">
+<section class="card" id="memory-management">
   <h2>Memory Management</h2>
   <pre>{{ takeUntilCode }}</pre>
 </section>
-<section class="card">
+<section class="card" id="tap-demo">
       <h2>Tap Demo usage</h2>
       <pre [textContent]="tapDemo"></pre>
 </section>
 
-<h2>RXJS usage industry example</h2>
+<h2 id="industry-example">RXJS usage industry example</h2>
 <section class="card">
       <pre [textContent]="searchComponentService"></pre>
       <pre [textContent]="searchComponentTs"></pre>
       <pre [textContent]="searchComponentHtml"></pre>
 </section>
+  <button class="scroll-to-top" (click)="scrollToTop()">
+    ↑ Top
+  </button>
 </div>

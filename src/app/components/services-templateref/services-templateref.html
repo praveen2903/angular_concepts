@@ -1,4 +1,12 @@
 <div class="page">
+  <nav class="sticky-nav">
+    <ul>
+      <li *ngFor="let topic of navTopics" (click)="scrollToSection(topic.id)">
+        {{ topic.title }}
+      </li>
+    </ul>
+  </nav>
+
   <h1>Angular Services & Template Reference Variables</h1>
   <pre class="flow-box">
   Component
@@ -26,7 +34,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>1. Services</h2>
+    <h2 id="services">1. Services</h2>
 
     <p class="definition">
       Reusable business logic shared across components.
@@ -37,14 +45,14 @@ TypeScript
   </section>
 
   <section class="card">
-    <h2>2. Creating Service</h2>
+    <h2 id="creating-service">2. Creating Service</h2>
     <pre [textContent]="serviceCode"></pre>
 
   </section>
 
   <section class="card">
 
-    <h2>3. Using Service In Component</h2>
+    <h2 id="using-service">3. Using Service In Component</h2>
 
     <pre [textContent]="serviceUsageCode"></pre>
 
@@ -52,7 +60,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>4. HTML Rendering</h2>
+    <h2 id="html-rendering">4. HTML Rendering</h2>
 
     <pre [textContent]="serviceHtmlCode"></pre>
 
@@ -60,7 +68,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>5. Service Execution Flow</h2>
+    <h2 id="service-flow">5. Service Execution Flow</h2>
 
     <pre [textContent]="serviceOutputCode"></pre>
 
@@ -68,7 +76,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>6. Dependency Injection (DI means declaring it in constructor) - DI of service</h2>
+    <h2 id="di">6. Dependency Injection (DI means declaring it in constructor) - DI of service</h2>
 
     <pre [textContent]="dependencyInjectionCode"></pre>
 
@@ -76,7 +84,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>7. Enterprise Product Service</h2>
+    <h2 id="enterprise-service">7. Enterprise Product Service</h2>
 
     <pre [textContent]="enterpriseServiceCode"></pre>
 
@@ -84,13 +92,13 @@ TypeScript
 
   <section class="card">
 
-    <h2>8. Service Interview Traps</h2>
+    <h2 id="service-traps">8. Service Interview Traps</h2>
 
     <pre [textContent]="serviceInterviewCode"></pre>
 
   </section>
   <section class="card">
-  <h2>User Management</h2>
+  <h2 id="user-management">User Management</h2>
 <input #nameRef type="text" placeholder="Enter Name"/>
 
 <hr>
@@ -151,7 +159,7 @@ TypeScript
   <!-- TEMPLATE REF -->
 
   <section class="card">
-    <h2>Template Reference Variable</h2>
+    <h2 id="template-ref">Template Reference Variable</h2>
 <span>they give you a direct handle to DOM elements, component instances, or directives right inside the template or the TypeScript code.</span>
 
 <pre [textContent]="templateRefUse"></pre>
@@ -165,7 +173,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>1. Component Method</h2>
+    <h2 id="component-method">1. Component Method</h2>
 
     <pre [textContent]="templateRefTsCode"></pre>
 
@@ -173,7 +181,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>2. Template Ref Flow</h2>
+    <h2 id="template-flow">2. Template Ref Flow</h2>
 
     <pre [textContent]="templateRefFlowCode"></pre>
 
@@ -181,7 +189,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>3. ViewChild Example</h2>
+    <h2 id="viewchild-example">3. ViewChild Example</h2>
 
     <pre [textContent]="viewChildCode"></pre>
 
@@ -189,7 +197,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>4. ViewChild Flow</h2>
+    <h2 id="viewchild-flow">4. ViewChild Flow</h2>
 
     <pre [textContent]="viewChildFlowCode"></pre>
 
@@ -197,7 +205,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>5. Template Ref Interview Traps</h2>
+    <h2 id="template-traps">5. Template Ref Interview Traps</h2>
 
     <pre [textContent]="templateInterviewCode"></pre>
 
@@ -205,7 +213,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>6. Real Enterprise Usage</h2>
+    <h2 id="real-world">6. Real Enterprise Usage</h2>
 
     <pre [textContent]="realWorldCode"></pre>
 
@@ -213,7 +221,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>Services vs Template Ref Variable</h2>
+    <h2 id="services-vs-template">Services vs Template Ref Variable</h2>
 
     <table>
 
@@ -265,7 +273,7 @@ TypeScript
 
   <section class="card">
 
-    <h2>Most Asked Interview Question</h2>
+    <h2 id="interview-question">Most Asked Interview Question</h2>
 
     <pre>
 @Component(...)
@@ -289,8 +297,10 @@ Answer: Angular loses lifecycle, singleton behavior, testing support, intercepto
 
   </section>
 <section class="card">
-  <h2> user interactions and how input tab has inputRef and helps to save data</h2>
+  <h2 id="user-interactions"> user interactions and how input tab has inputRef and helps to save data</h2>
   <pre [textContent]="implementRefandServiceHtml"></pre>
 </section>
-
+  <button class="scroll-to-top" (click)="scrollToTop()">
+    ↑ Top
+  </button>
 </div>

@@ -2,6 +2,7 @@
 <nav class="sticky-nav" id="top">
   <div class="nav-brand">🐘 PostgreSQL Guide</div>
   <div class="nav-links">
+    <a (click)="scrollToSection('section-sql')">SQL Basics</a>
     <a (click)="scrollToSection('section-setup')">📜 Setup</a>
     <a (click)="scrollToSection('section-constraints')">🔒 Constraints</a>
     <a (click)="scrollToSection('section-indexes')">📑 Indexes</a>
@@ -13,6 +14,26 @@
     <a (click)="scrollToSection('section-joins')">🤝 Joins</a>
   </div>
 </nav>
+
+<div class="page" id="section-sql">
+  <!-- SQL Basics Section -->
+  <div class="card">
+    <h2>SQL Basics</h2>
+    <p>SQL stands for Structured Query Language. It is a standard language for managing and manipulating databases.</p>
+    <div *ngFor="let section of pgsqlSections; let i=index">
+      <h2>{{section.icon}} {{section.title}}</h2>
+      <p>{{section.purpose}}</p>
+      <h3>Commands</h3>
+      <pre>{{section.commands}}</pre>
+      <h3>Query</h3>
+      <pre>{{section.query}}</pre>
+      <h3>Output</h3>
+      <pre>{{section.output}}</pre>
+      <h3>Interview</h3>
+      <pre>{{section.interview}}</pre>
+    </div>
+  </div>
+</div>
 
 <!-- Page 1 -->
 <div class="page" id="section-setup">

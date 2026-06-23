@@ -1373,7 +1373,27 @@ Avoid storing it.
 
 Correct
 ------------
-const fullName = firstName+' '+lastName;`
+const fullName = firstName+' '+lastName;\`
 }
-];
+  ];
+
+  ngOnInit(): void {
+    this.reactTraps = this.reactTraps.map(topic => ({
+      ...topic,
+      id: topic.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    }));
+  }
+}
+`
+}];
+ scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

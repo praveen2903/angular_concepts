@@ -427,23 +427,229 @@ import {Component,Input,Output,EventEmitter} from '@angular/core';
 })
 export class ProductCardComponent {
  @Input()
- product!: any;
+   PARENT COMPONENT
+====================================================== */
 
- @Output()
- cartClicked = new EventEmitter<any>();
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-parent',
+  templateUrl: './parent.component.html'
+})
+export class ParentComponent {
+  selectedEmployee: any;
 
- addProduct() {
-   this.cartClicked.emit(this.product);
- }
+  receiveEmployee(employee: any) {   //employee event like selected employee
+    this.selectedEmployee = employee;
+  }
 }
+
+<app-child (employeeSelected)="receiveEmployee($event)"></app-child>   //employeeselected eventemitter in child and recieveEmployee method in parent ts
+<hr>
+<h3>Employee Details</h3>
+<p>Id : {{ selectedEmployee?.id }}</p>
+<p>Name : {{ selectedEmployee?.name }}</p>
+<p>Department : {{ selectedEmployee?.department }}</p>
+<p>Salary : {{ selectedEmployee?.salary }}</p>`
+
+// lifecycleMethodsOutput= `1. Constructor
+// userName = Praveen
+// 2. ngOnChanges
+// {
+//   userName: {
+//     previousValue: undefined,
+//     currentValue: 'Praveen',
+//     firstChange: true
+//   }
+// }
+// 3. ngOnInit
+// API Calls Usually Here
+// 4. ngDoCheck
+// 5. ngAfterViewInit
+// --------------------------------
+// Click Change Name
+// 4. ngDoCheck
+// --------------------------------
+// Parent Change Input
+// 2. ngOnChanges
+// {
+//   userName: {
+//     previousValue: 'Praveen',
+//     currentValue: 'Rahul',
+//     firstChange: false
+//   }
+// }
+// 4. ngDoCheck
+// --------------------------------
+// Component Removed
+// 6. ngOnDestroy`
+//  lifecyleMethods = `import {
+//   Component,
+//   Input,
+//   OnChanges,
+//   SimpleChanges,
+//   OnInit,
+//   DoCheck,
+//   AfterViewInit,
+//   OnDestroy
+// } from '@angular/core';
+
+// @Component({
+//   selector: 'app-user-card',
+//   template: \`
+//     <h2>{{ userName }}</h2>
+
+//     <button (click)="changeName()">
+//       Change Name
+//     </button>
+//   \`
+// })
+// export class UserCardComponent implementsOnChanges,OnInit,DoCheck,AfterViewInit,OnDestroy {
+//   @Input()
+//   userName = 'Praveen';
+//   constructor() {
+//     console.log('1. Constructor');
+//     console.log('userName '=this.userName);
+//   }
+//   ngOnChanges(changes: SimpleChanges) {
+//     console.log('2. ngOnChanges');
+//     console.log(changes);
+//   }
+//   ngOnInit() {
+//     console.log('3. ngOnInit');
+//     console.log('API Calls Usually Here');
+// }
+//   ngDoCheck() {
+//     console.log('4. ngDoCheck');
+//   }
+//   ngAfterViewInit() {
+//     console.log('5. ngAfterViewInit');
+//   }
+//   changeName() {
+//     this.userName ='Sai';
+//   }
+//   ngOnDestroy() {
+//     console.log('6. ngOnDestroy');
+//   }
+// }`
+
+// interviewQuestions = `
+// Parent Component
+//        ↓
+// Load Child
+//        ↓
+// User Click Button
+//        ↓
+// sendEmployee()
+//        ↓
+// employeeSelected.emit(employee)
+//        ↓
+// @Output()
+//        ↓
+// (employeeSelected)
+//        ↓
+// receiveEmployee($event)
+//        ↓
+// selectedEmployee = employee
+//        ↓
+// UI Updated
+// @Output()
+// userSelected = new EventEmitter<User>();
+// selectUser() {
+//   this.userSelected.emit(this.user);
+// }
+// -----------------------------------
+// <app-user-card (userSelected)="loadUser($event)">
+// </app-user-card>
+// -----------------------------------
+// loadUser(user: User) {
+//   console.log(user);
+// }`
+// parentproduct = ` But child to parent event is passed 
+// parent -> child : products sent [parentRecords]
+// child -> parent : products added to card (childEventEmitter)="parentMethod($event)" event binding
+
+// --parent.ts
+
+// import { Component } from '@angular/core';
+// @Component({
+//   selector: 'app-products',
+//   templateUrl: './products.component.html'
+// })
+// export class ProductsComponent {
+//   cartCount = 0;
+//   products = [
+//     {
+//       id: 1,
+//       name: 'iPhone 16',
+//       price: 80000,
+//       stock: 10
+//     },
+//     {
+//       id: 2,
+//       name: 'Samsung S26',
+//       price: 70000,
+//       stock: 5
+//     },
+//     {
+//       id: 3,
+//       name: 'OnePlus 15',
+//       price: 50000,
+//       stock: 8
+//     }
+//   ];
+
+//   addToCart(product: any) {
+//       this.cartService.add(product);
+//       this.store.dispatch(addToCart(product));
+//       this.http.post('/api/cart', product).subscribe();
+//   }
+// }
+  
+// -------parent.html
+
+// <h2>Cart Count : {{ cartCount }}</h2>
+
+// <app-product-card *ngFor="let product of products" [product]="product" (cartClicked)="addToCart($event)"></app-product-card>
+
+
+// -- child.ts
+
+// import {Component,Input,Output,EventEmitter} from '@angular/core';
+
+// @Component({
+//  selector:'app-product-card',
+//  templateUrl:'./product-card.html'
+// })
+// export class ProductCardComponent {
+//  @Input()
+//  product!: any;
+
+//  @Output()
+//  cartClicked = new EventEmitter<any>();
+
+//   addProduct() {
+//     this.cartClicked.emit(this.product);
+//   }
+// }
  
----child html
+// ---child html
 
-<div class="card">
-  <h3>{{ product.name }}</h3>
-  <p>₹{{ product.price| INR }}</p>
-  <p>Stock : {{ product.stock }}</p>
+// <div class="card">
+//   <h3>{{ product.name }}</h3>
+//   <p>₹{{ product.price| INR }}</p>
+//   <p>Stock : {{ product.stock }}</p>
 
-  <button (click)="addProduct()"> Add To Cart </button>
-</div>`
+//   <button (click)="addProduct()"> Add To Cart </button>
+// </div>`
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

@@ -25,6 +25,7 @@ import { NodeJs } from './components/node-js/node-js';
 import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
 import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
+import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
     PgsqlDemo,
     PgsqlQueries,
     ProceduresDemo,
+    MongodbDemo,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

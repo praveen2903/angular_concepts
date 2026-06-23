@@ -1,8 +1,25 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">💻 Machine Coding</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-clickstars')">⭐ Click Stars</a>
+    <a (click)="scrollToSection('section-hoverstars')">✨ Hover Stars</a>
+    <a (click)="scrollToSection('section-decimalstars')">💫 Decimal Stars</a>
+    <a (click)="scrollToSection('section-search')">🔍 Search Demo</a>
+    <a (click)="scrollToSection('section-todobasic')">📝 Basic Todo</a>
+    <a (click)="scrollToSection('section-todoadvanced')">⚙️ Advanced Todo</a>
+    <a (click)="scrollToSection('section-tododragdrop')">🔄 Drag & Drop</a>
+    <a (click)="scrollToSection('section-gridlights')">💡 Grid Lights</a>
+    <a (click)="scrollToSection('section-modal')">🚪 Modal</a>
+    <a (click)="scrollToSection('section-pagination')">📄 Pagination</a>
+  </div>
+</nav>
+
 <div class="page">
     <hr/>
 <app-search-autocomplete></app-search-autocomplete>
 <hr/>
-<h2>Click stars - style binding & *ngFor</h2>
+<h2 id="section-clickstars">Click stars - style binding & *ngFor</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre> {{clickedCode}}</pre>
 <pre>{{clickedTs}}</pre>
@@ -16,7 +33,7 @@
 <span>Rating: {{clickedIndex}}</span>
 
 <hr/>
-<h2> hover stars -- style and class binding showcase</h2>
+<h2 id="section-hoverstars"> hover stars -- style and class binding showcase</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre>{{hoveredHtml}}</pre>
 <pre>{{hoveredCode}}</pre>
@@ -28,7 +45,7 @@
   </div>
 </div>
 <hr/>
-<h2>Decimal Stars understanding event binding</h2>
+<h2 id="section-decimalstars">Decimal Stars understanding event binding</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre>{{fractionTs}}</pre>
 <pre>{{fractionCode}}</pre>
@@ -43,7 +60,7 @@
 <h2>Rating: {{starRating}}</h2>
 
 <hr/>
-<h2>Users Searching demo</h2>
+<h2 id="section-search">Users Searching demo</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
   <pre>{{searchCode}}</pre>
   <pre>{{searchTs}}</pre>
@@ -55,7 +72,7 @@
   </li>
 </ul>
 <hr/>
-<h2>TODO App- basic the edit will add the thing to input itself simple model</h2>
+<h2 id="section-todobasic">TODO App- basic the edit will add the thing to input itself simple model</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">  
 <pre>{{todoBasicHtml}}</pre>
 <pre>{{todobasicCode}}</pre>
@@ -74,7 +91,7 @@
   </li>
 </ul>
 <hr/>
-<h2>TODO Advanced-- edit multi items, key press enter add like that you could see advantage in angular</h2>
+<h2 id="section-todoadvanced">TODO Advanced-- edit multi items, key press enter add like that you could see advantage in angular</h2>
 <p>here keyup/keydown.enter manages the enter button unlike in react pass event and check e.key=="Enter"</p>
 <h3>Modal div get document: to event but not input why?</h3>
 <p>(document:keydown.escape) the document: is because the escape key happens on document not modal like in input which is dom so it can be negated.</p>
@@ -105,7 +122,7 @@
   </li>
 </ul>
 <hr/>
-<h2>TODO Drag & Drop using previous ones itself</h2>
+<h2 id="section-tododragdrop">TODO Drag & Drop using previous ones itself</h2>
 <p>If asked to save priorities like on drag and drop new array create use put axios request to update the tasks list</p>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;">
   <pre>{{todoDragHtml}}</pre>
@@ -136,7 +153,7 @@
 
 <hr/>
 
-<h2>Grid Lights code -- class binding active->inactive (clicked active blue; else gold)</h2>
+<h2 id="section-gridlights">Grid Lights code -- class binding active->inactive (clicked active blue; else gold)</h2>
 <div style="display: grid; grid-template-columns: repeat(2,1fr); gap:20px;">
   <pre [textContent]="gridCode">  </pre>
   <pre [textContent]="gridHtml"></pre>
@@ -150,7 +167,7 @@
   </div>
 </div>
 <hr/>
-<h2>Modal related</h2>
+<h2 id="section-modal">Modal related</h2>
 <p>(document:keydown.escape) the document: is because the escape key happens on document not modal like in input which is dom so it can be negated.</p>
 <p>A normal div cannot recieve the keyboard events unless focused but input, textarea, select, button get global focus without document: </p>
 <div style="display: grid;grid-template-columns: repeat(2,1fr); gap: 20px;">
@@ -168,7 +185,7 @@
 
 <hr/>
 
-<h2>Pagination & filtering</h2>
+<h2 id="section-pagination">Pagination & filtering</h2>
 
 <div style="display: grid; grid-template-columns: repeat(2,1fr);gap: 20px;">
   <pre [textContent]="paginationTs"></pre>
@@ -214,3 +231,8 @@
   </div>
 </div>
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

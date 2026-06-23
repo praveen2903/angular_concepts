@@ -1,3 +1,15 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🔄 Lifecycle & IO</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-input-output')">📥 Input & Output</a>
+    <a (click)="scrollToSection('section-order')">⚙️ Lifecycle Order</a>
+    <a (click)="scrollToSection('section-hooks')">⚓ Hooks Examples</a>
+    <a (click)="scrollToSection('section-traps')">💡 Usage & Traps</a>
+    <a (click)="scrollToSection('section-mistakes')">⚠️ Common Mistakes</a>
+  </div>
+</nav>
+
 <div class="page">
 <pre class="flow-box">
       {{randomDefs}}
@@ -29,7 +41,7 @@ Component Destroy
 
 <!-- INPUT -->
 
-<section class="card">
+<section class="card" id="section-input-output">
 
 <h2>1. @Input() </h2>
 <span>-- Parent-> child parent directly sends to @Input the data in [childState]</span>
@@ -160,7 +172,7 @@ Redux Store Update
 
 <!-- LIFECYCLE -->
 
-<section class="card">
+<section class="card" id="section-order">
 
 <h2>5. Lifecycle Execution Order</h2>
 
@@ -168,7 +180,7 @@ Redux Store Update
 
 </section>
 
-<section class="card">
+<section class="card" id="section-hooks">
 
 <h2>6. Lifecycle Hooks Example</h2>
 
@@ -315,7 +327,7 @@ timers and sockets.
 
 </section>
 
-<section class="card">
+<section class="card" id="section-traps">
 
 <h2>Lifecycle Interview Traps</h2>
 
@@ -376,7 +388,7 @@ timers and sockets.
 
 </section>
 
-<section class="card">
+<section class="card" id="section-mistakes">
 
 <h2>Common Mistakes</h2>
 
@@ -440,3 +452,8 @@ UI Refresh
 </section>
 
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

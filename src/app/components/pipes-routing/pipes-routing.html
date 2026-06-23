@@ -1,4 +1,12 @@
 <div class="page">
+  <nav class="sticky-nav">
+    <ul>
+      <li *ngFor="let topic of navTopics" (click)="scrollToSection(topic.id)">
+        {{ topic.title }}
+      </li>
+    </ul>
+  </nav>
+
 
   <h1>Angular Pipes & Routing</h1>
 
@@ -22,7 +30,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>1. Uppercase Pipe</h2>
+    <h2 id="uppercase-pipe">1. Uppercase Pipe</h2>
 
     <p class="definition">
       Converts all text into uppercase.
@@ -38,7 +46,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>2. Lowercase Pipe</h2>
+    <h2 id="lowercase-pipe">2. Lowercase Pipe</h2>
 
     <div class="demo-box">
       {{ name | lowercase }}
@@ -50,7 +58,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>3. TitleCase Pipe</h2>
+    <h2 id="titlecase-pipe">3. TitleCase Pipe</h2>
 
     <div class="demo-box">
       {{ name | titlecase }}
@@ -62,7 +70,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>4. Currency Pipe</h2>
+    <h2 id="currency-pipe">4. Currency Pipe</h2>
 
     <div class="demo-box">
       {{ salary | currency:'INR' }}
@@ -74,7 +82,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>5. Percent Pipe</h2>
+    <h2 id="percent-pipe">5. Percent Pipe</h2>
 
     <div class="demo-box">
       {{ percentage | percent }}
@@ -86,7 +94,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>6. Date Pipe</h2>
+    <h2 id="date-pipe">6. Date Pipe</h2>
 
     <div class="demo-box">
       {{ today | date:'dd/MM/yyyy' }}
@@ -98,7 +106,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>7. JSON Pipe</h2>
+    <h2 id="json-pipe">7. JSON Pipe</h2>
 
     <p>-- most used suppose you need to check for Json request with console.log() in ts but need lifecycle method for it, so check in ui by this json pipe</p>
     <div class="demo-box">
@@ -111,7 +119,7 @@ Component Rendering
 
   <section class="card">
 
-    <h2>Pipes Flow</h2>
+    <h2 id="pipes-flow">Pipes Flow</h2>
 
     <pre>
 Raw Data
@@ -140,7 +148,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>Pipes Interview Traps</h2>
+    <h2 id="interview-traps">Pipes Interview Traps</h2>
 
     <table>
 
@@ -176,7 +184,7 @@ Display To UI
       </tbody>
 
     </table>
-    <h2>Custom Pipes</h2>
+    <h2 id="custom-pipes">Custom Pipes</h2>
     <p>{{salary | salary}}</p>
     <pre>{{customPipes}}</pre>
 
@@ -209,7 +217,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>8. Route Configuration</h2>
+    <h2 id="route-config">8. Route Configuration</h2>
 
     <p class="definition">
       Maps URL paths to Angular Components.
@@ -221,7 +229,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>9. routerLink</h2>
+    <h2 id="router-link">9. routerLink</h2>
 
     <pre>{{ routerLinkCode }}</pre>
 
@@ -229,7 +237,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>10. router-outlet</h2>
+    <h2 id="router-outlet">10. router-outlet</h2>
 
     <pre>{{ routerOutletCode }}</pre>
 
@@ -237,7 +245,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>11. Route Parameters</h2>
+    <h2 id="route-params">11. Route Parameters</h2>
 
     <pre>{{ routeParamCode }}</pre>
 
@@ -245,7 +253,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>12. Programmatic Navigation</h2>
+    <h2 id="navigate">12. Programmatic Navigation</h2>
 
     <pre>{{ navigateCode }}</pre>
 
@@ -253,7 +261,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>13. ActivatedRoute</h2>
+    <h2 id="activated-route">13. ActivatedRoute</h2>
 
     <pre>{{ activatedRouteCode }}</pre>
 
@@ -261,7 +269,7 @@ Display To UI
 
   <section class="card">
 
-    <h2>Routing Flow</h2>
+    <h2 id="routing-flow">Routing Flow</h2>
 
     <pre>
 User Click
@@ -366,7 +374,7 @@ Render User Details</pre>
   </section>
 <section class="card">
 
-  <h2>14. Route Guards</h2>
+  <h2 id="route-guards">14. Route Guards</h2>
 
   <p class="definition">
     Route Guards protect pages and decide whether
@@ -504,4 +512,7 @@ Allow Route
   </table>
 
 </section>
+  <button class="scroll-to-top" (click)="scrollToTop()">
+    ↑ Top
+  </button>
 </div>

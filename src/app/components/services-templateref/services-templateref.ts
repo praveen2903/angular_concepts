@@ -557,5 +557,37 @@ ngAfterViewInit() {
   <!-- Disables button by accessing the directive's "valid" state property  directly by ref -->
   <button [disabled]="!myForm.valid">Submit</button>
 </form>`
-}
 
+  navTopics = [
+    { title: 'Services', id: 'services' },
+    { title: 'Creating Service', id: 'creating-service' },
+    { title: 'Using Service', id: 'using-service' },
+    { title: 'HTML Rendering', id: 'html-rendering' },
+    { title: 'Service Flow', id: 'service-flow' },
+    { title: 'Dependency Injection', id: 'di' },
+    { title: 'Enterprise Service', id: 'enterprise-service' },
+    { title: 'Service Traps', id: 'service-traps' },
+    { title: 'User Management', id: 'user-management' },
+    { title: 'Template Ref Variable', id: 'template-ref' },
+    { title: 'Component Method', id: 'component-method' },
+    { title: 'Template Ref Flow', id: 'template-flow' },
+    { title: 'ViewChild Example', id: 'viewchild-example' },
+    { title: 'ViewChild Flow', id: 'viewchild-flow' },
+    { title: 'Template Traps', id: 'template-traps' },
+    { title: 'Real Enterprise Usage', id: 'real-world' },
+    { title: 'Services vs Template Ref', id: 'services-vs-template' },
+    { title: 'Interview Question', id: 'interview-question' },
+    { title: 'User Interactions', id: 'user-interactions' }
+  ];
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}

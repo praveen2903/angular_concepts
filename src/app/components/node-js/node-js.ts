@@ -729,6 +729,24 @@ Method 3 — Query Parameter
 Interview Trap
   URL Versioning Is The Most Widely Used Method.
 `
-},
+}
   ];
+
+  ngOnInit(): void {
+    this.nodeExpressInterview = this.nodeExpressInterview.map(topic => ({
+      ...topic,
+      id: topic.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    }));
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

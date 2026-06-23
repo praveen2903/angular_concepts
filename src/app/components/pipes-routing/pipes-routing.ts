@@ -391,4 +391,35 @@ export const routes: Routes = [
     canActivate: [authGaurd, AdminGaurd]
   }
 ];`
+  navTopics = [
+    { title: 'Uppercase', id: 'uppercase-pipe' },
+    { title: 'Lowercase', id: 'lowercase-pipe' },
+    { title: 'TitleCase', id: 'titlecase-pipe' },
+    { title: 'Currency', id: 'currency-pipe' },
+    { title: 'Percent', id: 'percent-pipe' },
+    { title: 'Date', id: 'date-pipe' },
+    { title: 'JSON', id: 'json-pipe' },
+    { title: 'Pipes Flow', id: 'pipes-flow' },
+    { title: 'Interview Traps', id: 'interview-traps' },
+    { title: 'Custom Pipes', id: 'custom-pipes' },
+    { title: 'Route Configuration', id: 'route-config' },
+    { title: 'routerLink', id: 'router-link' },
+    { title: 'router-outlet', id: 'router-outlet' },
+    { title: 'Route Params', id: 'route-params' },
+    { title: 'Navigation', id: 'navigate' },
+    { title: 'ActivatedRoute', id: 'activated-route' },
+    { title: 'Routing Flow', id: 'routing-flow' },
+    { title: 'Route Guards', id: 'route-guards' }
+  ];
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

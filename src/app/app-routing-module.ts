@@ -17,6 +17,7 @@ import { NodeJs } from './components/node-js/node-js';
 import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
 import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
+import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
 
 const routes: Routes = [
   {
@@ -83,6 +84,10 @@ const routes: Routes = [
   {
     path:'procedures',
     component:ProceduresDemo
+  },
+  {
+    path:'mongodb',
+    component:MongodbDemo
   }
 ];
 

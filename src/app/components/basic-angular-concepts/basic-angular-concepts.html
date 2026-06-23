@@ -1,3 +1,17 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🅰️ Angular Basics</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-interpolation')">📝 Interpolation</a>
+    <a (click)="scrollToSection('section-event')">⚡ Event Binding</a>
+    <a (click)="scrollToSection('section-property')">🔒 Property Binding</a>
+    <a (click)="scrollToSection('section-ngif')">❓ *ngIf</a>
+    <a (click)="scrollToSection('section-ngmodel')">🔄 ngModel</a>
+    <a (click)="scrollToSection('section-style')">🎨 Style Binding</a>
+    <a (click)="scrollToSection('section-class')">🏷️ Class Binding</a>
+  </div>
+</nav>
+
 <div class="page">
 
   <h1>Angular Basic Concepts</h1>
@@ -18,7 +32,7 @@ Directives        *ngIf, *ngFor
   <!-- INTERPOLATION -->
   <!-- ==================================== -->
 
-  <section class="card">
+  <section class="card" id="section-interpolation">
 
     <h2>1. Interpolation {{ '{' }}{{ '{' }} {{ '}' }}{{ '}' }}</h2>
 
@@ -57,7 +71,7 @@ HTML Output
   <!-- EVENT BINDING -->
   <!-- ==================================== -->
 
-  <section class="card">
+  <section class="card" id="section-event">
 
     <h2>2. Event Binding ()</h2>
 
@@ -115,7 +129,7 @@ UI Updated
   <!-- PROPERTY BINDING -->
   <!-- ==================================== -->
 
-  <section class="card">
+  <section class="card" id="section-property">
 
     <h2>3. Property Binding []</h2>
 
@@ -166,7 +180,7 @@ DOM Property
   <!-- NGIF -->
   <!-- ==================================== -->
 
-  <section class="card">
+  <section class="card" id="section-ngif">
 
     <h2>4. Structural Directive *ngIf</h2>
 
@@ -218,7 +232,7 @@ Destroy DOM
   <!-- NGMODEL -->
   <!-- ==================================== -->
 
-  <section class="card">
+  <section class="card" id="section-ngmodel">
 
     <h2>5. Two-Way Binding [(ngModel)]</h2>
 
@@ -264,7 +278,7 @@ User Input
 
   </section>
 
-  <section class="card">
+  <section class="card" id="section-style">
 
   <h2>6. Style Binding [style]</h2>
 
@@ -327,7 +341,7 @@ UI Updated
 </div>
 
 
-<section class="card">
+<section class="card" id="section-class">
 
   <h2>7. Class Binding [class]</h2>
 <span>[class.xxx] and [style.xxx] are preferred when binding a single class/style.
@@ -378,3 +392,8 @@ UI Updated
   <pre>{{ngClass}}</pre>
 </div>
 </div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

@@ -1,0 +1,220 @@
+<!-- Sticky Navigation Bar -->
+<nav class="sticky-nav" id="top">
+  <div class="nav-brand">🍃 MongoDB Guide</div>
+  <div class="nav-links">
+    <a (click)="scrollToSection('section-sqlvsnosql')">⚖️ SQL vs NoSQL</a>
+    <a (click)="scrollToSection('section-structure')">📦 Structure</a>
+    <a (click)="scrollToSection('section-crud')">🔧 CRUD</a>
+    <a (click)="scrollToSection('section-queries')">🌐 Full-Stack Queries</a>
+    <a (click)="scrollToSection('section-http')">📡 HTTP Interview</a>
+    <a (click)="scrollToSection('section-idempotent')">🔁 Idempotency</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 — SQL vs NoSQL
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-sqlvsnosql">
+  <h1>⚖️ SQL vs NoSQL</h1>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of sqlVsNosql">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Comparison</h4>
+        <pre class="mongo-code">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Output</h4>
+        <pre>{{ item.output }}</pre>
+      </div>
+
+      <div class="section-box interview-box" *ngIf="$any(item).interview">
+        <h4>💡 Interview</h4>
+        <pre class="interview-pre">{{ $any(item).interview }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 — MongoDB Structure
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-structure">
+  <h1>📦 MongoDB Structure</h1>
+  <p class="section-subtitle">
+    Understand MongoDB terminology and how it maps to SQL concepts.
+  </p>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of mongoDbSections">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Query</h4>
+        <pre class="mongo-code">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Output</h4>
+        <pre>{{ item.output }}</pre>
+      </div>
+
+      <div class="section-box interview-box" *ngIf="$any(item).interview">
+        <h4>💡 Interview</h4>
+        <pre class="interview-pre">{{ $any(item).interview }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 — CRUD Operations
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-crud">
+  <h1>🔧 CRUD Operations</h1>
+  <p class="section-subtitle">
+    MongoDB Create, Read, Update, Delete — the core database operations.
+  </p>
+
+  <div class="concept-grid">
+    <div class="concept-card" *ngFor="let item of mongodbsections">
+      <h2>{{ item.icon }} {{ item.title }}</h2>
+      <p class="purpose">{{ item.purpose }}</p>
+
+      <div class="section-box" *ngIf="item.input">
+        <h4>Input</h4>
+        <pre>{{ item.input }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Query</h4>
+        <pre class="mongo-code">{{ item.query }}</pre>
+      </div>
+
+      <div class="section-box">
+        <h4>Output</h4>
+        <pre>{{ item.output }}</pre>
+      </div>
+
+      <div class="section-box interview-box" *ngIf="$any(item).interview">
+        <h4>💡 Interview</h4>
+        <pre class="interview-pre">{{ $any(item).interview }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4 — Full-Stack Queries
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-queries">
+  <h1>🌐 Full-Stack Queries</h1>
+  <p class="section-subtitle">
+    End-to-end flow: Route → Backend → MongoDB → SQL equivalent → Angular → React
+  </p>
+
+  <div class="query-grid">
+    <div class="query-card" *ngFor="let item of queries">
+      <div class="query-card-header">
+        <span class="query-icon">{{ item.icon }}</span>
+        <h2>{{ item.title }}</h2>
+      </div>
+
+      <div class="query-row">
+        <div class="query-block" *ngIf="item.route">
+          <h4>🛤️ Route</h4>
+          <pre class="route-pre">{{ item.route }}</pre>
+        </div>
+
+        <div class="query-block" *ngIf="item.backend">
+          <h4>⚙️ Backend (Express)</h4>
+          <pre class="backend-pre">{{ item.backend }}</pre>
+        </div>
+      </div>
+
+      <div class="query-row">
+        <div class="query-block" *ngIf="item.mongoDb">
+          <h4>🍃 MongoDB</h4>
+          <pre class="mongo-code">{{ item.mongoDb }}</pre>
+        </div>
+
+        <div class="query-block" *ngIf="item.sql">
+          <h4>🐘 SQL Equivalent</h4>
+          <pre class="sql-pre">{{ item.sql }}</pre>
+        </div>
+      </div>
+
+      <div class="query-row">
+        <div class="query-block" *ngIf="item.angularService">
+          <h4>🅰️ Angular Service</h4>
+          <pre class="angular-pre">{{ item.angularService }}</pre>
+        </div>
+
+        <div class="query-block" *ngIf="item.angularComponent">
+          <h4>🅰️ Angular Component</h4>
+          <pre class="angular-pre">{{ item.angularComponent }}</pre>
+        </div>
+      </div>
+
+      <div class="query-row" *ngIf="item.react">
+        <div class="query-block">
+          <h4>⚛️ React</h4>
+          <pre class="react-pre">{{ item.react }}</pre>
+        </div>
+      </div>
+
+      <div class="query-output" *ngIf="item.output">
+        <h4>📤 Output</h4>
+        <pre>{{ item.output }}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5 — HTTP Interview Questions
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-http">
+  <h1>📡 HTTP Interview Questions</h1>
+  <p class="section-subtitle">
+    PUT vs PATCH, POST vs PUT, Status Codes, and more — essential HTTP concepts.
+  </p>
+
+  <div class="interview-container">
+    <pre class="interview-block">{{ httpInteview }}</pre>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 6 — Idempotency
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="section-idempotent">
+  <h1>🔁 Idempotency in HTTP</h1>
+  <p class="section-subtitle">
+    Understand idempotent methods, idempotency keys, and how payment gateways handle duplicates.
+  </p>
+
+  <div class="interview-container">
+    <pre class="interview-block">{{ idempotentMethods }}</pre>
+  </div>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" (click)="scrollToTop()" title="Scroll to Top">
+  ↑
+</button>

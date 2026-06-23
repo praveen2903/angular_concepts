@@ -11,14 +11,10 @@ export class PgsqlDemo {
   pgsqlSections = [
 
 {
-  title: 'DDL (Data Definition Language)',
+  title: '1. DDL (Data Definition Language)',
   icon: '🏗️',
 
-  purpose: `
-Used to define and modify database structures.
-
-DDL changes metadata/schema objects.
-  `,
+  purpose: `Used to define and modify database structures. DDL changes metadata/schema objects.  `,
 
   commands: `
 CREATE
@@ -28,9 +24,7 @@ TRUNCATE
 RENAME
   `,
 
-  query: `
--- Create Table
-
+  query: `-- Create Table
 CREATE TABLE employees(
     employee_id INT PRIMARY KEY,
     first_name VARCHAR(50),
@@ -38,93 +32,58 @@ CREATE TABLE employees(
 );
 
 -- Add Column
-
-ALTER TABLE employees
-ADD COLUMN email VARCHAR(100);
+ALTER TABLE employees ADD COLUMN email VARCHAR(100);
 
 -- Rename Column
-
-ALTER TABLE employees
-RENAME COLUMN first_name TO employee_name;
+ALTER TABLE employees RENAME COLUMN first_name TO employee_name;
 
 -- Remove Table
-
-DROP TABLE employees;
-  `,
+DROP TABLE employees;`,
 
   output: `
-
 Structure Created
 
 Table Modified
 
-Table Deleted
+Table Deleted  `,
 
-  `,
-
-  interview: `
-DDL changes database structure.
-
-Mostly auto-committed.
-  `
+  interview: `DDL changes database structure. Mostly auto-committed.`
 },
 
 {
-  title: 'DML (Data Manipulation Language)',
+  title: '2. DML (Data Manipulation Language)',
   icon: '✍️',
 
-  purpose: `
-Used to insert, update and delete data.
-
-Works on table records.
-  `,
+  purpose: `Used to insert, update and delete data. Works on table records.`,
 
   commands: `
 INSERT
 UPDATE
-DELETE
-  `,
+DELETE`,
 
   query: `
 -- Insert
-
-INSERT INTO employees
-VALUES(
-    101,
-    'John',
-    50000
-);
+INSERT INTO employees VALUES(101,'John',50000);
 
 -- Update
-
-UPDATE employees
-SET salary = 60000
-WHERE employee_id = 101;
+UPDATE employees SET salary = 60000 WHERE employee_id = 101;
 
 -- Delete
 
-DELETE FROM employees
-WHERE employee_id = 101;
-  `,
+DELETE FROM employees WHERE employee_id = 101;`,
 
   output: `
-
 Record Inserted
 
 Record Updated
 
-Record Deleted
+Record Deleted`,
 
-  `,
-
-  interview: `
-DML changes data,
-not table structure.
-  `
+  interview: `DML changes data, not table structure.`
 },
 
 {
-  title: 'DQL (Data Query Language)',
+  title: '3. DQL (Data Query Language)',
   icon: '🔍',
 
   purpose: `
@@ -135,33 +94,18 @@ Used to retrieve data from database.
 SELECT
   `,
 
-  query: `
-SELECT
-    employee_id,
-    first_name,
-    salary
-FROM employees
-WHERE salary > 50000
-ORDER BY salary DESC;
-  `,
+  query: `SELECT employee_id, first_name, salary FROM employees WHERE salary > 50000 ORDER BY salary DESC;`,
 
   output: `
-
 102 Emma 70000
 
-103 Mike 90000
+103 Mike 90000`,
 
-  `,
-
-  interview: `
-DQL only reads data.
-
-No modifications.
-  `
+  interview: `DQL only reads data. No modifications.`
 },
 
 {
-  title: 'TCL (Transaction Control Language)',
+  title: '4. TCL (Transaction Control Language)',
   icon: '💳',
 
   purpose: `
@@ -176,44 +120,95 @@ ROLLBACK
 SAVEPOINT
   `,
 
-  query: `
-BEGIN;
+  query: `BEGIN;
 
-UPDATE accounts
-SET balance = balance - 500
-WHERE account_id = 101;
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 101;
 
-UPDATE accounts
-SET balance = balance + 500
-WHERE account_id = 102;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 102;
 
-COMMIT;
-  `,
+COMMIT;`,
 
   output: `
-
 Transaction Successful
 
-Changes Saved Permanently
+Changes Saved Permanently  `,
 
-  `,
-
-  interview: `
-COMMIT
-
+  interview: `COMMIT
 Makes Changes Permanent
 
-
 ROLLBACK
-
 Undo Changes
 
-
 SAVEPOINT
-
 Partial Rollback Point
-  `
-},
+
+Can ROLLBACK Undo a COMMIT?
+==========================
+No.
+
+Once a COMMIT is executed, all changes made in the current transaction are permanently saved to the database.
+
+After a COMMIT:
+• The transaction is completed.
+• All changes become permanent.
+• Any SAVEPOINTS created during the transaction are removed.
+• ROLLBACK can no longer undo those committed changes.
+
+Example
+--------
+BEGIN;
+
+UPDATE employees SET salary = salary + 5000 WHERE id = 101;
+
+COMMIT;
+
+ROLLBACK;   -- Has no effect
+
+Result: The salary update remains saved because COMMIT already finalized the transaction.
+
+
+Transaction Commands
+====================
+┌────────────┬──────────────────────────────────────────────────┬──────────────────────────────┐
+│ Command    │ Purpose                                          │ Can ROLLBACK Undo It?        │
+├────────────┼──────────────────────────────────────────────────┼──────────────────────────────┤
+│ COMMIT     │ Permanently saves all transaction changes.       │ No                           │
+├────────────┼──────────────────────────────────────────────────┼──────────────────────────────┤
+│ ROLLBACK   │ Cancels all uncommitted changes.                 │ N/A (This is the undo action)│
+├────────────┼──────────────────────────────────────────────────┼──────────────────────────────┤
+│ SAVEPOINT  │ Creates a checkpoint inside a transaction.       │ Yes, using ROLLBACK TO       │
+│            │                                                  │ savepoint_name               │
+└────────────┴──────────────────────────────────────────────────┴──────────────────────────────┘
+
+SAVEPOINT Example
+=================
+BEGIN;
+
+INSERT INTO employees VALUES (101, 'John');
+
+SAVEPOINT sp1;
+
+UPDATE employees SET salary = 50000 WHERE id = 101;
+
+ROLLBACK TO sp1;
+COMMIT;
+
+Result:
+✓ INSERT remains.
+✗ UPDATE is undone.
+
+Because ROLLBACK TO sp1 only reverses the changes made after the SAVEPOINT.
+
+
+Key Rule
+========
+
+COMMIT  → Makes changes permanent.
+ROLLBACK → Undoes uncommitted changes.
+SAVEPOINT → Allows partial rollback within a transaction.
+
+Once COMMIT is executed, the changes cannot be reversed using ROLLBACK.
+`},
 
 {
   title: 'ROLLBACK Example',
@@ -221,13 +216,10 @@ Partial Rollback Point
 
   purpose: `Undo transaction changes.`,
 
-  input: `Balance = 10000  `,
-
+  input: `Balance = 10000`,
   query: `BEGIN;
 UPDATE accounts SET balance = 5000 WHERE account_id = 101;
-ROLLBACK;
-  `,
-
+ROLLBACK;`,
   output: `
 Before
 10000
@@ -240,9 +232,7 @@ After Rollback
   title: 'SAVEPOINT Example',
   icon: '📍',
 
-  purpose: `
-Rollback to a specific point.
-  `,
+  purpose: `Rollback to a specific point.`,
 
   query: `BEGIN;
 INSERT INTO employees VALUES(101,'John',50000);
@@ -254,12 +244,12 @@ ROLLBACK TO employee_save;
 COMMIT;
   `,
 
-  output: `101 John 50000
-Emma Record Removed`
+  output: `101 John 50000 
+  Emma Record Removed`
 },
 
 {
-  title: 'DCL (Data Control Language)',
+  title: '5.DCL (Data Control Language)',
   icon: '🔐',
 
   purpose: `Manage permissions and security.`,
@@ -312,6 +302,8 @@ Adds Data  `
 },
 
 {
+
+  
   title: 'DROP vs TRUNCATE vs DELETE',
   icon: '🗑️',
 
