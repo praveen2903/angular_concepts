@@ -8,23 +8,21 @@
     <a (click)="scrollToSection('middleware')">⚙️ Middleware</a>
     <a (click)="scrollToSection('jwt-authentication')">🔑 JWT Auth</a>
     <a (click)="scrollToSection('http-status-categories')">📊 HTTP Statuses</a>
+    <a (click)="scrollToSection('sliding-window')">🟢 sliding-window</a>
+    <a (click)="scrollToSection('node-middlewares')">🔑 Middlewares</a>
+    <a (click)="scrollToSection('request-object')">🔄 Request Object</a>
   </div>
 </nav>
 
 <div class="page">
+  <pre [textContent]="requestObject"></pre>
+  <pre [textContent]="responseObject"></pre>
 
   <h1>NodeJS & ExpressJS Master Sheet</h1>
 
   <div class="grid">
 
-    <div
-      class="card"
-      *ngFor="
-        let topic of nodeExpressInterview
-      "
-      [id]="$any(topic).id"
-    >
-
+    <div class="card" *ngFor="let topic of nodeExpressInterview" [id]="$any(topic).id">
       <h2>
         {{topic.title}}
       </h2>
@@ -37,6 +35,74 @@
 
   </div>
 
+  <pre>
+1. Fixed Window
+        ↓
+    Problem
+        ↓
+2. Sliding Window
+        ↓
+    Problem
+        ↓
+3. Token Bucket
+        ↓
+    Problem
+        ↓
+4. Leaky Bucket
+        ↓
+    Problem
+        ↓
+5. Redis Distributed Rate Limiter
+  </pre>
+  <div id="sliding-window" *ngFor="let card of rateLimiterSections" style="border: 2px solid black; padding: 20px;">
+    <h2>{{card.title}}</h2>
+    <pre>
+{{card.code}}
+</pre>
+<div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 30px;">
+  <pre style="border: 1px solid red;">{{card.output}}</pre>
+  <pre style="border: 1px solid green;">{{card.problem}}</pre>
+</div>
+<pre>{{card.otherApproach}}</pre>
+  </div>
+  <pre>
+1. Identify client
+   - IP
+   - User ID
+   - API Key
+
+2. Choose algorithm
+   - Fixed Window    (basic)
+   - Sliding Window  (improved)
+   - Token Bucket    (improved)  -- most advanced used in AWS so on
+
+3. Store request counts
+   - Memory (single server)
+   - Redis (distributed)
+
+4. Check limit
+
+5. Return 429 if exceeded
+
+6. Cleanup expired entries
+
+7. Log violations
+  </pre>
+
+  <div id="node-middlewares" *ngFor="let middleware of nodeJsMiddlewares">
+    <h2>{{middleware.title}}</h2>
+    <pre [textContent]="middleware.code"></pre>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+      <pre style="border: 1px solid red;" [textContent]="middleware.output"></pre>
+      <pre style="border: 1px solid green;" [textContent]="middleware.explanation"></pre>
+    </div>
+
+  </div>
+
+  <div id="request-object"> 
+    <h2>{{requestType.title}}</h2>
+    <pre [textContent]="requestType.code"></pre>
+  </div>
 </div>
 
 <!-- Scroll to Top Button -->
