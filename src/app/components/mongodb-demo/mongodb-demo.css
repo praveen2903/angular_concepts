@@ -365,3 +365,27 @@ pre {
     font-size: 1.3rem;
   }
 }
+.query-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.query-table th{
+  background:#1976d2;
+  color:white;
+  padding:12px;
+  text-align:left;
+}
+
+.query-table td{
+  border:1px solid #ddd;
+  vertical-align:top;
+  padding:12px;
+}
+
+.query-table pre{
+  margin:0;
+  white-space:pre-wrap;
+  font-size:16px;
+  font-family:Consolas;
+}

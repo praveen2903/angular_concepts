@@ -482,7 +482,419 @@ db.employees.find({
 })  `
 }
 ];
+mongoConcepts = [
+{
+  title:'$match',
+  icon:'🎯',
 
+  purpose:`
+Filters documents.
+Equivalent to SQL WHERE clause.
+`,
+
+  sql:`
+SELECT *
+FROM employees
+WHERE salary > 50000;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $match:{
+    salary:{
+      $gt:50000
+    }
+  }
+}
+]);
+`,
+
+  output:`
+[
+ {
+  name:'David',
+  salary:70000
+ }
+]
+`,
+
+  interviewPoint:` --> Usually first stage in aggregation pipeline.`
+},
+
+{
+  title:'$project',
+  icon:'📋',
+
+  purpose:`
+Select specific fields.
+Equivalent to SQL SELECT columns.
+`,
+
+  sql:`
+SELECT name,
+       salary
+FROM employees;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $project:{
+    _id:0,
+    name:1,
+    salary:1
+  }
+}
+]);
+`,
+
+  output:`
+[
+ {
+  name:'John',
+  salary:50000
+ }
+]
+`,
+
+  interviewPoint:`--> 1 = Include field,  0 = Exclude field`
+},
+
+{
+  title:'$group',
+  icon:'📊',
+
+  purpose:`
+Groups documents.
+Equivalent to SQL GROUP BY.
+`,
+
+  sql:`
+SELECT department,
+       COUNT(*)
+FROM employees
+GROUP BY department;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    totalEmployees:{
+      $sum:1
+    }
+  }
+}
+]);
+`,
+
+  output:`
+[
+ {
+  _id:'IT',
+  totalEmployees:2
+ }
+]
+`
+},
+
+{
+  title:'$sort',
+  icon:'🔀',
+
+  purpose:`
+Sort documents.
+Equivalent to ORDER BY.
+`,
+
+  sql:`
+SELECT *
+FROM employees
+ORDER BY salary DESC;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $sort:{
+    salary:-1
+  }
+}
+]);
+`,
+
+  output:`
+David
+Sara
+John
+Mike
+`
+},
+
+{
+  title:'$limit',
+  icon:'✂️',
+
+  purpose:`
+Returns first N records.
+Equivalent to LIMIT.
+`,
+
+  sql:`
+SELECT *
+FROM employees
+LIMIT 5;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $limit:5
+}
+]);
+`
+},
+
+{
+  title:'$skip',
+  icon:'⏭️',
+
+  purpose:`
+Skips records.
+Equivalent to OFFSET.
+`,
+
+  sql:`
+SELECT *
+FROM employees
+LIMIT 10 OFFSET 20;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $skip:20
+},
+{
+  $limit:10
+}
+]);
+`
+},
+
+{
+  title:'$unwind',
+  icon:'📂',
+
+  purpose:`
+Converts array items
+into individual documents.
+`,
+
+  sampleDocument:`
+{
+ name:'John',
+ skills:[
+  'React',
+  'Node',
+  'MongoDB'
+ ]
+}
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+  $unwind:'$skills'
+}
+]);
+`,
+
+  output:`
+{
+ name:'John',
+ skills:'React'
+}
+
+{
+ name:'John',
+ skills:'Node'
+}
+
+{
+ name:'John',
+ skills:'MongoDB'
+}
+`
+},
+
+{
+  title:'$lookup',
+  icon:'🔗',
+
+  purpose:`
+Performs JOIN.
+Equivalent to SQL INNER JOIN.
+`,
+
+  sql:`
+SELECT e.name,
+       d.departmentName
+FROM employees e
+JOIN departments d
+ON e.departmentId=d.id;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+ $lookup:{
+  from:'departments',
+  localField:'departmentId',
+  foreignField:'_id',
+  as:'departmentInfo'
+ }
+}
+]);
+`
+},
+
+{
+  title:'$addFields',
+  icon:'➕',
+
+  purpose:`
+Creates new fields.
+`,
+
+  sql:`
+SELECT name,
+salary,
+salary * 12
+AS yearlySalary
+FROM employees;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+ $addFields:{
+  yearlySalary:{
+   $multiply:[
+    '$salary',
+    12
+   ]
+  }
+ }
+}
+]);
+`
+},
+
+{
+  title:'$count',
+  icon:'🔢',
+
+  purpose:`
+Counts documents.
+Equivalent to COUNT(*).
+`,
+
+  sql:`
+SELECT COUNT(*)
+FROM employees;
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+ $count:'totalEmployees'
+}
+]);
+`
+},
+
+{
+  title:'$facet',
+  icon:'📦',
+
+  purpose:`
+Run multiple aggregations
+in a single query.
+`,
+
+  mongodb:`
+db.employees.aggregate([
+{
+ $facet:{
+  totalEmployees:[
+   {
+    $count:'count'
+   }
+  ],
+  salaries:[
+   {
+    $group:{
+     _id:null,
+     total:{
+      $sum:'$salary'
+     }
+    }
+   }
+  ]
+ }
+}
+]);
+`,
+
+  interviewPoint:`--> One query, multiple reports.`
+},
+
+{
+  title:'Text Search',
+  icon:'🔍',
+
+  purpose:`
+Search text quickly.
+`,
+
+  mongodb:`
+db.employees.find({
+ $text:{
+  $search:'react'
+ }
+});
+`,
+
+  output:`
+Returns documents
+containing react.
+`
+},
+
+{
+  title:'Regex Search',
+  icon:'📝',
+
+  purpose:`
+Pattern matching.
+`,
+
+  mongodb:`
+db.employees.find({
+ name:/^Jo/
+});
+`,
+
+  output:`
+John
+Joseph
+Jordan
+`
+}
+];
 queries = [
     {
   title:'Get Employee By Id',
@@ -954,1486 +1366,859 @@ axios.put(
 },
 
 ]
-
-httpInteview = `
-========================================================
-PUT VS PATCH
-========================================================
-PUT
---------------------------------------------------------
-Updates Entire Resource
-
-PATCH
---------------------------------------------------------
-Updates Specific Fields
-========================================================
-PUT Request
---------------------------------------------------------
-{
- name:"John",
- age:25,
- city:"Hyd"
-}
-
-========================================================
-PATCH Request
---------------------------------------------------------
-{
- city:"Vizag"
-}
-
-========================================================
-Interview Trap
---------------------------------------------------------
-PUT = Full Update
-PATCH = Partial Update
-
-
-========================================================
-POST VS PUT
-========================================================
-POST
---------------------------------------------------------
-Create New Resource
-
-PUT
---------------------------------------------------------
-Update Existing Resource
-
-========================================================
-POST
---------------------------------------------------------
-POST /employees
-
-========================================================
-PUT
---------------------------------------------------------
-PUT /employees/101
-
-========================================================
-Interview Trap
---------------------------------------------------------
-POST Can Create Many
-PUT Targets One Resource
-
-
-========================================================
-PUT VS PATCH EXAMPLE
-========================================================
-
-Existing Employee
---------------------------------------------------------
-
-{
- id:101,
- name:"John",
- age:25,
- city:"Hyd"
-}
-
-========================================================
-
-PUT
---------------------------------------------------------
-
-{
- name:"Mike",
- age:30,
- city:"Vizag"
-}
-
-Result
---------------------------------------------------------
-
-Entire Object Replaced
-
-========================================================
-
-PATCH
---------------------------------------------------------
-
-{
- city:"Vizag"
-}
-
-Result
---------------------------------------------------------
-
-Only City Changes
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-PATCH Saves Bandwidth.
-
-========================================================
-200 VS 201
-========================================================
-
-200 OK
---------------------------------------------------------
-
-Request Successful
-
-Usually GET
-
-PUT
-
-PATCH
-
-========================================================
-
-201 CREATED
---------------------------------------------------------
-
-Resource Created
-
-Usually POST
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-POST Should Return 201
-Not 200
-
-========================================================
-200 VS 204
-========================================================
-
-200
---------------------------------------------------------
-
-Returns Data
-
-========================================================
-
-204
---------------------------------------------------------
-
-No Content
-
-========================================================
-
-Example
---------------------------------------------------------
-
-DELETE /employees/101
-
-204 No Content
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-204 Response
-Cannot Have Body.
-
-========================================================
-GET VS POST
-========================================================
-
-GET
---------------------------------------------------------
-
-Fetch Data
-
-========================================================
-
-POST
---------------------------------------------------------
-
-Send Data
-
-========================================================
-
-GET
---------------------------------------------------------
-
-/users?page=1
-
-========================================================
-
-POST
---------------------------------------------------------
-
-{
- name:"John"
-}
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-GET Should Not Modify Data.
-
-
-========================================================
-SAFE HTTP METHODS
-========================================================
-
-Safe Methods
---------------------------------------------------------
-
-GET
-
-HEAD
-
-OPTIONS
-
-========================================================
-
-Unsafe Methods
---------------------------------------------------------
-
-POST
-
-PUT
-
-PATCH
-
-DELETE
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Safe Means
-
-No Data Modification.
-
-
-========================================================
-DELETE VS SOFT DELETE
-========================================================
-
-DELETE
---------------------------------------------------------
-
-Remove Record
-
-========================================================
-
-SOFT DELETE
---------------------------------------------------------
-
-Mark As Deleted
-
-========================================================
-
-Example
---------------------------------------------------------
-
-isDeleted=true
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Most Real Projects
-Use Soft Delete.
-
-
-========================================================
-req.params VS req.query
-========================================================
-
-req.params
---------------------------------------------------------
-
-Required Resource
-
-/users/101
-
-========================================================
-
-req.query
---------------------------------------------------------
-
-Optional Filters
-
-/users?page=1
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-params = Identity
-
-query = Filters
-
-
-========================================================
-401 VS 403
-========================================================
-
-401
---------------------------------------------------------
-
-Not Logged In
-
-========================================================
-
-403
---------------------------------------------------------
-
-Logged In
-
-No Permission
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-401 = Authentication
-
-403 = Authorization
-
-
-========================================================
-res.send VS res.json
-========================================================
-
-res.send()
---------------------------------------------------------
-
-Any Response
-
-========================================================
-
-res.json()
---------------------------------------------------------
-
-JSON Response
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-For APIs
-
-Prefer res.json()
-
-
-
-========================================================
-Bearer Token VS Cookie
-========================================================
-
-Bearer Token
---------------------------------------------------------
-
-Stored In
-
-LocalStorage
-
-SessionStorage
-
-========================================================
-
-Cookie
---------------------------------------------------------
-
-Stored By Browser
-
-Automatically Sent
-
-========================================================
-
-Bearer Header
---------------------------------------------------------
-
-Authorization:
-Bearer token
-
-========================================================
-
-Cookie
---------------------------------------------------------
-
-token=abc123
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-httpOnly Cookie
-
-Cannot Be Read
-By JavaScript.
-
-
-========================================================
-req.body VS req.headers
-========================================================
-
-req.body
---------------------------------------------------------
-
-Payload Data
-
-========================================================
-
-req.headers
---------------------------------------------------------
-
-Metadata
-
-========================================================
-
-Body
---------------------------------------------------------
-
-{
- name:"John"
-}
-
-========================================================
-
-Headers
---------------------------------------------------------
-
-Authorization:
-Bearer token
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Token Usually
-Lives In Headers.
-
-
-
-========================================================
-URL STRUCTURE
-========================================================
-
-/employees/101
-?department=IT
-&page=1
-
-========================================================
-
-req.params
---------------------------------------------------------
-
-101
-
-========================================================
-
-req.query.department
---------------------------------------------------------
-
-IT
-
-========================================================
-
-req.query.page
---------------------------------------------------------
-
-1
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Everything After ?
-
-Becomes Query Params.`
-
-idempotentMethods = `
-========================================================
-WHAT IS IDEMPOTENCY?
-========================================================
-
-Definition
---------------------------------------------------------
-
-An Operation Is Idempotent
-
-If Executing It Multiple Times
-
-Produces Same Final State.
-
-========================================================
-
-Example
---------------------------------------------------------
-
-Light Switch OFF
-
-OFF
-
-↓
-
-OFF
-
-↓
-
-OFF
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Still OFF
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Idempotent
-
-========================================================
-WHY IS IDEMPOTENCY IMPORTANT?
-========================================================
-
-Problem
---------------------------------------------------------
-
-Network Timeout
-
-User Double Click
-
-Browser Retry
-
-Load Balancer Retry
-
-========================================================
-
-Without Idempotency
---------------------------------------------------------
-
-Duplicate Orders
-
-Duplicate Payments
-
-Duplicate Users
-
-Duplicate Emails
-
-========================================================
-
-With Idempotency
---------------------------------------------------------
-
-Only One Action Happens.
-
-========================================================
-
-Interview Answer
---------------------------------------------------------
-
-Protects Against
-Duplicate Requests.
-
-========================================================
-GET IS IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-GET /employees/101
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-Returns John
-
-========================================================
-
-100 Times
---------------------------------------------------------
-
-Returns John
-
-========================================================
-
-Database
---------------------------------------------------------
-
-No Changes
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Idempotent
-
-========================================================
-PUT IS IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-PUT /employees/101
-
-{
- salary:50000
-}
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-salary=50000
-
-========================================================
-
-10 Times
---------------------------------------------------------
-
-salary=50000
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Same
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Idempotent
-
-========================================================
-PATCH IS USUALLY IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-PATCH /employees/101
-
-{
- city:"Vizag"
-}
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-city=Vizag
-
-========================================================
-
-100 Times
---------------------------------------------------------
-
-city=Vizag
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Same
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Idempotent
-
-========================================================
-PATCH CAN BE NON IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-PATCH /employees/101
-
-{
- incrementSalary:1000
-}
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-50000
-
-↓
-
-51000
-
-========================================================
-
-2 Times
---------------------------------------------------------
-
-51000
-
-↓
-
-52000
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Changes Every Call
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Not Idempotent
-
-========================================================
-DELETE IS IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-DELETE /employees/101
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-Employee Removed
-
-========================================================
-
-10 Times
---------------------------------------------------------
-
-Employee Still Missing
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Deleted
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Idempotent
-
-
-========================================================
-POST IS NOT IDEMPOTENT
-========================================================
-
-Request
---------------------------------------------------------
-
-POST /employees
-
-{
- name:"John"
-}
-
-========================================================
-
-1 Time
---------------------------------------------------------
-
-Creates Record
-
-========================================================
-
-2 Times
---------------------------------------------------------
-
-Creates Another Record
-
-========================================================
-
-Final State
---------------------------------------------------------
-
-Different
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Not Idempotent
-
-
-
-
-
-========================================================
-POST PAYMENT EXAMPLE
-========================================================
-
-POST /payment
-
-{
- amount:1000
-}
-
-========================================================
-
-1 Click
---------------------------------------------------------
-
-₹1000 Charged
-
-========================================================
-
-Double Click
---------------------------------------------------------
-
-₹2000 Charged
-
-========================================================
-
-Problem
---------------------------------------------------------
-
-Duplicate Payment
-
-========================================================
-
-Result
---------------------------------------------------------
-
-Non Idempotent
-
-
-========================================================
-IDEMPOTENCY KEY
-========================================================
-
-Purpose
---------------------------------------------------------
-
-Prevent Duplicate Requests.
-
-========================================================
-
-Request Header
---------------------------------------------------------
-
-Idempotency-Key:
-abc123
-
-========================================================
-
-Flow
---------------------------------------------------------
-
-Request 1
-
-↓
-
-Process Payment
-
-↓
-
-Store Key
-
-========================================================
-
-Request 2
-
-Same Key
-
-↓
-
-Return Old Result
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Used In Payment APIs.
-
-
-========================================================
-HTTP METHODS TABLE
-========================================================
-
-GET
---------------------------------------------------------
-Idempotent ✅
-
-PUT
---------------------------------------------------------
-Idempotent ✅
-
-DELETE
---------------------------------------------------------
-Idempotent ✅
-
-PATCH
---------------------------------------------------------
-Usually ✅
-
-POST
---------------------------------------------------------
-No ❌
-
-========================================================
-
-Most Interview Answer
---------------------------------------------------------
-
-GET
-PUT
-DELETE
-
-Always Idempotent
-
-POST
-
-Never Idempotent
-
-PATCH
-
-Depends On Logic
-
-========================================================
-HOW TO MAKE POST IDEMPOTENT?
-========================================================
-
-Problem
---------------------------------------------------------
-
-POST /payments
-
-{
- amount:1000
-}
-
-========================================================
-
-User Clicks Twice
---------------------------------------------------------
-
-Request 1
-
-Request 2
-
-========================================================
-
-Result
---------------------------------------------------------
-
-₹2000 Charged
-
-========================================================
-
-Solution
---------------------------------------------------------
-
-Use Idempotency Key.
-
-========================================================
-
-Header
---------------------------------------------------------
-
-Idempotency-Key:
-PAY123
-
-========================================================
-
-Store Key
---------------------------------------------------------
-
-PAY123
-
-Already Processed?
-
-========================================================
-
-Yes
---------------------------------------------------------
-
-Return Old Response
-
-========================================================
-
-No
---------------------------------------------------------
-
-Process Payment
-
-Store Key
-
-========================================================
-
-Result
---------------------------------------------------------
-
-POST Becomes Idempotent.
-
-========================================================
-IDEMPOTENCY KEY FLOW
-========================================================
-
-Client
---------------------------------------------------------
-
-POST /payment
-
-Idempotency-Key:
-abc123
-
-========================================================
-
-Server
---------------------------------------------------------
-
-Check Database
-
-========================================================
-
-Key Exists?
---------------------------------------------------------
-
-YES
-
-↓
-
-Return Previous Response
-
-========================================================
-
-NO
-
-↓
-
-Process Request
-
-↓
-
-Store Key
-
-↓
-
-Return Response
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Many Payment Gateways
-Use This Pattern.
-
-========================================================
-WHERE TO STORE IDEMPOTENCY KEYS?
-========================================================
-
-Options
---------------------------------------------------------
-
-Database
-
-Redis
-
-Cache
-
-========================================================
-
-Common
---------------------------------------------------------
-
-Redis
-
-========================================================
-
-Why?
---------------------------------------------------------
-
-Fast Lookup
-
-Automatic Expiry
-
-========================================================
-
-Example
---------------------------------------------------------
-
-abc123
-
-→
-
-Payment Success
-
-========================================================
-
-Future Request
---------------------------------------------------------
-
-Same Key
-
-↓
-
-Return Cached Result
-
-========================================================
-WHAT HAPPENS IF API
-IS NOT IDEMPOTENT?
-========================================================
-
-Scenario
---------------------------------------------------------
-
-User Clicks
-
-Pay Now
-
-Twice
-
-========================================================
-
-Request 1
---------------------------------------------------------
-
-₹1000 Charged
-
-========================================================
-
-Request 2
---------------------------------------------------------
-
-₹1000 Charged Again
-
-========================================================
-
-Result
---------------------------------------------------------
-
-₹2000 Charged
-
-========================================================
-
-Business Impact
---------------------------------------------------------
-
-Money Loss
-
-Customer Complaints
-
-Refund Requests
-
-========================================================
-CAN CREATE API
-BE IDEMPOTENT?
-========================================================
-
-Normal POST
---------------------------------------------------------
-
-POST /users
-
-========================================================
-
-Request 1
---------------------------------------------------------
-
-User Created
-
-========================================================
-
-Request 2
---------------------------------------------------------
-
-Another User Created
-
-========================================================
-
-Not Idempotent
---------------------------------------------------------
-
-Duplicate Records
-
-========================================================
-
-Solution
---------------------------------------------------------
-
-Use Unique Identifier
-
-Email
-
-Phone
-
-External Id
-
-Idempotency Key
-
-========================================================
-IDEMPOTENT VS SAFE
-========================================================
-
-SAFE
---------------------------------------------------------
-
-Does Not Modify Data
-
-========================================================
-
-IDEMPOTENT
---------------------------------------------------------
-
-May Modify Data
-
-But Final State Same
-
-========================================================
-
-GET
---------------------------------------------------------
-
-Safe ✅
-
-Idempotent ✅
-
-========================================================
-
-PUT
---------------------------------------------------------
-
-Safe ❌
-
-Idempotent ✅
-
-========================================================
-
-DELETE
---------------------------------------------------------
-
-Safe ❌
-
-Idempotent ✅
-
-========================================================
-
-POST
---------------------------------------------------------
-
-Safe ❌
-
-Idempotent ❌
-
-========================================================
-
-Interview Trap
---------------------------------------------------------
-
-Safe
-
-≠
-
-Idempotent
-
-
-========================================================
-INTERVIEW TRAP
-========================================================
-
-Question
---------------------------------------------------------
-
-DELETE Removes Data.
-
-How Can It Be Idempotent?
-
-Answer
---------------------------------------------------------
-
-Because Idempotency Checks
-
-Final State
-
-Not Action Count.
-
-========================================================
-
-DELETE 1 Time
---------------------------------------------------------
-
-Resource Missing
-
-========================================================
-
-DELETE 100 Times
---------------------------------------------------------
-
-Resource Missing
-
-========================================================
-
-Final State Same
-
-Therefore
-
-Idempotent ✅
-========================================================
-INTERVIEW QUESTION
-========================================================
-
-Q:
-Can POST Be Idempotent?
-
-========================================================
-
-A:
-Yes.
-
-By Default
-
-POST Is Not Idempotent.
-
-But Using
-
-Idempotency Keys
-
-Unique Request IDs
-
-Deduplication Logic
-
-POST Can Be Made
-Idempotent.
-
-
-========================================================
-HOW AMAZON/STRIPE
-HANDLE PAYMENTS?
-========================================================
-
-Client Generates
-
-Unique Key
-
-========================================================
-
-Example
---------------------------------------------------------
-
-payment_123
-
-========================================================
-
-Every Retry
---------------------------------------------------------
-
-Uses Same Key
-
-========================================================
-
-Server
---------------------------------------------------------
-
-Checks Key
-
-========================================================
-
-If Exists
---------------------------------------------------------
-
-Returns Existing Result
-
-========================================================
-
-If Missing
---------------------------------------------------------
-
-Processes Payment
-
-========================================================
-
-Result
---------------------------------------------------------
-
-No Double Charge
-
-========================================================
-HOW TO IMPLEMENT
-IN NODEJS EXPRESS?
-========================================================
-
-Middleware
---------------------------------------------------------
-
-const key =
-req.headers[
- 'idempotency-key'
+httpInterviewSections = [
+  {
+    title: 'PUT vs PATCH',
+    explanation:
+      'PUT updates the entire resource while PATCH updates only specific fields of a resource.',
+    points: [
+      'PUT = Full Update',
+      'PATCH = Partial Update',
+      'PATCH generally sends less data'
+    ],
+    example: {
+      put: `{
+  name: "John",
+  age: 25,
+  city: "Hyderabad"
+}`,
+      patch: `{
+  city: "Vizag"
+}`
+    },
+    interviewTrap:
+      'PUT replaces the complete resource whereas PATCH modifies only selected fields.'
+  },
+
+  {
+    title: 'POST vs PUT',
+    explanation:
+      'POST is commonly used to create resources. PUT is used to update or replace a specific resource.',
+    points: [
+      'POST creates resources',
+      'PUT updates resources',
+      'POST can create multiple records',
+      'PUT targets a specific resource'
+    ],
+    example: {
+      post: 'POST /employees',
+      put: 'PUT /employees/101'
+    },
+    interviewTrap:
+      'POST can create many resources. PUT usually targets one known resource.'
+  },
+
+  {
+    title: '200 vs 201 Status Codes',
+    explanation:
+      'Both indicate success but represent different outcomes.',
+    points: [
+      '200 OK = Request Successful',
+      '201 Created = New Resource Created',
+      'POST generally returns 201'
+    ],
+    interviewTrap:
+      'Creating a resource should typically return 201 instead of 200.'
+  },
+
+  {
+    title: '401 vs 403',
+    explanation:
+      'These status codes are frequently confused in interviews.',
+    points: [
+      '401 = Authentication Failed',
+      'User is not logged in',
+      '403 = Authorization Failed',
+      'User is logged in but lacks permission'
+    ],
+    interviewTrap:
+      '401 means who are you? 403 means I know who you are but you cannot access this resource.'
+  },
+
+  {
+    title: 'req.params vs req.query',
+    explanation:
+      'Used for retrieving values from the URL.',
+    points: [
+      'req.params identifies a specific resource',
+      'req.query provides filtering, sorting, paging options'
+    ],
+    example: {
+      params: '/users/101',
+      query: '/users?page=1'
+    },
+    interviewTrap:
+      'params = Identity, query = Filters'
+  },
+
+  {
+    title: 'Bearer Token vs Cookie',
+    explanation:
+      'Both are used for authentication but are handled differently.',
+    points: [
+      'Bearer Token stored manually',
+      'Sent through Authorization header',
+      'Cookies are managed by the browser',
+      'Cookies are automatically sent with requests'
+    ],
+    interviewTrap:
+      'HttpOnly cookies cannot be accessed through JavaScript.'
+  },
+
+  {
+    title: 'Idempotency',
+    explanation:
+      'An operation is idempotent when executing it multiple times produces the same final state.',
+    points: [
+      'GET is idempotent',
+      'PUT is idempotent',
+      'DELETE is idempotent',
+      'POST is not idempotent by default'
+    ],
+    interviewTrap:
+      'Idempotency checks the final state, not how many times the operation executes.'
+  },
+
+  {
+    title: 'How to Make POST Idempotent',
+    explanation:
+      'Use an Idempotency Key to prevent duplicate processing.',
+    points: [
+      'Client generates unique key',
+      'Server stores the key',
+      'Repeated requests return previous response',
+      'Common in payment APIs'
+    ],
+    example: {
+      header: 'Idempotency-Key: PAY123'
+    },
+    interviewTrap:
+      'Stripe and many payment gateways use Idempotency Keys to prevent duplicate charges.'
+  },
+
+  {
+    title: 'Safe vs Idempotent',
+    explanation:
+      'Safe and Idempotent are different concepts.',
+    points: [
+      'Safe = Does not modify data',
+      'Idempotent = Final state remains same',
+      'GET is Safe and Idempotent',
+      'PUT is Idempotent but not Safe',
+      'DELETE is Idempotent but not Safe'
+    ],
+    interviewTrap:
+      'Safe ≠ Idempotent'
+  }
 ];
+mongoVsSqlSections = [
+{
+  title: 'SELECT ALL RECORDS',
+  sql: `SELECT * FROM employees;`,
+  mongodb: `db.employees.find({})`,
+},
 
-========================================================
+{
+  title: 'WHERE CONDITION',
 
-Check Redis
---------------------------------------------------------
+  sql: `SELECT * FROM employees WHERE salary > 50000; `,
 
-const existing =
-await redis.get(key);
+  mongodb: `db.employees.find({ salary: { $gt: 50000 }})`
+},
 
-========================================================
+{
+  title: 'AND CONDITION',
 
-Exists?
---------------------------------------------------------
+  sql: `SELECT * FROM employees WHERE department='IT' AND salary > 50000;`,
 
-return res.json(
- JSON.parse(existing)
-);
+  mongodb: `db.employees.find({department:'IT', salary:{ $gt:50000 }})`
+},
 
-========================================================
+{
+  title: 'OR CONDITION',
 
-Else
---------------------------------------------------------
+  sql: `SELECT * FROM employees WHERE department='IT' OR department='HR';`,
 
-Process Request
+  mongodb: `db.employees.find({
+  $or:[ { department:'IT' }, { department:'HR' }]
+})`
+},
 
-Store Response
+{
+  title: 'IN OPERATOR',
 
-========================================================
+  sql: ` SELECT * FROM employees WHERE city IN ('Hyderabad','Vizag');`,
 
-Save
---------------------------------------------------------
+  mongodb: `
+db.employees.find({
+  city:{$in:['Hyderabad','Vizag']}
+})
+`
+},
 
-await redis.set(
- key,
- JSON.stringify(result)
-);`
+{
+  title: 'NOT IN OPERATOR',
+  sql: `SELECT * FROM employees WHERE city NOT IN ('Hyderabad');`,
 
+  mongodb: `db.employees.find({
+  city:{$nin:['Hyderabad']}
+})`
+},
+
+{
+  title: 'ORDER BY ASC',
+
+  sql: `SELECT * FROM employees ORDER BY salary ASC; `,
+
+  mongodb: `db.employees.find().sort({salary:1})`
+},
+
+{
+  title: 'ORDER BY DESC',
+
+  sql: `SELECT * FROM employees ORDER BY salary DESC;`,
+
+  mongodb: `db.employees.find().sort({salary:-1})`
+},
+
+{
+  title: 'LIMIT',
+
+  sql: ` SELECT * FROM employees LIMIT 5;`,
+
+  mongodb: `db.employees.find().limit(5)`
+},
+
+{
+  title: 'COUNT',
+
+  sql: `SELECT COUNT(*) FROM employees;`,
+
+  mongodb: `db.employees.countDocuments()`
+},
+
+{
+  title: 'SUM SALARY',
+
+  sql: `SELECT SUM(salary) FROM employees;`,
+
+  mongodb: `db.employees.aggregate([
+  {
+    $group:{
+      _id:null,
+      totalSalary:{$sum:'$salary'}
+    }
+  }
+])`
+},
+
+{
+  title: 'AVERAGE SALARY',
+
+  sql: `
+SELECT AVG(salary) FROM employees;
+`,
+
+  mongodb: `db.employees.aggregate([
+{
+  $group:{
+    _id:null,
+    avgSalary:{$avg:'$salary'}
+  }
+}]`
+},
+
+{
+  title: 'MAX SALARY',
+
+  sql: `SELECT MAX(salary) FROM employees;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:null,
+    maxSalary:{$max:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'MIN SALARY',
+
+  sql: `
+SELECT MIN(salary) FROM employees;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:null,
+    minSalary:{$min:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'GROUP BY DEPARTMENT',
+
+  sql: `SELECT department, COUNT(*) FROM employees GROUP BY department;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    totalEmployees:{ $sum:1 }
+  }
+}
+])`
+},
+
+{
+  title: 'GROUP BY + SUM',
+
+  sql: `
+SELECT department, SUM(salary) FROM employees
+GROUP BY department;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    totalSalary:{$sum:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'HAVING CLAUSE (MATCH -- where/having)',
+
+  sql: `
+SELECT department, COUNT(*) FROM employees
+GROUP BY department
+HAVING COUNT(*) > 1;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    count:{$sum:1}
+  }
+},
+{
+  $match:{count:{ $gt:1 }}
+}
+])
+`
+},
+
+{
+  title: 'MATCH + GROUP + SORT',
+
+  sql: `
+SELECT department, SUM(salary) totalSalary
+FROM employees
+WHERE salary > 50000
+GROUP BY department
+ORDER BY totalSalary DESC;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $match:{salary:{ $gt:50000 }}
+},
+{
+  $group:{
+    _id:'$department',
+    totalSalary:{$sum:'$salary'}
+  }
+},
+{
+  $sort:{totalSalary:-1}
+}
+])
+`
+},
+
+{
+  title: 'LIKE / REGEX STARTS WITH',
+
+  sql: `
+SELECT * FROM employees
+WHERE name LIKE 'J%';
+`,
+
+  mongodb: `
+db.employees.find({
+  name:/^J/
+})
+`
+},
+
+{
+  title: 'LIKE / REGEX CONTAINS',
+
+  sql: `
+SELECT * FROM employees
+WHERE name LIKE '%ohn%';
+`,
+
+  mongodb: `
+db.employees.find({
+  name:/ohn/
+})
+`
+},
+
+{
+  title: 'DISTINCT',
+
+  sql: `
+SELECT DISTINCT department FROM employees;
+`,
+
+  mongodb: `
+db.employees.distinct(
+  'department'
+)
+`
+},
+
+{
+  title: 'JOIN / LOOKUP',
+
+  sql: `
+SELECT e.name, d.departmentName
+FROM employees e
+INNER JOIN departments d
+ON e.departmentId=d.id;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $lookup:{
+    from: 'departments',
+    localField: 'departmentId',
+    foreignField: '_id',
+    as: 'departmentInfo'
+  }
+}
+])
+`
+},
+
+{
+  title: 'UNION --removes duplicates',
+
+  sql: `
+SELECT name FROM employees
+UNION
+SELECT name FROM managers;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $unionWith:{coll:'managers'}
+}
+])
+`
+},
+{
+  title: 'PROJECT (SELECT SPECIFIC COLUMNS)',
+
+  sql: `
+SELECT name, salary FROM employees;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $project:{
+    _id:0,    
+-- id is primary identifier so needed to specify it but not showing put 0 if showing 1
+    
+    name:1,
+    salary:1
+  }
+}
+])
+`
+},
+
+{
+  title: 'PROJECT WITH ALIAS',
+
+  description:
+    'Rename fields in the output.',
+
+  sql: `
+SELECT name AS employeeName, salary AS employeeSalary
+FROM employees;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $project:{
+    _id:0,
+    employeeName:'$name',
+    employeeSalary:'$salary'
+  }
+}
+])
+`
+},
+
+{
+  title: 'PROJECT CALCULATED FIELD',
+
+  description:
+    'Create new fields during query execution.',
+
+  sql: `
+SELECT name, salary, salary + 5000 AS bonusSalary
+FROM employees;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $project:{
+    name:1,
+    salary:1,
+    bonusSalary:{$add:['$salary',5000]}
+  }
+}
+])
+`
+},
+
+{
+  title: 'UNWIND ARRAY',
+
+  sql: `
+-- Similar to splitting rows
+-- No direct SQL equivalent like partition of sql
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $unwind:'$skills'
+}
+])
+`
+},
+
+{
+  title: 'MATCH + PROJECT',
+
+  sql: `SELECT name, salary
+FROM employees
+WHERE salary > 50000;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $match:{salary:{ $gt:50000 }}
+},
+{
+  $project:{
+    _id:0,
+    name:1,
+    salary:1
+  }
+}
+])
+`
+},
+
+{
+  title: 'COUNT USING AGGREGATION',
+
+  sql: `SELECT COUNT(*) FROM employees;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $count:'totalEmployees'
+}
+])
+`
+},
+
+{
+  title: 'GROUP BY + AVG',
+
+  description:
+    'Average salary department wise.',
+
+  sql: `
+SELECT department, AVG(salary)
+FROM employees
+GROUP BY department;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id: '$department',
+    averageSalary: {$avg:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'GROUP BY + MAX',
+
+
+  sql: `
+SELECT department,  MAX(salary)
+FROM employees
+GROUP BY department;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    maxSalary:{$max:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'GROUP BY + MIN',
+
+  description:
+    'Lowest salary department wise.',
+
+  sql: `
+SELECT department, MIN(salary)
+FROM employees
+GROUP BY department;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $group:{
+    _id:'$department',
+    minSalary:{$min:'$salary'}
+  }
+}
+])
+`
+},
+
+{
+  title: 'MULTIPLE SORTING',
+
+  sql: `SELECT * FROM employees
+ORDER BY department ASC, salary DESC;
+`,
+
+  mongodb: `
+db.employees.find().sort({
+  department:1,
+  salary:-1
+})
+`
+},
+
+{
+  title: 'EXISTS',
+
+
+  sql: `
+SELECT * FROM employees
+WHERE email IS NOT NULL;
+`,
+
+  mongodb: `
+db.employees.find({
+  email:{$exists:true}
+})
+`
+},
+
+{
+  title: 'NULL CHECK',
+
+  description:
+    'Find null values.',
+
+  sql: `
+SELECT * FROM employees
+WHERE email IS NULL;
+`,
+
+  mongodb: `
+db.employees.find({
+  email:null
+})
+`
+},
+
+{
+  title: 'BETWEEN',
+
+  description:
+    'Salary between two values.',
+
+  sql: `
+SELECT * FROM employees
+WHERE salary BETWEEN 40000 AND 70000;
+`,
+
+  mongodb: `
+db.employees.find({
+  salary:{$gte:40000, $lte:70000}
+})
+`
+},
+
+{
+  title: 'NOT EQUAL',
+
+  sql: `
+SELECT * FROM employees
+WHERE department <> 'IT';
+`,
+
+  mongodb: `
+db.employees.find({
+  department:{$ne:'IT'}
+})
+`
+},
+
+{
+  title: 'TEXT SEARCH',
+
+  sql: `
+SELECT * FROM employees
+WHERE description LIKE '%react%';
+`,
+
+  mongodb: `
+db.employees.find({
+  $text:{ $search:'react' }
+})
+`
+},
+
+{
+  title: 'TEXT SEARCH MULTIPLE WORDS',
+
+  description:
+    'Search multiple keywords.',
+
+  sql: `
+SELECT * FROM employees
+WHERE description LIKE '%react%' 
+OR description LIKE '%node%';
+`,
+
+  mongodb: `
+db.employees.find({
+  $text:{$search:'react node'}
+})
+`
+},
+
+{
+  title: 'REGEX CASE INSENSITIVE',
+
+  sql: `
+SELECT * FROM employees
+WHERE LOWER(name) LIKE 'john%';
+`,
+
+  mongodb: `
+db.employees.find({
+  name:{ $regex:'^john', $options:'i'}
+})
+`
+},
+
+{
+  title: 'ADD NEW FIELD',
+
+  sql: `SELECT *, salary * 12 AS yearlySalary FROM employees;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $addFields:{
+    yearlySalary:{ $multiply:['$salary', 12]}
+  }
+}
+])
+`
+},
+
+{
+  title: 'REMOVE FIELD',
+
+  sql: `SELECT name, salary FROM employees;`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $unset:['age', 'city']
+}
+])
+`
+},
+
+{
+  title: 'CASE WHEN / CONDITIONAL',
+
+  sql: `
+SELECT name, CASE WHEN salary > 60000
+THEN 'Senior' ELSE 'Junior' END AS level
+FROM employees;
+`,
+
+  mongodb: `
+db.employees.aggregate([
+{
+  $project:{
+    name:1,
+    level:{
+      $cond:{
+        if:{$gt:['$salary', 60000]},
+        then:'Senior',
+        else:'Junior'
+      }
+    }
+  }
+}
+])
+`
+}
+];
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

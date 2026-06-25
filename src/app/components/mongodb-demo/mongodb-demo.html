@@ -5,9 +5,11 @@
     <a (click)="scrollToSection('section-sqlvsnosql')">⚖️ SQL vs NoSQL</a>
     <a (click)="scrollToSection('section-structure')">📦 Structure</a>
     <a (click)="scrollToSection('section-crud')">🔧 CRUD</a>
+    <a (click)="scrollToSection('mongo-concepts')">🎯 MongoDB Basics</a>
+      <a (click)="scrollToSection('section-mongo')">🔁 Mongo vs SQL</a>
     <a (click)="scrollToSection('section-queries')">🌐 Full-Stack Queries</a>
     <a (click)="scrollToSection('section-http')">📡 HTTP Interview</a>
-    <a (click)="scrollToSection('section-idempotent')">🔁 Idempotency</a>
+    <!-- <a (click)="scrollToSection('section-idempotent')"> Idempotency</a> -->
   </div>
 </nav>
 
@@ -119,6 +121,82 @@
   </div>
 </div>
 
+
+<div id="mongo-concepts">
+  <table class="query-table">
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>purpose</th>
+        <th>SQL</th>
+        <th>MongoDB</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of mongoConcepts">
+        <td>{{ item.icon }} {{ item.title }}
+        </td>
+        <td>{{item.purpose}}
+          <p>{{item.interviewPoint}}</p>
+        </td>
+        <td><pre>{{ item.sql }}</pre></td>
+        <td><pre>{{ item.mongodb }}</pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="section-mongo">
+<pre>
+  | SQL Concept                      MongoDB Equivalent      |
+| -----------------      ----    --------------------------- |
+| JOIN                   ----    `$lookup`                   |
+| UNION                  ----    `$unionWith`                |
+| Nested JOIN            ----    Multiple `$lookup`          |
+| CASE WHEN              ----    `$cond`                     |
+| COALESCE               ----    `$ifNull`                   |
+| ROW_NUMBER()           ----    `$setWindowFields`          |
+| CTE                    ----    Multiple Aggregation Stages |
+| Temporary Tables       ----    `$facet`                    |
+| Partition By           ----    `$setWindowFields`          |
+| Index Scan             ----    `explain()`                 |
+| Full Text Search       ----    `$text`                     |
+| Window Functions       ----    `$setWindowFields`          |
+| Stored Procedure       ----    Application Logic           |
+| Trigger                ----    Change Streams              |
+| Transactions           ----    Session Transactions        |
+| Materialized View      ----    Aggregation + `$merge`      |
+
+</pre>
+  <table class="query-table">
+
+  <thead>
+    <tr>
+      <th>Concept & Description</th>
+      <th>SQL Query</th>
+      <th>MongoDB Query</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let row of mongoVsSqlSections">
+
+      <td>
+        <b>{{row.title}}</b>
+        <p>{{row.description}}</p>
+      </td>
+
+      <td>
+        <pre>{{row.sql}}</pre>
+      </td>
+
+      <td>
+        <pre>{{row.mongodb}}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <!-- ═══════════════════════════════════════════════
      SECTION 4 — Full-Stack Queries
      ═══════════════════════════════════════════════ -->
@@ -185,7 +263,6 @@
     </div>
   </div>
 </div>
-
 <!-- ═══════════════════════════════════════════════
      SECTION 5 — HTTP Interview Questions
      ═══════════════════════════════════════════════ -->
@@ -194,24 +271,38 @@
   <p class="section-subtitle">
     PUT vs PATCH, POST vs PUT, Status Codes, and more — essential HTTP concepts.
   </p>
+<div class="container">
 
-  <div class="interview-container">
-    <pre class="interview-block">{{ httpInteview }}</pre>
+  <div class="card" *ngFor="let section of httpInterviewSections">
+
+    <h2>{{ section.title }}</h2>
+
+    <p class="description">
+      {{ section.explanation }}
+    </p>
+
+    <ul>
+      <li *ngFor="let point of section.points">
+        {{ point }}
+      </li>
+    </ul>
+
+    <div class="example" *ngIf="section.example">
+      <h3>Example</h3>
+
+      <div *ngFor="let item of section.example | keyvalue">
+        <h4>{{ item.key | uppercase }}</h4>
+        <pre>{{ item.value }}</pre>
+      </div>
+    </div>
+
+    <div class="trap" *ngIf="section.interviewTrap">
+      <strong>Interview Trap:</strong>
+      {{ section.interviewTrap }}
+    </div>
+
   </div>
-</div>
 
-<!-- ═══════════════════════════════════════════════
-     SECTION 6 — Idempotency
-     ═══════════════════════════════════════════════ -->
-<div class="page" id="section-idempotent">
-  <h1>🔁 Idempotency in HTTP</h1>
-  <p class="section-subtitle">
-    Understand idempotent methods, idempotency keys, and how payment gateways handle duplicates.
-  </p>
-
-  <div class="interview-container">
-    <pre class="interview-block">{{ idempotentMethods }}</pre>
-  </div>
 </div>
 
 <!-- Scroll to Top Button -->
