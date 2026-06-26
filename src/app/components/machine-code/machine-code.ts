@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 import { TableUserData } from '../../models/TableUserModel';
 
 @Component({
@@ -8,6 +8,7 @@ import { TableUserData } from '../../models/TableUserModel';
   styleUrl: './machine-code.css',
 })
 export class MachineCode {
+  constructor(private cdr: ChangeDetectorRef) {}
    stars:number[] = [1,2,3,4,5];
    clickedIndex = 0;
    rateStars (star:number){
@@ -33,16 +34,15 @@ selectRating(event: MouseEvent, star: number) {
   const rect = element.getBoundingClientRect();
   const clickX = event.clientX - rect.left;
   const percentage = clickX / rect.width;
-  const fractionalRating = Math.round(percentage * 10) / 10;
-  this.starRating = Number((star - 1 + fractionalRating).toFixed(1));
+  this.starRating = Number((star-1 +percentage).toFixed(1))
 }
 
 hoverSelectRating(event: MouseEvent, star: number) {
   const element = event.target as HTMLElement;
-  const rect = element.getBoundingClientRect()
-  const clickX= event.clientX - rect.left;
-  const percentage = clickX/ rect.width;
-  this.hoverStarRating = Number((star-1+ percentage).toFixed(1));
+  const rect = element.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const percentage = clickX / rect.width;
+  this.hoverStarRating = Number((star-1 +percentage).toFixed(1))
 }
 getFill(star:number){
   const currentRating = this.hoverStarRating || this.starRating;
@@ -146,7 +146,7 @@ hoveredHtml = `.star{
 }
 
 <div style="display:flex; align-items:center; justify-content: center;">
-  <div *ngFor="let star of stars" (click)="ratingStars(star)" (mouseenter)="hoverStars(star)" (mouseleave)="hoverRating=0">
+  <div *ngFor="let star of stars" (click)="ratingStars(star)" (mousemove)="hoverStars(star)" (mouseleave)="hoverRating=0">
   --style binding--
      <span class="star" [class.active]="star <= (hoverRating || rating)" [style.height.px]="100" [style.width.px]="100" [style.border-radius.%]="50" [style.display]="'flex'"></span>
   -- giving whole that in class better to use in interviews---

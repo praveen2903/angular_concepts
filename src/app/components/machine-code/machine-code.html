@@ -51,7 +51,7 @@
 <pre>{{fractionCode}}</pre>
 </div>
 <div style="display: flex; align-items: center; justify-content: center;">
-   <div *ngFor="let star of stars" class="circle-wrapper" (click)="selectRating($event, star)" (mouseenter)="hoverSelectRating($event, star)" (mouseleave)="hoverStarRating = 0">
+   <div *ngFor="let star of stars" class="circle-wrapper" (click)="selectRating($event, star)" (mousemove)="hoverSelectRating($event, star)" (mouseleave)="hoverStarRating = 0">
   <span class="circle-base"></span>
   <span class="circle-fill" [style.width.%]="getFill(star)" [style.background]="hoverStarRating > 0 ? 'black': 'gold'"></span>
 </div>
