@@ -6,6 +6,7 @@
     <a (click)="scrollToSection('section-structure')">📦 Structure</a>
     <a (click)="scrollToSection('section-crud')">🔧 CRUD</a>
     <a (click)="scrollToSection('mongo-concepts')">🎯 MongoDB Basics</a>
+    <a (click)="scrollToSection('findVsAggregate')">find vs aggregate</a>
       <a (click)="scrollToSection('section-mongo')">🔁 Mongo vs SQL</a>
     <a (click)="scrollToSection('section-queries')">🌐 Full-Stack Queries</a>
     <a (click)="scrollToSection('section-http')">📡 HTTP Interview</a>
@@ -121,7 +122,26 @@
   </div>
 </div>
 
+<div id="findVsAggregate" class="page">
+  <h3>find Usage</h3>
+  <pre>{{findUsage}}</pre>
+  <h3>Aggregate Usage for same things</h3>
+  <pre>{{aggregateUsage}}</pre>
+  <h3>what is best?</h3>
+  <pre>
+capability                    find()               aggregate()
+Primary Purpose               Fetching           documentsTransforming 
+data Output Type             Database Cursor      Database Cursor
+Can Group Data?               No                   Yes ($group)
+Can Join Collections?         No                   Yes ($lookup)
+Can Create New Fields?        No                   Yes ($addFields)
+Syntax Complexity           Simple & Concise     Verbose Array Pipeline
 
+
+Performance Tip: 
+While aggregate() can perfectly replicate everything find() does by using a standalone $match stage, you should default to find() for simple lookups. Because aggregate() converts BSON documents into internal objects for processing and shifts them back to BSON at completion, it carries a higher CPU/memory overhead for large datasets if no actual transformations take place.
+  </pre>
+</div>
 <div id="mongo-concepts">
   <table class="query-table">
     <thead>
@@ -165,8 +185,8 @@
 | Trigger                ----    Change Streams              |
 | Transactions           ----    Session Transactions        |
 | Materialized View      ----    Aggregation + `$merge`      |
-
 </pre>
+
   <table class="query-table">
 
   <thead>
@@ -277,9 +297,9 @@
 
     <h2>{{ section.title }}</h2>
 
-    <p class="description">
+    <pre class="description">
       {{ section.explanation }}
-    </p>
+    </pre>
 
     <ul>
       <li *ngFor="let point of section.points">

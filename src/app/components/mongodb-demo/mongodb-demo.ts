@@ -7,6 +7,43 @@ import { Component } from '@angular/core';
   styleUrl: './mongodb-demo.css',
 })
 export class MongodbDemo {
+
+  findUsage = `Use find() when your goal is to extract matching documents exactly as they are stored, or with minor omissions. It is the most readable and standard approach for CRUD applications.
+
+-> Basic Filtering: Fetching documents matching a direct condition (e.g., finding an active user by email).
+
+-> Field Projection: Selecting or excluding specific fields to reduce network payload (e.g., returning only names and IDs).
+
+->Standard Pagination: Applying basic .sort(), .skip(), and .limit() modifiers onto the returned database cursor.
+
+->Low Overhead Tasks: Maximizing raw speed for basic queries because find() skips the internal pipelin0e execution machinery.
+
+
+Example:   // Simple, fast retrieval with sorting and pagination
+db.products.find({ category: "electronics", price: { $lt: 1000 } }, { name: 1, price: 1, _id: 0 })
+.sort({ price: -1 })
+.limit(10);`;
+  
+  aggregateUsage = `Use aggregate() when data must be combined, restructured, or calculated on the database server before sending it to your application. The MongoDB Aggregation Pipeline processes records sequentially through distinct stages.
+
+-> Data Grouping & Metrics: Calculating sums, averages, mins, maxes, or counts across groups of documents (equivalent to SQL GROUP BY).
+
+-> Collection Joins: Performing relational-like left outer joins with other collections via the $lookup stage.
+
+-> Creating Computed Fields: Generating new fields on the fly using existing document properties via $addFields or $project.
+
+-> Flattening Arrays: Deconstructing an array field within a document to output a distinct row for each item via $unwind.
+
+-> Complex Data Reports: Constructing multi-step analytics pipelines for financial reporting, dashboards, or data tracking
+  
+Example:
+
+  db.orders.aggregate([
+    { $match: { status: "completed" } },
+    { $group: { _id: "$region", totalRevenue: { $sum: "$amount" } } },
+    { $sort: { totalRevenue: -1 } }
+  ]);`
+
   sqlVsNosql = [
     
 {
@@ -15,8 +52,7 @@ export class MongodbDemo {
 
   purpose: `Understand why MongoDB exists and when NoSQL is preferred.`,
 
-  input: `
-Employee Data
+  input: `Employee Data
 
 ID
 Name
@@ -37,12 +73,13 @@ Database
   ↓
 Collection
   ↓
-Documents(JSON)
-  `,
+Documents(JSON)`,
 
   output: `
 SQL
 employees
+Id  | Name | Email
+__________________________
 101 | John | john@gmail.com
 
 
@@ -56,15 +93,15 @@ MongoDB
   interview: `
 SQL
 ----
-Structured Data
-Fixed Schema
-Uses JOINs
+-> Structured Data
+-> Fixed Schema
+-> Uses JOINs
 
 NoSQL
 ------
-Flexible Schema
-JSON Documents
-Scales Horizontally`
+-> Flexible Schema
+-> JSON Documents
+-> Scales Horizontally`
 },
   ]
 mongoDbSections = [
@@ -74,12 +111,9 @@ mongoDbSections = [
   title: 'Table vs Collection',
   icon: '📦',
 
-  purpose: `
-Understand SQL and MongoDB equivalents.
-  `,
+  purpose: `Understand SQL and MongoDB equivalents.`,
 
   query: `
-
 SQL
 ----
 Database
@@ -95,56 +129,35 @@ Database
   ↓
 Collection
   ↓
-Document
-
-  `,
+Document`,
 
   output: `
-
 employees Table
-
-↓
-
-employees Collection
-
-  `
+    ↓
+employees Collection`
 },
 
 {
   title: 'Row vs Document',
   icon: '📄',
 
-  purpose: `
-A MongoDB document is equivalent to a SQL row.
-  `,
+  purpose: `A MongoDB document is equivalent to a SQL row.`,
 
   input: `
-
 SQL Row
-
+Id  | Name | Salary
+--------------------
 101 | John | 50000
-
-  `,
+-------------------- `,
 
   query: `
-
 {
   "_id": 101,
   "name": "John",
   "salary": 50000
-}
+}`,
 
-  `,
-
-  output: `
-
-One SQL Row
-
-=
-
-One MongoDB Document
-
-  `
+  output: `One SQL Row= One MongoDB Document`
 },
 
 {
@@ -155,7 +168,6 @@ One MongoDB Document
 
   query: `
 Document 1
-
 {
   "name":"John",
   "salary":50000
@@ -169,43 +181,26 @@ Document 2
   "city":"London"
 }  `,
 
-  output: `
-
-Both Documents Valid
-
-Same Collection
-
-  `,
+  output: `Both Documents Valid Same Collection`,
 
   interview: `
+SQL --> Fixed Schema
 
-SQL
-
-Fixed Schema
-
-
-MongoDB
-
-Flexible Schema
-
-  `
+MongoDB-> Flexible Schema`
 },
 
 {
   title: 'Create Database & Collection',
   icon: '🏢',
 
-  purpose: `
-Create database and collection.
-  `,
+  purpose: `Create database and collection.`,
 
   query: `
 use companyDB
 db.createCollection("employees")
   `,
 
-  output: `Database Created
-Collection Created  `
+  output: `Database Created & Collection Created`
 },
 ];
 mongodbsections = [
@@ -215,10 +210,8 @@ mongodbsections = [
 
   purpose: `Insert documents into collection. Equivalent to SQL INSERT.`,
 
-  input: `
-John
-50000
-  `,
+  input: `John 
+  50000`,
 
   query: `db.employees.insertOne({name:"John", salary:50000})`,
 
@@ -232,12 +225,9 @@ John
   title: 'INSERT MANY',
   icon: '📚',
 
-  purpose: `
-Insert multiple documents at once.
-  `,
+  purpose: `Insert multiple documents at once.`,
 
   query: `
-
 db.employees.insertMany([
 {
   name:"John",
@@ -247,114 +237,83 @@ db.employees.insertMany([
   name:"Emma",
   salary:70000
 }
-])
+])  `,
 
-  `,
-
-  output: `
-
-2 Documents Inserted
-
-  `
+  output: `2 Documents Inserted`
 },
 
 {
   title: 'SELECT (Read)',
   icon: '🔍',
 
-  purpose: `
-Fetch documents from collection.
-Equivalent to SQL SELECT.
-  `,
+  purpose: `Fetch documents from collection. Equivalent to SQL SELECT.`,
 
-  query: `
-
-db.employees.find()
-
-  `,
+  query: `db.employees.find()  `,
 
   output: `
-
 John 50000
-
 Emma 70000
-
-Mike 90000
-
-  `
+Mike 90000  `
 },
 
 {
   title: 'SELECT WHERE',
   icon: '🎯',
 
-  purpose: `
-Filter documents.
-Equivalent to SQL WHERE.
-  `,
+  purpose: `Filter documents. Equivalent to SQL WHERE.`,
 
-  query: `
-
-db.employees.find({
+  query: `db.employees.find({
   salary:{$gt:60000}
 })
+  
+or 
 
-  `,
+db.employees.aggregate([
+  {
+    $match: {
+      salary: {
+        $gt: 60000
+      }
+    }
+  }
+]);`,
 
   output: `
-
 Emma 70000
-
-Mike 90000
-
-  `
+Mike 90000  `
 },
 
 {
   title: 'Projection',
   icon: '📑',
 
-  purpose: `
-Return only selected fields.
-Equivalent to SQL column selection.
-  `,
+  purpose: `Return only selected fields. Equivalent to SQL column selection.`,
 
   query: `
-
-db.employees.find(
- {},
+db.employees.find({},
  {
    name:1,
    salary:1,
    _id:0
  }
 )
-
-  `,
+ db.employees.find(); -- gives all`,
 
   output: `
-
 {
  name:"John",
  salary:50000
-}
-
-  `
+}`
 },
 
 {
   title: 'UPDATE ONE',
   icon: '✏️',
 
-  purpose: `
-Update single document.
-Equivalent to SQL UPDATE.
-  `,
+  purpose: `Update single document. Equivalent to SQL UPDATE.`,
 
   query: `
-
-db.employees.updateOne(
- {name:"John"},
+db.employees.updateOne({name:"John"},
  {
    $set:{
      salary:60000
@@ -365,42 +324,28 @@ db.employees.updateOne(
   `,
 
   output: `
-
 John
-
 50000
-
 ↓
-
-60000
-
-  `
+60000`
 },
 
 {
   title: 'UPDATE MANY',
   icon: '📝',
 
-  purpose: `
-Update multiple documents.
-  `,
+  purpose: `Update multiple documents.`,
 
   query: `
-
-db.employees.updateMany(
- {},
+db.employees.updateMany({},
  {
    $inc:{
      salary:5000
    }
  }
-)
+)`,
 
-  `,
-
-  output: `
-All Salaries Increased
-  `
+  output: `All Salaries Increased  `
 },
 
 {
@@ -445,7 +390,7 @@ DELETE FROM employees ...
 
 MongoDB
 insertOne()
-find()
+find() / aggregate()
 updateOne()
 deleteOne()
   `,
@@ -479,7 +424,17 @@ db.employees.find({
  salary:{
    $gt:50000
  }
-})  `
+}) 
+ or
+ db.employees.aggregate([
+  {
+    $match: {
+      salary: {
+        $gt: 50000
+      }
+    }
+  }
+]); `
 }
 ];
 mongoConcepts = [
@@ -499,6 +454,13 @@ WHERE salary > 50000;
 `,
 
   mongodb:`
+db.employees.find({
+  salary:{
+    $gt:50000
+  }
+})
+
+OR (same but aggregate is more used for multiple operations and neater consistent purpose)
 db.employees.aggregate([
 {
   $match:{
@@ -510,14 +472,12 @@ db.employees.aggregate([
 ]);
 `,
 
-  output:`
-[
+  output:`[
  {
   name:'David',
   salary:70000
  }
-]
-`,
+]`,
 
   interviewPoint:` --> Usually first stage in aggregation pipeline.`
 },
@@ -532,8 +492,7 @@ Equivalent to SQL SELECT columns.
 `,
 
   sql:`
-SELECT name,
-       salary
+SELECT name, salary
 FROM employees;
 `,
 
@@ -546,8 +505,7 @@ db.employees.aggregate([
     salary:1
   }
 }
-]);
-`,
+]);`,
 
   output:`
 [
@@ -571,11 +529,9 @@ Equivalent to SQL GROUP BY.
 `,
 
   sql:`
-SELECT department,
-       COUNT(*)
+SELECT department, COUNT(*) as totalEmployees
 FROM employees
-GROUP BY department;
-`,
+GROUP BY department;`,
 
   mongodb:`
 db.employees.aggregate([
@@ -586,9 +542,7 @@ db.employees.aggregate([
       $sum:1
     }
   }
-}
-]);
-`,
+}]);`,
 
   output:`
 [
@@ -596,24 +550,19 @@ db.employees.aggregate([
   _id:'IT',
   totalEmployees:2
  }
-]
-`
+]`
 },
 
 {
   title:'$sort',
   icon:'🔀',
 
-  purpose:`
-Sort documents.
-Equivalent to ORDER BY.
-`,
+  purpose:`Sort documents. Equivalent to ORDER BY.`,
 
   sql:`
 SELECT *
 FROM employees
-ORDER BY salary DESC;
-`,
+ORDER BY salary DESC;`,
 
   mongodb:`
 db.employees.aggregate([
@@ -622,8 +571,7 @@ db.employees.aggregate([
     salary:-1
   }
 }
-]);
-`,
+]);`,
 
   output:`
 David
@@ -661,10 +609,7 @@ db.employees.aggregate([
   title:'$skip',
   icon:'⏭️',
 
-  purpose:`
-Skips records.
-Equivalent to OFFSET.
-`,
+  purpose:`Skips records. Equivalent to OFFSET.`,
 
   sql:`
 SELECT *
@@ -681,6 +626,9 @@ db.employees.aggregate([
   $limit:10
 }
 ]);
+
+or 
+db.employees.find({}).skip(20).limit(10);
 `
 },
 
@@ -688,10 +636,7 @@ db.employees.aggregate([
   title:'$unwind',
   icon:'📂',
 
-  purpose:`
-Converts array items
-into individual documents.
-`,
+  purpose:`Converts array items into individual documents.`,
 
   sampleDocument:`
 {
@@ -717,31 +662,24 @@ db.employees.aggregate([
  name:'John',
  skills:'React'
 }
-
 {
  name:'John',
  skills:'Node'
 }
-
 {
  name:'John',
  skills:'MongoDB'
-}
-`
+}`
 },
 
 {
   title:'$lookup',
   icon:'🔗',
 
-  purpose:`
-Performs JOIN.
-Equivalent to SQL INNER JOIN.
-`,
+  purpose:`Performs JOIN. Equivalent to SQL INNER JOIN.`,
 
   sql:`
-SELECT e.name,
-       d.departmentName
+SELECT e.name, d.departmentName
 FROM employees e
 JOIN departments d
 ON e.departmentId=d.id;
@@ -769,23 +707,15 @@ db.employees.aggregate([
 Creates new fields.
 `,
 
-  sql:`
-SELECT name,
-salary,
-salary * 12
-AS yearlySalary
-FROM employees;
-`,
+  sql:`SELECT name, salary, salary * 12 AS yearlySalary
+FROM employees;`,
 
   mongodb:`
 db.employees.aggregate([
 {
  $addFields:{
   yearlySalary:{
-   $multiply:[
-    '$salary',
-    12
-   ]
+   $multiply:['$salary', 12]
   }
  }
 }
@@ -798,8 +728,7 @@ db.employees.aggregate([
   icon:'🔢',
 
   purpose:`
-Counts documents.
-Equivalent to COUNT(*).
+Counts documents. Equivalent to COUNT(*).
 `,
 
   sql:`
@@ -820,10 +749,7 @@ db.employees.aggregate([
   title:'$facet',
   icon:'📦',
 
-  purpose:`
-Run multiple aggregations
-in a single query.
-`,
+  purpose:`Run multiple aggregations in a single query.`,
 
   mongodb:`
 db.employees.aggregate([
@@ -838,9 +764,7 @@ db.employees.aggregate([
    {
     $group:{
      _id:null,
-     total:{
-      $sum:'$salary'
-     }
+     total:{$sum:'$salary'}
     }
    }
   ]
@@ -878,14 +802,10 @@ containing react.
   title:'Regex Search',
   icon:'📝',
 
-  purpose:`
-Pattern matching.
-`,
+  purpose:`Pattern matching.`,
 
   mongodb:`
-db.employees.find({
- name:/^Jo/
-});
+db.employees.find({name:/^Jo/});
 `,
 
   output:`
@@ -905,18 +825,9 @@ GET /employees/101
   `,
 
   backend:`
-app.get(
- '/employees/:id',
- async(req,res)=>{
-
-  const employee =
-  await Employee.findOne({
-   employeeId:
-   req.params.id
-  });
-
+app.get('/employees/:id', async(req,res)=>{
+  const employee = await Employee.findOne({employeeId: req.params.id});
   res.json(employee);
-
  });
   `,
 
@@ -934,64 +845,38 @@ WHERE employee_id = 101;
 
   angularService:`
 getEmployee(id:number){
-
- return this.http.get(
-  \`/employees/\${id}\`
- );
-
+ return this.http.get(\`/employees/\${id}\`);
 }
   `,
 
   angularComponent:`
 employee:any;
-
 ngOnInit(){
-
- this.employeeService
- .getEmployee(101)
- .subscribe(res=>{
-
-  this.employee = res;
-
+ this.employeeService.getEmployee(101).subscribe(res=>{
+    this.employee = res;
  });
-
-}
-  `,
+}`,
 
   react:`
-const [employee,
-setEmployee] =
-useState(null);
+const [employee,setEmployee] = useState(null);
 
 useEffect(()=>{
-
- axios
- .get('/employees/101')
- .then(res=>{
-
-  setEmployee(
-   res.data
-  );
-
+ axiosget('/employees/101').then(res=>{
+  setEmployee(res.data);
  });
-
-},[]);
-  `,
+},[]);`,
 
   output:`
 {
  employeeId:101,
  name:'John'
-}
-  `
+}`
 },
 {
   title: 'Get All Employees',
   icon: '👥',
 
-  route:`
-GET /employees
-  `,
+  route:`GET /employees`,
 
   backend:`
 app.get('/employees', async(req,res)=>{
@@ -1052,48 +937,23 @@ POST /employees
   `,
 
   backend:`
-app.post(
- '/employees',
- async(req,res)=>{
-
-  const employee =
-  await Employee.create(
-   req.body
-  );
-
+app.post('/employees', async(req,res)=>{
+  const employee = await Employee.create(req.body);
   res.json(employee);
-
  });
   `,
 
   mongoDb:`
 db.employees.insertOne({
-
  name:'John',
  salary:50000
-
 });
   `,
-
-  sql:`
-INSERT INTO employees(
- name,
- salary
-)
-VALUES(
- 'John',
- 50000
-);
-  `,
+  sql:`INSERT INTO employees(name, salary) VALUES('John', 50000);`,
 
   angularService:`
 createEmployee(data:any){
-
- return this.http.post(
-  '/employees',
-  data
- );
-
+ return this.http.post('/employees', data);
 }
   `,
 
@@ -1115,10 +975,7 @@ save(){
   react:`
 const [response, setResponse] = useState(null);
 
-const employee={
- name:'John',
- salary:50000
-};
+const employee={name:'John', salary:50000};
 
 const save=()=>{
  axios.post('/employees',employee).then(res=>{ 
@@ -1135,36 +992,19 @@ const save=()=>{
   title:'Pagination',
   icon:'📄',
 
-  route:`
-GET /employees?page=1
-  `,
+  route:`GET /employees?page=1`,
 
-  backend:`
-const page =
-req.query.page;
-  `,
+  backend:`const page = req.query.page;`,
 
-  mongoDb:`
-db.employees
-.find()
-.skip(0)
-.limit(10);
-  `,
+  mongoDb:`db.employees.find().skip(0).limit(10);`,
 
-  sql:`
-SELECT *
+  sql:`SELECT *
 FROM employees
-LIMIT 10
-OFFSET 0;
-  `,
+LIMIT 10 OFFSET 0;`,
 
   angularService:`
 getEmployees(page:number){
-
- return this.http.get(
-  \`/employees?page=\${page}\`
- );
-
+ return this.http.get(\`/employees?page=\${page}\`);
 }
   `,
 
@@ -1172,37 +1012,24 @@ getEmployees(page:number){
 employees:any[]=[];
 
 ngOnInit(){
-
- this.employeeService
- .getEmployees(1)
- .subscribe(res=>{
-
-  this.employees = res;
-
+ this.employeeService.getEmployees(1).subscribe(res=>{
+    this.employees = res;
  });
-
-}
-  `,
+}`,
 
   react:`
-const [employees,
-setEmployees] =
-useState([]);
+const [employees,setEmployees] = useState([]);
 
 useEffect(()=>{
-
- axios
- .get(
-  '/employees?page=1'
- )
- .then(res=>{
-
-  setEmployees(
-   res.data
-  );
-
- });
-
+ const fetchData = async (): Promise<void> => {
+  try {
+    const res = await axios.get('/employees?page=1');
+    setEmployees(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+  }
+  fetchData();
 },[]);
   `
 },
@@ -1210,78 +1037,42 @@ useEffect(()=>{
   title:'Bearer Token',
   icon:'🔐',
 
-  route:`
-GET /profile
-  `,
+  route:`GET /profile`,
 
-  backend:`
-const token =
-req.headers
-.authorization;
-  `,
+  backend:`const token = req.headers.authorization;`,
 
   angularService:`
 getProfile(){
-
- return this.http.get(
-  '/profile',
-  {
-   headers:{
-    Authorization:
-    'Bearer ' +
-    localStorage
-    .getItem('token')
+ return this.http.get('/profile',{headers:{
+    Authorization: 'Bearer ' + localStorage.getItem('token')
    }
   }
  );
-
 }
   `,
 
   angularComponent:`
 profile:any;
-
 ngOnInit(){
-
- this.authService
- .getProfile()
- .subscribe(res=>{
-
+ this.authService.getProfile().subscribe(res=>{
   this.profile = res;
-
  });
-
 }
   `,
 
-  react:`
-const [profile,
-setProfile] =
-useState(null);
+  react:`const [profile,setProfile] =useState(null);
 
 useEffect(()=>{
 
- axios.get(
-  '/profile',
-  {
+ axios.get('/profile', {
    headers:{
-    Authorization:
-    'Bearer ' +
-    localStorage
-    .getItem('token')
+    Authorization:'Bearer ' + localStorage.getItem('token')
    }
   }
- )
- .then(res=>{
-
-  setProfile(
-   res.data
-  );
-
+ ).then(res=>{
+  setProfile(res.data);
  });
-
-},[]);
-  `
+},[]);`
 },
 {
   title:'Update Employee',
@@ -1292,29 +1083,14 @@ PUT /employees/101
   `,
 
   backend:`
-app.put(
- '/employees/:id',
- async(req,res)=>{
-
-  const employee =
-  await Employee
-  .findOneAndUpdate(
-   {
-    employeeId:
-    req.params.id
-   },
-   req.body,
-   {new:true}
-  );
-
+app.put('/employees/:id', async(req,res)=>{
+  const employee = await Employee.findOneAndUpdate({ employeeId:req.params.id }, req.body, {new:true});
   res.json(employee);
-
  });
   `,
 
   mongoDb:`
-db.employees.updateOne(
- {employeeId:101},
+db.employees.updateOne({employeeId:101},
  {
   $set:{
    salary:70000
@@ -1332,37 +1108,16 @@ WHERE employee_id=101;
   angularComponent:`
 update(){
 
- this.employeeService
- .updateEmployee(
-  101,
-  {
-   salary:70000
-  }
- )
- .subscribe(res=>{
-
+ this.employeeService.updateEmployee(101,{salary:70000}).subscribe(res=>{
   this.employee = res;
-
  });
-
 }
   `,
 
   react:`
-axios.put(
- '/employees/101',
- {
-  salary:70000
- }
-)
-.then(res=>{
-
- setEmployee(
-  res.data
- );
-
-});
-  `
+axios.put('/employees/101',{salary:70000}).then(res=>{
+ setEmployee(res.data);
+});  `
 },
 
 ]
@@ -1386,8 +1141,7 @@ httpInterviewSections = [
   city: "Vizag"
 }`
     },
-    interviewTrap:
-      'PUT replaces the complete resource whereas PATCH modifies only selected fields.'
+    interviewTrap: 'PUT replaces the complete resource whereas PATCH modifies only selected fields.'
   },
 
   {
@@ -1466,50 +1220,271 @@ httpInterviewSections = [
   },
 
   {
-    title: 'Idempotency',
-    explanation:
-      'An operation is idempotent when executing it multiple times produces the same final state.',
-    points: [
-      'GET is idempotent',
-      'PUT is idempotent',
-      'DELETE is idempotent',
-      'POST is not idempotent by default'
-    ],
-    interviewTrap:
-      'Idempotency checks the final state, not how many times the operation executes.'
+  title: 'Idempotency',
+
+  explanation: `
+PUT /employees/101
+
+Request Body
+------------
+{
+   "salary":70000
+}
+
+1st Request
+------------
+Salary = 70000
+
+2nd Request
+------------
+Salary = 70000
+
+3rd Request
+------------
+Salary = 70000
+
+Final State
+-----------
+Salary = 70000
+
+Even if the request is executed multiple times,
+the final state remains the same.
+`,
+
+  points: [
+    'GET is idempotent',
+    'PUT is idempotent',
+    'DELETE is idempotent',
+    'POST is not idempotent by default'
+  ],
+
+  interviewTrap:
+    'Idempotency checks the final state, not how many times the operation executes.'
+},
+
+{
+  title: 'How to Make POST Idempotent',
+
+  explanation: ` Without Idempotency keys   
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+const payments = [];
+app.post("/payments", (req, res) => {
+    const payment = {
+        id: payments.length + 1,
+        amount: req.body.amount
+    };
+    payments.push(payment);
+    res.json(payment);
+});
+
+app.listen(3000);
+
+
+POST /payments
+
+Request-1:
+{
+    "amount":1000
+}
+
+Response-1:
+{
+    "id":1,
+    "amount":1000
+}
+
+Request-2:
+POST /payments
+
+{
+    "amount":1000
+}
+
+Response -2:
+{
+    "id":2,
+    "amount":1000
+}
+________________________________________
+with Idempotency key
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+const payments = [];
+const processedRequests = new Map();
+
+app.post("/payments", (req, res) => {
+    const key = req.header("Idempotency-Key");
+
+    // Already processed
+    if (processedRequests.has(key)) {
+        return res.json(processedRequests.get(key));
+    }
+
+    // Create payment
+    const payment = {
+        id: payments.length + 1,
+        amount: req.body.amount
+    };
+
+    payments.push(payment);
+
+    // Store response
+    processedRequests.set(key, payment);
+    res.json(payment);
+});
+app.listen(3000);
+
+Request -1
+POST /payments
+
+Idempotency-Key: PAY123
+
+{
+    "amount":1000
+}
+
+response:1
+{
+    "id":1,
+    "amount":1000
+}
+
+request -2:
+POST /payments
+
+Idempotency-Key: PAY123
+
+{
+    "amount":1000
+}
+
+response-2
+{
+    "id":1,
+    "amount":1000
+}
+
+Retry with Same Key
+-------------------
+POST /payments
+
+Idempotency-Key: PAY123
+
+Server checks PAY123
+
+✓ Already Processed
+
+Returns Previous Response
+
+No Duplicate Payment Created.
+`,
+
+  points: [
+    'Client generates unique key',
+    'Server stores the key',
+    'Repeated requests return previous response',
+    'Common in payment APIs'
+  ],
+
+  example: {
+    header: 'Idempotency-Key: PAY123'
   },
 
-  {
-    title: 'How to Make POST Idempotent',
-    explanation:
-      'Use an Idempotency Key to prevent duplicate processing.',
-    points: [
-      'Client generates unique key',
-      'Server stores the key',
-      'Repeated requests return previous response',
-      'Common in payment APIs'
-    ],
-    example: {
-      header: 'Idempotency-Key: PAY123'
-    },
-    interviewTrap:
-      'Stripe and many payment gateways use Idempotency Keys to prevent duplicate charges.'
-  },
+  interviewTrap:
+    'Stripe and many payment gateways use Idempotency Keys to prevent duplicate charges.'
+},
 
-  {
-    title: 'Safe vs Idempotent',
-    explanation:
-      'Safe and Idempotent are different concepts.',
-    points: [
-      'Safe = Does not modify data',
-      'Idempotent = Final state remains same',
-      'GET is Safe and Idempotent',
-      'PUT is Idempotent but not Safe',
-      'DELETE is Idempotent but not Safe'
-    ],
-    interviewTrap:
-      'Safe ≠ Idempotent'
-  }
+{
+  title: 'Safe vs Idempotent',
+
+  explanation: `
+GET /employees/101
+
+Request 1
+---------
+Reads Employee
+
+Request 2
+---------
+Reads Employee
+
+Request 3
+---------
+Reads Employee
+
+Database Never Changes
+
+----------------------------
+
+PUT /employees/101
+
+{
+   "salary":70000
+}
+
+Request 1
+---------
+Salary = 70000
+
+Request 2
+---------
+Salary = 70000
+
+Request 3
+---------
+Salary = 70000
+
+Data Changed Once, But Final State Remains Same.
+
+
+when does idempotent key changes
+User clicks Pay
+        │
+        ▼
+Generate PAY123
+        │
+        ▼
+Send Request
+        │
+        ▼
+Timeout
+        │
+        ▼
+Retry
+        │
+Use PAY123 Again
+        │
+        ▼
+Server Returns Previous Response
+
+----------------------------------
+
+User starts another payment
+        │
+        ▼
+Generate PAY456
+        │
+        ▼
+New Payment Created
+`,
+
+  points: [
+    'Safe = Does not modify data',
+    'Idempotent = Final state remains same',
+    'GET is Safe and Idempotent',
+    'PUT is Idempotent but not Safe',
+    'DELETE is Idempotent but not Safe'
+  ],
+
+  interviewTrap:
+    'Safe ≠ Idempotent'
+}
 ];
 mongoVsSqlSections = [
 {
