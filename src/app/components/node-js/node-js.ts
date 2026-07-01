@@ -1475,7 +1475,7 @@ Solution: Redis Distributed Limiter
 // ---------------------------------------------------
 
 {
-title: '5. API Rate Limiting -- Redis Distributed Limiter',
+title: '5. API Rate Limiting -- Redis Distributed (Primarily use Redis when multiple servers are running like muliple nodes or clusters in load balancing)',
 code: `
 const express = require('express');
 const app = express();
@@ -1518,12 +1518,13 @@ User can send:
 Total: 200 requests
 Still allowed.
 `,
-otherApproach: ` Production Solution
+otherApproach: ` ->Production Solution:- why Redis it is best since same cache is used for all the load balancing nodes/clusters so when devops use redis for the rate limiting.
 
-Redis + Sliding Window
+->If locally running or single application deployed then just token bucket is useful. If Horizontal scaling/ vertical scaling by which many server instances running best to use the redis with token bucket or sliding window.
+
+Redis + Sliding Window + Token Bucket
 OR
-Redis + Token Bucket
-Used in Production Systems`
+Redis + Token Bucket Used in Production Systems`
 }
 
 ];
