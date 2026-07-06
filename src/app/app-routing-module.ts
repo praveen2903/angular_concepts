@@ -21,11 +21,6 @@ import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'basic',
-    pathMatch: 'full'
-  },
-  {
     path: 'basic',
     component: BasicAngularConcepts
   },
@@ -88,7 +83,12 @@ const routes: Routes = [
   {
     path:'mongodb',
     component:MongodbDemo
-  }
+  },
+  {
+    path: '**',
+    redirectTo: 'basic',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
