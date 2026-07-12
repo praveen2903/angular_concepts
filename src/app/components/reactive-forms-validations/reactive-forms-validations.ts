@@ -18,17 +18,11 @@ export class ReactiveFormsValidations implements OnInit {
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       fullName: ['', [ Validators.required, Validators.minLength(3)]],
-
       email: ['', [Validators.required, Validators.email]],
-
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-
       age:    ['', [Validators.required, Validators.min(18)]],
-
       gender: ['', Validators.required],
-
       password: ['', [Validators.required, Validators.minLength(8)]],
-
       skills: this.fb.array([this.fb.control('')])
     });
 

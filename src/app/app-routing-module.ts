@@ -18,6 +18,7 @@ import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
 import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
 import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
+import { ParentMachinecodes } from './components/parent-machinecodes/parent-machinecodes';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
   {
     path:'async-machine-codes',
     component: AsyncMachineCodes
+  },
+  {
+    path:'lifeCycle-ref-machine-codes',
+    component: ParentMachinecodes
   },
   {
     path:'node-js',

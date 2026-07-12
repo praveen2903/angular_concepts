@@ -26,6 +26,8 @@ import { PgsqlDemo } from './components/pgsql-demo/pgsql-demo';
 import { PgsqlQueries } from './components/pgsql-queries/pgsql-queries';
 import { ProceduresDemo } from './components/procedures-demo/procedures-demo';
 import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
+import { ChildMachinecodes } from './components/child-machinecodes/child-machinecodes';
+import { ParentMachinecodes } from './components/parent-machinecodes/parent-machinecodes';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { MongodbDemo } from './components/mongodb-demo/mongodb-demo';
     PgsqlQueries,
     ProceduresDemo,
     MongodbDemo,
+    ChildMachinecodes,
+    ParentMachinecodes,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

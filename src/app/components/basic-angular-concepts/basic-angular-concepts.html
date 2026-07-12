@@ -9,11 +9,21 @@
     <a (click)="scrollToSection('section-ngmodel')">🔄 ngModel</a>
     <a (click)="scrollToSection('section-style')">🎨 Style Binding</a>
     <a (click)="scrollToSection('section-class')">🏷️ Class Binding</a>
+    <a (click)="scrollToSection('section-component')">🧩 Component</a>
+    <a (click)="scrollToSection('section-service')">⚙️ Service</a>
+    <a (click)="scrollToSection('section-module')">📦 App Module</a>
+    <a (click)="scrollToSection('section-routing')">🛣️ Routing</a>
+    <a (click)="scrollToSection('section-directive')">📌 Directives</a>
+    <a (click)="scrollToSection('section-pipe')">🚰 Pipes</a>
+    <a (click)="scrollToSection('section-decorators')">@ Decorators</a>
+    <a (click)="scrollToSection('section-architecture')">🏗️ Architecture</a>
   </div>
 </nav>
 
 <div class="page">
 
+  <h1>Other website covers basics angular forms, routing and route guards</h1>
+  <a href="https://angular-basics-forms-routing.vercel.app/" target="_blank">Basic Forms and routing concepts to view</a>
   <h1>Angular Basic Concepts</h1>
 
   <pre class="flow-box">
@@ -391,6 +401,184 @@ UI Updated
   <pre>{{classbindingcode}}</pre>
   <pre>{{ngClass}}</pre>
 </div>
+
+<section class="card" id="section-component">
+
+    <h2>8. @Component</h2>
+
+    <p class="definition">
+        A Component controls one part of the UI. Every page or reusable piece of UI is a Component.
+    </p>
+
+    <h3>Flow</h3>
+
+<pre>
+TypeScript
+      ↓
+@Component
+      ↓
+HTML Template
+      ↓
+Browser UI
+</pre>
+
+    <h3>Example</h3>
+
+<pre>{{componentConcept}}</pre>
+
+</section>
+
+<section class="card" id="section-service">
+
+    <h2>9. @Injectable Service</h2>
+
+    <p class="definition">
+        Services contain reusable business logic and API calls.
+    </p>
+
+    <h3>Flow</h3>
+
+<pre>
+Component
+      ↓
+Calls Service
+      ↓
+HTTP/API
+      ↓
+Returns Data
+      ↓
+Component Updates UI
+</pre>
+
+<pre>{{serviceConcept}}</pre>
+
+</section>
+
+<section class="card" id="section-module">
+
+    <h2>10. @NgModule (App Module)</h2>
+
+    <p class="definition">
+        The root module that tells Angular what belongs to the application.
+    </p>
+
+<pre>{{appModuleConcept}}</pre>
+
+</section>
+
+<section class="card" id="section-routing">
+
+    <h2>11. App Routing Module</h2>
+
+    <p class="definition">
+        Maps URLs to Components.
+    </p>
+
+<h3>Routing Flow</h3>
+
+<pre>
+Browser URL
+      ↓
+Routes[]
+      ↓
+Router
+      ↓
+router-outlet
+      ↓
+Component Displayed
+</pre>
+
+<pre>{{appRoutingModuleConcept}}</pre>
+
+<pre>{{routingConcept}}</pre>
+
+</section>
+
+<section class="card" id="section-directive">
+
+    <h2>12. Directives</h2>
+
+    <p class="definition">
+        Directives change the appearance or structure of the DOM.
+    </p>
+
+<h3>Flow</h3>
+
+<pre>
+Directive
+     ↓
+DOM
+     ↓
+Updated UI
+</pre>
+
+<pre>{{directiveConcept}}</pre>
+
+</section>
+
+
+<section class="card" id="section-pipe">
+
+    <h2>13. Pipes</h2>
+
+    <p class="definition">
+        Pipes transform data before displaying it.
+    </p>
+
+<h3>Flow</h3>
+
+<pre>
+Original Data
+      ↓
+Pipe
+      ↓
+Formatted Data
+      ↓
+UI
+</pre>
+
+<pre>{{pipeConcept}}</pre>
+
+</section>
+
+<section class="card" id="section-decorators">
+
+    <h2>14. Angular Decorators</h2>
+
+    <p class="definition">
+        Decorators provide metadata to Angular classes and members.
+    </p>
+
+<h3>Flow</h3>
+
+<pre>
+Decorator
+     ↓
+Angular Metadata
+     ↓
+Angular Framework
+     ↓
+Application
+</pre>
+
+<pre>{{decoratorsConcept}}</pre>
+
+</section>
+
+
+
+
+<section class="card" id="section-architecture">
+
+    <h2>15. Angular Architecture</h2>
+
+    <p class="definition">
+        High level flow of an Angular application.
+    </p>
+
+<pre>{{angularArchitecture}}</pre>
+
+</section>
 </div>
 
 <!-- Scroll to Top Button -->
