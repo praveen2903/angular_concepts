@@ -43,3 +43,20 @@
     <app-child-machinecodes [cartItems]="cart"></app-child-machinecodes>
 
 </div>
+
+<div class="page">
+
+    <div class="code-tabs-container">
+    <div class="code-tabs-header">
+        <button type="button" class="code-tab-button" 
+                *ngFor="let item of parentArray" 
+                [class.active]="setIndex == item.index" 
+                (click)="setDataIndex(item.index)">
+            {{item.index}}
+        </button>
+    </div>
+    <ng-container *ngFor="let item of parentArray">
+        <pre class="code-tab-content" *ngIf="setIndex == item.index">{{item.data}}</pre>
+    </ng-container>
+</div>
+</div>

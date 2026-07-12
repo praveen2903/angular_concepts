@@ -89,3 +89,16 @@
         </table>
     </div>
 </div>
+<div class="code-tabs-container">
+    <div class="code-tabs-header">
+        <button type="button" class="code-tab-button" 
+                *ngFor="let item of childArray" 
+                [class.active]="setIndex == item.index" 
+                (click)="setDataIndex(item.index)">
+            {{item.index}}
+        </button>
+    </div>
+    <ng-container *ngFor="let item of childArray">
+        <pre class="code-tab-content" *ngIf="setIndex == item.index">{{item.data}}</pre>
+    </ng-container>
+</div>
